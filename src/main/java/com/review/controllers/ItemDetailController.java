@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -13,8 +14,42 @@ import java.util.ResourceBundle;
 
 public class ItemDetailController implements Initializable{
     @FXML
-    private HBox rating_list;
+    private AnchorPane info_button;
+
+    @FXML
+    private AnchorPane rating_button;
+
+    @FXML
+    private AnchorPane rating_list;
     private static PrimaryController primaryController;
+    private Pane rating_pane;
+    @FXML
+    void info_button_press(MouseEvent event) throws IOException{
+        Pane newPane = FXMLLoader.load(getClass().getResource("/com/review/info_detail.fxml"));
+        this.rating_list.getChildren().clear();
+        this.rating_list.getChildren().addAll(newPane);
+        this.rating_button.getStyleClass().remove("action");
+        this.info_button.getStyleClass().add("action");
+
+    }
+
+    @FXML
+    void rating_button_press(MouseEvent event) throws IOException{
+        if(rating_pane != null){
+            this.rating_list.getChildren().clear();
+            this.rating_list.getChildren().addAll(rating_pane);
+            this.info_button.getStyleClass().remove("action");
+            this.rating_button.getStyleClass().add("action");
+        }
+        else{
+            this.rating_pane = FXMLLoader.load(getClass().getResource("/com/review/rating_list.fxml"));
+            this.rating_list.getChildren().clear();
+            this.rating_list.getChildren().addAll(rating_pane);
+            this.info_button.getStyleClass().remove("action");
+            this.rating_button.getStyleClass().add("action");
+        }
+
+    }
     @FXML
     void returnItemList(MouseEvent event) {
         primaryController.swapItemList();
@@ -28,7 +63,7 @@ public class ItemDetailController implements Initializable{
             ItemDetailController itemDetailController = fxmlLoader.getController();
             primaryController.setContainer(newPane);
 
-            newPane = FXMLLoader.load(getClass().getResource("/com/review/rating_list.fxml"));
+            newPane = FXMLLoader.load(getClass().getResource("/com/review/info_detail.fxml"));
             itemDetailController.rating_list.getChildren().addAll(newPane);
         } catch (IOException e) {
             throw new RuntimeException(e);

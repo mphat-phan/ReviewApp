@@ -1,14 +1,20 @@
 package com.review.controllers;
 
 import com.review.models.Rate;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
 import java.io.IOException;
@@ -23,8 +29,54 @@ public class RatingListController implements Initializable {
 
     @FXML
     private ScrollPane rating_scroll;
+    @FXML
+    private HBox pagination_list;
+    private int stepPagination = 0;
+    private int pageNumDefault = 5;
 
     private List<Rate> rateList = new ArrayList<>();
+    @FXML
+    void pagination_left_press(MouseEvent event) {
+        if(this.stepPagination != 0){
+            setStepPagination(this.stepPagination-1);
+            setPagination();
+        }
+    }
+
+    @FXML
+    void pagination_right_press(MouseEvent event) {
+        setStepPagination(this.stepPagination+1);
+        setPagination();
+    }
+    public void setStepPagination(int stepPagination) {
+        this.stepPagination = stepPagination;
+    }
+    public void setPagination(){
+        pagination_list.getChildren().clear();
+        Button button;
+        int startPage = (pageNumDefault * stepPagination) + 1;
+        for(int i = 0; i < pageNumDefault; i++){
+            button = new Button();
+            button.getStyleClass().add("button-pagination");
+            button.addEventHandler(MouseEvent.MOUSE_PRESSED, clickPagination);
+            button.setText(String.valueOf(startPage++));
+            pagination_list.getChildren().add(button);
+        }
+    }
+    private EventHandler clickPagination = new EventHandler() {
+
+        @Override
+        public void handle(Event event) {
+            Node node;
+            for(int i = 0; i < pageNumDefault; i++){
+                node = pagination_list.getChildren().get(i);
+                node.getStyleClass().remove("button-pagination-action");
+            }
+
+
+            ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
+        }
+    };
     private List<Rate> getData() {
         List<Rate> rates = new ArrayList<>();
         Rate rate;
@@ -65,6 +117,8 @@ public class RatingListController implements Initializable {
                 rating_grid.setMaxHeight(Region.USE_PREF_SIZE);
                 rating_grid.setAlignment(Pos.TOP_CENTER);
 
+                pagination_list.getChildren().clear();
+                setPagination();
 
 
             }

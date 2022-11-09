@@ -38,7 +38,7 @@
     -fx-background-color:#D5D5D5;
 }
 
-.button-pagination .action {
+.button-pagination-action{
     -fx-background-color:#D5D5D5;
 }
 
@@ -57,7 +57,13 @@
 }
 
 .button-brands{
-    -fx-margin: 0 10 0 0;
+
+}
+.action{
+    -fx-border-width: 0 0 3 0;
+    -fx-border-color:black;
+    -fx-background-insets: 0;
+    -fx-cursor: hand;
 }
 
 .button-brands:hover{

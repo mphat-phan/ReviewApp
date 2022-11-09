@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="498.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingListController">
+<VBox prefHeight="498.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingListController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="745.0" spacing="5.0">
          <children>
@@ -45,7 +45,7 @@
       </HBox>
       <HBox prefHeight="437.0" prefWidth="745.0">
          <children>
-            <ScrollPane fx:id="rating_scroll" minViewportHeight="470.0" minViewportWidth="530.0" prefHeight="270.0" prefWidth="501.0">
+            <ScrollPane fx:id="rating_scroll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minViewportHeight="450.0" minViewportWidth="530.0" minWidth="-Infinity" prefHeight="450.0" prefWidth="530.0">
                <content>
                   <GridPane fx:id="rating_grid" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="0.0">
                      <rowConstraints>
@@ -63,8 +63,8 @@
          <children>
             <HBox alignment="CENTER" layoutX="77.0" layoutY="8.0" prefHeight="40.0" prefWidth="346.0">
                <children>
-                  <FontAwesomeIconView glyphName="CHEVRON_LEFT" styleClass="button-pagination-arrow" />
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="278.0" spacing="10.0">
+                  <FontAwesomeIconView glyphName="CHEVRON_LEFT" onMousePressed="#pagination_left_press" styleClass="button-pagination-arrow" />
+                  <HBox fx:id="pagination_list" alignment="CENTER" prefHeight="36.0" prefWidth="278.0" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" styleClass="button-pagination" text="1">
                            <HBox.margin>
@@ -80,7 +80,7 @@
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </HBox>
-                  <FontAwesomeIconView glyphName="CHEVRON_RIGHT" styleClass="button-pagination-arrow" />
+                  <FontAwesomeIconView glyphName="CHEVRON_RIGHT" onMousePressed="#pagination_right_press" styleClass="button-pagination-arrow" />
                </children>
                <styleClass>
                   <String fx:value="shadow2" />

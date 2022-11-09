@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="200.0" prefWidth="100.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.ItemListController">
+<VBox prefHeight="200.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.ItemListController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <AnchorPane styleClass="button-brands">
+            <AnchorPane fx:id="amazon_button" onMouseReleased="#amazon_button_presss" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -37,7 +37,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane styleClass="button-brands">
+            <AnchorPane fx:id="ebay_button" onMousePressed="#ebay_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -55,7 +55,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane styleClass="button-brands">
+            <AnchorPane fx:id="tiki_button" onMousePressed="#tiki_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -73,7 +73,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane styleClass="button-brands">
+            <AnchorPane fx:id="sendo_button" onMousePressed="#sendo_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -91,7 +91,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane styleClass="button-brands">
+            <AnchorPane fx:id="lazada_button" onMousePressed="#lazada_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -131,13 +131,17 @@
          <children>
             <HBox alignment="CENTER" layoutX="575.0" layoutY="22.0" prefHeight="40.0" prefWidth="346.0">
                <children>
-                  <FontAwesomeIconView glyphName="CHEVRON_LEFT" styleClass="button-pagination-arrow" />
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="278.0" spacing="10.0">
+                  <FontAwesomeIconView glyphName="CHEVRON_LEFT" onMousePressed="#pagination_left_press" styleClass="button-pagination-arrow" />
+                  <HBox fx:id="pagination_list" alignment="CENTER" prefHeight="36.0" prefWidth="278.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="button-pagination" text="1">
+                        <Button mnemonicParsing="false" text="1">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
+                           <styleClass>
+                              <String fx:value="button-pagination" />
+                              <String fx:value="button-pagination-action" />
+                           </styleClass>
                         </Button>
                         <Button mnemonicParsing="false" styleClass="button-pagination" text="1" />
                         <Button mnemonicParsing="false" styleClass="button-pagination" text="1" />
@@ -148,7 +152,7 @@
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
                   </HBox>
-                  <FontAwesomeIconView glyphName="CHEVRON_RIGHT" styleClass="button-pagination-arrow" />
+                  <FontAwesomeIconView glyphName="CHEVRON_RIGHT" onMousePressed="#pagination_right_press" styleClass="button-pagination-arrow" />
                </children>
                <styleClass>
                   <String fx:value="shadow2" />
