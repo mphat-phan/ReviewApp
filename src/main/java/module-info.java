@@ -5,6 +5,9 @@ module com.review.reviewapp {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
 
+    requires org.json;
+    requires org.jsoup;
+
     opens com.review to javafx.fxml;
     exports com.review;
     exports com.review.controllers;
