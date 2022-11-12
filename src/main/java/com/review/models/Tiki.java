@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tiki {
-    private String url = "https://tiki.vn/api/v2/products?limit=10&q";
+    private String url = "https://tiki.vn/api/v2/products?limit=10&q=";
     public List<Product> getProductsByQuery(String q) throws IOException {
 
         List<Product> productList = new ArrayList<>();
         Product product;
-        Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url+q).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= new JSONObject(doc.text()).getJSONArray("data");
         for(int i = 0; i < jsonArray.length(); i++){
@@ -28,5 +28,12 @@ public class Tiki {
             productList.add(product);
         }
         return productList;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Tiki tiki = new Tiki();
+        List<Product> productList = new ArrayList<>();
+        productList = tiki.getProductsByQuery("iphone");
+        System.out.println("Hello");
     }
 }

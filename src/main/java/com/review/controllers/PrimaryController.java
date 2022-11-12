@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class PrimaryController implements Initializable {
@@ -14,6 +16,30 @@ public class PrimaryController implements Initializable {
     private BorderPane container;
     private ItemListController itemListController;
     private ItemDetailController itemDetailController;
+    private RatingAggregatorController ratingAggregatorController;
+    @FXML
+    private Label rating_aggregator_button;
+
+    @FXML
+    private Label search_product_button;
+
+    @FXML
+    void rating_aggregator_press(MouseEvent event) {
+        this.rating_aggregator_button.getStyleClass().remove("action");
+        this.search_product_button.getStyleClass().remove("action");
+
+        swapRatingAggregator();
+        this.rating_aggregator_button.getStyleClass().add("action");
+    }
+
+    @FXML
+    void search_product_press(MouseEvent event) {
+        this.rating_aggregator_button.getStyleClass().remove("action");
+        this.search_product_button.getStyleClass().remove("action");
+
+        swapItemList();
+        this.search_product_button.getStyleClass().add("action");
+    }
 
     public void setContainer(Pane newPane){
         container.setCenter(newPane);
@@ -22,7 +48,9 @@ public class PrimaryController implements Initializable {
     public void swapItemList(){
         itemListController.openItemList(this);
     }
-
+    public void swapRatingAggregator(){
+        ratingAggregatorController.openRatingAggregator(this);
+    }
     public void swapItemDetail(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -43,7 +71,14 @@ public class PrimaryController implements Initializable {
             fxmlLoader.load();
             itemListController = fxmlLoader.getController();
             itemListController.productList.addAll(itemListController.getData());
-            swapItemList();
+
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
+            fxmlLoader.load();
+            ratingAggregatorController = fxmlLoader.getController();
+
+            ratingAggregatorController.rateList.addAll(ratingAggregatorController.getData());
+            swapRatingAggregator();
         }catch (IOException e){
 
         }
