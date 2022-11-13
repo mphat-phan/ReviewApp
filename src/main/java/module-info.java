@@ -12,4 +12,6 @@ module com.review.reviewapp {
     exports com.review;
     exports com.review.controllers;
     opens com.review.controllers to javafx.fxml;
+    exports com.review.models;
+    opens com.review.models to javafx.fxml;
 }

@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.review.models.Client;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class PrimaryController implements Initializable {
+    private Client client ;
     @FXML
     private BorderPane container;
     private ItemListController itemListController;
@@ -22,6 +26,12 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private Label search_product_button;
+    @FXML
+    private TextField search_product;
+    @FXML
+    void search_enter(ActionEvent event)throws IOException {
+        client.SearchProduct(search_product.getText());
+    }
 
     @FXML
     void rating_aggregator_press(MouseEvent event) {
@@ -65,7 +75,7 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         try {
-
+            client = new Client(1234,"localhost");
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();

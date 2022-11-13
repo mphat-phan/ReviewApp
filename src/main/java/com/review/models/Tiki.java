@@ -6,6 +6,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Tiki {
         Connection.Response res = Jsoup.connect(url+q).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= new JSONObject(doc.text()).getJSONArray("data");
-        for(int i = 0; i < jsonArray.length(); i++){
+        for(int i = 0; i < jsonArray.length(); i++) {
             product = new Product();
             product.setProductName(jsonArray.getJSONObject(i).getString("name"));
             product.setImageUrl(jsonArray.getJSONObject(i).getString("thumbnail_url"));

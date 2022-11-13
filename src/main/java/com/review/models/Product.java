@@ -1,6 +1,8 @@
 package com.review.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String productName;
     private double price;
     private double price_sale;
