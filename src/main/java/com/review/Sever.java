@@ -4,8 +4,6 @@ import Mahoa.AES;
 import Mahoa.RSA;
 import com.review.models.Product;
 import com.review.models.Tiki;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -32,42 +30,60 @@ public class Sever  {
         System.out.println(value);
         socket.send(dpsend);
     }
-    public void SendList(List<Product> list){
-        AES aes=new AES();
+    public void SendList(List<Product> list,String ip){
+        AES aes=listip.get(ip);
         try {
             Send(aes.encryptList(list));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public String[] Receive()throws IOException{
-        socket.receive(dpreceive);
-        String tmp = new String(dpreceive.getData(), 0 , dpreceive.getLength());
+    public String[] Receive(String tmp)throws IOException{
         String[] token = tmp.split("#");
         return token;
     }
-    public void CheckRequest() throws IOException{
-        String[] token = Receive();
+    public void CheckRequest(String tmp) throws IOException{
+        String[] token = Receive(tmp);
         if(token[0].equals("search")){
             SearchProduct(token[1]);
         }
     }
     public void SearchProduct(String query)throws IOException{
         Tiki tiki = new Tiki();
-        SendList(tiki.getProductsByQuery(query));
+        SendList(tiki.getProductsByQuery(query),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException {
-        while(true){
-            socket.receive(dpreceive);
-            String tmp = new String(dpreceive.getData(), 0 , dpreceive.getLength());
-            if(tmp.equals("bye")) {
-                System.out.println("Server socket closed");
-                socket.close();
-                break;
+        try {
+            rsa.createkey();
+            while(true){
+                socket.receive(dpreceive);
+                String tmp = new String(dpreceive.getData(), 0 , dpreceive.getLength());
+                if(listip.containsKey(dpreceive.getAddress().getHostAddress())){
+                    AES aes=listip.get(dpreceive.getAddress().getHostAddress());
+                    tmp=aes.decrypt(tmp);
+                    if(tmp.equals("bye")){
+                        System.out.println(listip.get(dpreceive.getAddress().getHostAddress())+" has disconnected");
+                        listip.remove(dpreceive.getAddress().getHostAddress());
+                    }
+                    else {
+                        System.out.println("Server receive "+ tmp);
+                        CheckRequest(tmp);
+                    }
+                }
+                else {
+                    traodoikey();
+                }
+
             }
-            System.out.println("hello");
-            Send(tmp);
         }
+        catch (IOException e) {
+            System.err.println(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+
     }
     public static void traodoikey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         dpsend = new DatagramPacket(rsa.publickey.getEncoded(), rsa.publickey.getEncoded().length,dpreceive.getAddress(),dpreceive.getPort());
@@ -86,7 +102,7 @@ public class Sever  {
     {
             Sever sv = new Sever(1234, 512);
         while(true) {
-            sv.CheckRequest();
+            sv.ConnectSever();
         }
     }
 }
