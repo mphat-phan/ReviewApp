@@ -146,7 +146,7 @@ public class ItemListController implements Initializable {
                 myListener = new MyListener() {
                     @Override
                     public void onClickListener(Product product) {
-                        primaryController.swapItemDetail();
+                        primaryController.swapItemDetail(product);
                     }
                 };
             }

@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
     private Client client ;
@@ -89,13 +90,16 @@ public class PrimaryController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void swapItemDetail(){
+    public void swapItemDetail(Product product){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_detail.fxml"));
             fxmlLoader.load();
             itemDetailController = fxmlLoader.getController();
             itemDetailController.openItemDetail(this);
+            itemDetailController.ProductName.setText(product.getProductName());
+            itemDetailController.price.setText(product.getPrice_sale().toString());
+            itemDetailController.originalPrice.setText(product.getPrice().toString());
         }catch (IOException e){
 
         }
