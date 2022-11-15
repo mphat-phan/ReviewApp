@@ -1,7 +1,7 @@
 package com.review;
 
-import Mahoa.AES;
-import Mahoa.RSA;
+import com.review.Encryptions.AES;
+import com.review.Encryptions.RSA;
 import com.review.models.Product;
 import com.review.models.Tiki;
 import java.io.IOException;
@@ -13,14 +13,14 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.List;
 
-public class Sever  {
+public class Server {
     private int buffsize ;
     private int port;
     public static DatagramSocket socket;
     public static DatagramPacket dpreceive, dpsend;
     static RSA rsa=new RSA();
     private static HashMap<String,AES> listip=new HashMap<>();
-    public Sever(int port,int buffsize) throws SocketException {
+    public Server(int port, int buffsize) throws SocketException {
         this.socket = new DatagramSocket(port);
         this.dpreceive = new DatagramPacket(new byte[buffsize], buffsize);
     }
@@ -52,8 +52,7 @@ public class Sever  {
         Tiki tiki = new Tiki();
         SendList(tiki.getProductsByQuery(query),dpreceive.getAddress().getHostAddress());
     }
-    public void ConnectSever() throws IOException {
-        try {
+    public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
             rsa.createkey();
             while(true){
                 socket.receive(dpreceive);
@@ -75,15 +74,6 @@ public class Sever  {
                 }
 
             }
-        }
-        catch (IOException e) {
-            System.err.println(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
-
     }
     public static void traodoikey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         dpsend = new DatagramPacket(rsa.publickey.getEncoded(), rsa.publickey.getEncoded().length,dpreceive.getAddress(),dpreceive.getPort());
@@ -98,9 +88,9 @@ public class Sever  {
         aes.createkey();
         listip.put(dpreceive.getAddress().getHostAddress(), aes);
     }
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException,NoSuchAlgorithmException,InvalidKeySpecException
     {
-            Sever sv = new Sever(1234, 512);
+            Server sv = new Server(1234, 512);
         while(true) {
             sv.ConnectSever();
         }

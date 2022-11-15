@@ -7,6 +7,8 @@ public class Rate {
     private String userImageUrl;
     private String comment;
 
+    private int rating;
+
     public String getUsername() {
         return username;
     }
@@ -45,6 +47,13 @@ public class Rate {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
 }

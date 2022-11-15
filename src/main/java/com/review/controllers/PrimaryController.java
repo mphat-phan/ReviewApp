@@ -2,9 +2,11 @@ package com.review.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 import com.review.models.Client;
+import com.review.models.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +17,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class PrimaryController implements Initializable {
-    private Client client ;
+    private static Client client ;
+    private Product Tiki;
+    private Product Shopee;
+    private Product Sendo;
+    private Product Lazada;
+
     @FXML
     private BorderPane container;
     private ItemListController itemListController;
@@ -29,7 +36,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField search_product;
     @FXML
-    void search_enter(ActionEvent event)throws IOException {
+    void search_enter(ActionEvent event)throws IOException,ClassNotFoundException {
         client.SearchProduct(search_product.getText());
     }
 
@@ -74,25 +81,30 @@ public class PrimaryController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        try {
-            client = new Client(1234,"localhost");
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
-            fxmlLoader.load();
-            itemListController = fxmlLoader.getController();
-            itemListController.productList.addAll(itemListController.getData());
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+                fxmlLoader.load();
+                itemListController = fxmlLoader.getController();
+                itemListController.productList.addAll(itemListController.getData());
+                fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
+                fxmlLoader.load();
+                ratingAggregatorController = fxmlLoader.getController();
 
-            fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
-            fxmlLoader.load();
-            ratingAggregatorController = fxmlLoader.getController();
-
-            ratingAggregatorController.rateList.addAll(ratingAggregatorController.getData());
-            swapRatingAggregator();
-        }catch (IOException e){
-
-        }
-
-
+                ratingAggregatorController.rateList.addAll(ratingAggregatorController.getData());
+                swapRatingAggregator();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
+    public static void SetClient(Client cl){
+        client=cl;
+    }
+    public static Client getClient(){
+        return client;
     }
 }

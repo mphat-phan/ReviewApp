@@ -1,6 +1,7 @@
 package com.review.controllers;
 
 import com.review.MyListener;
+import com.review.models.Client;
 import com.review.models.Product;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ItemListController implements Initializable {
+    private Client client = PrimaryController.getClient() ;
     @FXML
     private AnchorPane amazon_button;
     @FXML
@@ -103,52 +105,20 @@ public class ItemListController implements Initializable {
         setStepPagination(this.stepPagination+1);
         setPagination();
     }
-    public List<Product> getData() {
+    public List<Product> getData()throws IOException,ClassNotFoundException {
         List<Product> products = new ArrayList<>();
+        //client.SearchProduct("ipad");
+        List<Product> data = client.ReceiveList();
         Product product;
-
-        product = new Product();
-        product.setProductName("Iphone 1");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg");
-        products.add(product);
-
-        product = new Product();
-        product.setProductName("[11.11_SALE LỚN NHẤT NĂM ] iPhone 14 - Hàng Chính Hãng VN/A - Hàng Có Sẵn Giao Nhanh Trong Ngày");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://lzd-img-global.slatic.net/g/p/8d96d9407c232c862422a4ed255c05ed.png");
-        products.add(product);
-
-        product = new Product();
-        product.setProductName("Sản phẩm 3");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://vn-live-01.slatic.net/p/b72b0a0bdddf15b29419975efd47d0f6.png");
-        products.add(product);
-
-        product = new Product();
-        product.setProductName("Sản phẩm 4");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg");
-        products.add(product);
-
-        product = new Product();
-        product.setProductName("Sản phẩm 5");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg");
-        products.add(product);
-
-        product = new Product();
-        product.setProductName("Sản phẩm 6");
-        product.setPrice(30000);
-        product.setPrice_sale(20000);
-        product.setImageUrl("https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-tim-thumb-600x600.jpg");
-        products.add(product);
-
+            for(int i=0;i<=9;i++)
+            {
+                product = new Product();
+                product.setProductName(data.get(i).getProductName());
+                product.setPrice(data.get(i).getPrice());
+                product.setPrice_sale(data.get(i).getPrice_sale());
+                product.setImageUrl(data.get(i).getImageUrl());
+                products.add(product);
+            }
         return products;
     }
     public void setStepPagination(int stepPagination) {

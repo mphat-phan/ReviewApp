@@ -3,11 +3,18 @@ package com.review.models;
 import java.io.Serializable;
 
 public class Product implements Serializable {
+    private  int productID;
     private String productName;
-    private double price;
-    private double price_sale;
+    private int price;
+    private int price_sale;
     private String imageUrl;
+    public Integer getproductID() {
+        return productID;
+    }
 
+    public void setproductID(Integer productID) {
+        this.productID = productID;
+    }
     public String getProductName() {
         return productName;
     }
@@ -16,19 +23,19 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public double getPrice_sale() {
+    public Integer getPrice_sale() {
         return price_sale;
     }
 
-    public void setPrice_sale(double price_sale) {
+    public void setPrice_sale(Integer price_sale) {
         this.price_sale = price_sale;
     }
 
