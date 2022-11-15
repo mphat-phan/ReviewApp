@@ -1,13 +1,12 @@
 package com.review;
 
-import com.review.controllers.PrimaryController;
-import com.review.models.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import com.review.controllers.PrimaryController;
+import com.review.models.Client;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
