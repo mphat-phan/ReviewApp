@@ -54,7 +54,7 @@ public class Client {
             return listdata;
     }
     public List<Rate> ReceiveListReviews() throws IOException,ClassNotFoundException{
-        dpreceive = new DatagramPacket(new byte[4096],4096);
+        dpreceive = new DatagramPacket(new byte[9216],9216);
         socket.receive(dpreceive);
         ListDataReviews = aes.decryptListReviews(new String(dpreceive.getData(),0,dpreceive.getLength()));
         return ListDataReviews;

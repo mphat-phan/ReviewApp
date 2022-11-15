@@ -51,7 +51,7 @@ public class ItemDetailController implements Initializable{
 
     }
     @FXML
-    void returnItemList(MouseEvent event) {
+    void returnItemList(MouseEvent event) throws IOException, ClassNotFoundException {
         primaryController.swapItemList();
     }
     public void openItemDetail(PrimaryController primaryController1){
