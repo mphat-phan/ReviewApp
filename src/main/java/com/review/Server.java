@@ -3,6 +3,7 @@ package com.review;
 import com.review.Encryptions.AES;
 import com.review.Encryptions.RSA;
 import com.review.models.Product;
+import com.review.models.Rate;
 import com.review.models.Tiki;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -38,6 +39,14 @@ public class Server {
             throw new RuntimeException(e);
         }
     }
+    public void SendListReviews(List<Rate> Rate, String ip){
+        AES aes=listip.get(ip);
+        try {
+            Send(aes.encryptListReviews(Rate));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public String[] Receive(String tmp)throws IOException{
         String[] token = tmp.split("#");
         return token;
@@ -47,10 +56,17 @@ public class Server {
         if(token[0].equals("search")){
             SearchProduct(token[1]);
         }
+        else if(token[0].equals("click")){
+            ReviewProduct( Integer.parseInt (token[1]));
+        }
     }
     public void SearchProduct(String query)throws IOException{
         Tiki tiki = new Tiki();
         SendList(tiki.getProductsByQuery(query),dpreceive.getAddress().getHostAddress());
+    }
+    public void ReviewProduct(Integer ID)throws IOException{
+        Tiki tiki = new Tiki();
+        SendListReviews(tiki.getRatesByQuery(ID),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
             rsa.createkey();

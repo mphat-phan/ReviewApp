@@ -48,6 +48,7 @@ public class Tiki {
             jsonArray = new JSONObject(doc.text()).getJSONArray("data");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
+                rate.setDate(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("created_time"));
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
                 rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
                 rate.setUserImageUrl(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("avatar_url"));
@@ -64,8 +65,10 @@ public class Tiki {
 
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
-        List<Rate> productList = new ArrayList<>();
-        productList = tiki.getRatesByQuery(184061913);
+        List<Product> productList = new ArrayList<>();
+        productList = tiki.getProductsByQuery("iphone");
+        //List<Rate> productListReviews = new ArrayList<>();
+      // productListReviews = tiki.getRatesByQuery(184061913);
         System.out.println("Hello");
     }
 }

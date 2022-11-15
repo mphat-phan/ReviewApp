@@ -66,7 +66,13 @@ public class PrimaryController implements Initializable {
         itemListController.openItemList(this);
     }
     public void swapRatingAggregator(){
-        ratingAggregatorController.openRatingAggregator(this);
+        try {
+            ratingAggregatorController.openRatingAggregator(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void swapItemDetail(){
         try{

@@ -43,6 +43,7 @@ public class App extends Application {
         client=new Client(1234,"localhost");
         client.ConnectClient();
         client.SearchProduct("ipad");
+      //  client.GetReviewProduct(184061913);
         PrimaryController.SetClient(client);
         launch();
     }

@@ -21,6 +21,7 @@ public class Client {
     private InetAddress add;
     private Scanner stdIn;
     private List<Product> listdata;
+    private List<Rate> ListDataReviews;
     private static RSA rsa=new RSA();
     private static AES aes=new AES();
     public Client(int destPort, String hostname) throws IOException {
@@ -37,11 +38,26 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void GetReviewProduct(Integer ID) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        IDProduct = ID.toString();
+        IDProduct = "click#"+IDProduct;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
     public List<Product> ReceiveList() throws IOException,ClassNotFoundException{
             dpreceive = new DatagramPacket(new byte[4096],4096);
             socket.receive(dpreceive);
             listdata=aes.decryptList(new String(dpreceive.getData(),0,dpreceive.getLength()));
             return listdata;
+    }
+    public List<Rate> ReceiveListReviews() throws IOException,ClassNotFoundException{
+        dpreceive = new DatagramPacket(new byte[4096],4096);
+        socket.receive(dpreceive);
+        ListDataReviews = aes.decryptListReviews(new String(dpreceive.getData(),0,dpreceive.getLength()));
+        return ListDataReviews;
     }
     public void ConnectClient() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
             traodoikey(socket, dpsend, add);

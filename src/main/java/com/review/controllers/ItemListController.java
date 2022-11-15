@@ -107,7 +107,6 @@ public class ItemListController implements Initializable {
     }
     public List<Product> getData()throws IOException,ClassNotFoundException {
         List<Product> products = new ArrayList<>();
-        //client.SearchProduct("ipad");
         List<Product> data = client.ReceiveList();
         Product product;
             for(int i=0;i<=9;i++)

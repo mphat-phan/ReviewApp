@@ -1,6 +1,7 @@
 package com.review.controllers;
 
 import com.review.MyListener;
+import com.review.models.Client;
 import com.review.models.Product;
 import com.review.models.Rate;
 import javafx.event.Event;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RatingAggregatorController implements Initializable {
+    private Client client = PrimaryController.getClient();
     @FXML
     private AnchorPane amazon_button;
     @FXML
@@ -101,10 +103,10 @@ public class RatingAggregatorController implements Initializable {
         setStepPagination(this.stepPagination+1);
         setPagination();
     }
-    public List<Rate> getData() {
+    public List<Rate> getData()throws IOException,ClassNotFoundException {
         List<Rate> rates = new ArrayList<>();
         Rate rate;
-
+        List<Rate> data  = client.ReceiveListReviews();
         for (int i = 0; i < 10; i++){
             rate = new Rate();
             rate.setComment("Xin chao nhe");
@@ -146,7 +148,7 @@ public class RatingAggregatorController implements Initializable {
             pagination_list.getChildren().add(button);
         }
     }
-    public void openRatingAggregator(PrimaryController primaryController1){
+    public void openRatingAggregator(PrimaryController primaryController1)throws IOException,ClassNotFoundException{
         if(pane != null){
             primaryController.setContainer(pane);
         }
