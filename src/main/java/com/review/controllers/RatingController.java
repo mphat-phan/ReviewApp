@@ -30,14 +30,14 @@ public class RatingController {
     private Rate rate;
 
     public void setData(Rate rate){
-        Image user_image = new Image(getClass().getResourceAsStream(rate.getUserImageUrl()));
-        Image image = new Image(getClass().getResourceAsStream(rate.getImageUrl()));
+        Image user_image = new Image(rate.getUserImageUrl());
+       // Image image = new Image(rate.getImageUrl());
 
         this.rate = rate;
 
         user_name_label.setText(rate.getUsername());
         user_image_label.setImage(user_image);
-        image_label.setImage(image);
+        //image_label.setImage(image);
         comment_label.setText(rate.getComment());
         date_label.setText(rate.getDate());
 

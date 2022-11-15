@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RatingAggregatorController implements Initializable {
-    private Client client = PrimaryController.getClient();
+
     @FXML
     private AnchorPane amazon_button;
     @FXML
@@ -103,21 +103,6 @@ public class RatingAggregatorController implements Initializable {
         setStepPagination(this.stepPagination+1);
         setPagination();
     }
-    public List<Rate> getData()throws IOException,ClassNotFoundException {
-        List<Rate> rates = new ArrayList<>();
-        Rate rate;
-        List<Rate> data  = client.ReceiveListReviews();
-        for (int i = 0; i < 10; i++){
-            rate = new Rate();
-            rate.setComment("Xin chao nhe");
-            rate.setImageUrl("/images/product.png");
-            rate.setDate("7/11/2022");
-            rate.setUsername("Phan Minh Phat");
-            rate.setUserImageUrl("/images/user.png");
-            rates.add(rate);
-        }
-        return rates;
-    }
     public void setStepPagination(int stepPagination) {
         this.stepPagination = stepPagination;
     }
@@ -154,7 +139,6 @@ public class RatingAggregatorController implements Initializable {
         }
         else{
             this.primaryController = primaryController1;
-            rateList.addAll(getData());
             int col = 0;
             int row = 1;
             try {

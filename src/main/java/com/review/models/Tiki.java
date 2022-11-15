@@ -1,16 +1,14 @@
 package com.review.models;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
+
+import org.jsoup.*;
+import org.json.*;
 import org.jsoup.nodes.Document;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Tiki {
     private String url ;
@@ -61,14 +59,12 @@ public class Tiki {
         return ReviewList;
     }
 
-
-
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
-        List<Product> productList = new ArrayList<>();
+          List<Product> productList = new ArrayList<>();
         productList = tiki.getProductsByQuery("iphone");
-        //List<Rate> productListReviews = new ArrayList<>();
-      // productListReviews = tiki.getRatesByQuery(184061913);
+        List<Rate> productListReviews = new ArrayList<>();
+        productListReviews = tiki.getRatesByQuery(184061913);
         System.out.println("Hello");
     }
 }

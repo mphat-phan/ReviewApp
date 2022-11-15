@@ -38,12 +38,7 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args)throws IOException, NoSuchAlgorithmException, InvalidKeySpecException,ClassNotFoundException {
-        client=new Client(1234,"localhost");
-        client.ConnectClient();
-        client.SearchProduct("ipad");
-      //  client.GetReviewProduct(184061913);
-        PrimaryController.SetClient(client);
+    public static void main(String[] args){
         launch();
     }
 

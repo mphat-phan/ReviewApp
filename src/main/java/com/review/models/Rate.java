@@ -1,9 +1,11 @@
 package com.review.models;
 
+import java.util.List;
+
 public class Rate {
     private String username;
     private String date;
-    private String imageUrl;
+    private List<String> imageUrl;
     private String userImageUrl;
     private String comment;
 
@@ -25,11 +27,11 @@ public class Rate {
         this.date = date;
     }
 
-    public String getImageUrl() {
+    public List<String> getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(List<String> imageUrl) {
         this.imageUrl = imageUrl;
     }
 

@@ -57,7 +57,7 @@ public class Server {
             SearchProduct(token[1]);
         }
         else if(token[0].equals("click")){
-            ReviewProduct( Integer.parseInt (token[1]));
+            ReviewProduct(Integer.parseInt(token[1]));
         }
     }
     public void SearchProduct(String query)throws IOException{

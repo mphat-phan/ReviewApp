@@ -3,6 +3,7 @@ package com.review.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ResourceBundle;
 
 import com.review.models.Client;
@@ -63,10 +64,18 @@ public class PrimaryController implements Initializable {
     }
 
     public void swapItemList(){
-        itemListController.openItemList(this);
+        try {
+            itemListController.productList = client.ReceiveList();
+            itemListController.openItemList(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void swapRatingAggregator(){
         try {
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
             ratingAggregatorController.openRatingAggregator(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -86,31 +95,37 @@ public class PrimaryController implements Initializable {
         }
     }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
             try {
+                client=new Client(1234,"localhost");
+                client.ConnectClient();
+                client.SearchProduct("ipad");
+                client.GetReviewProduct(184061913);
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
                 fxmlLoader.load();
                 itemListController = fxmlLoader.getController();
-                itemListController.productList.addAll(itemListController.getData());
                 fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
                 fxmlLoader.load();
                 ratingAggregatorController = fxmlLoader.getController();
 
-                ratingAggregatorController.rateList.addAll(ratingAggregatorController.getData());
                 swapRatingAggregator();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidKeySpecException e) {
+                throw new RuntimeException(e);
             }
     }
-    public static void SetClient(Client cl){
-        client=cl;
+    public void SetClient(Client cl){
+        this.client=client;
     }
-    public static Client getClient(){
+    public Client getClient(){
         return client;
     }
 }

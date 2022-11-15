@@ -74,7 +74,7 @@ public class Client {
 //                socket.close();
 //                break;
 //            }
-            //Get response from server
+//            //Get response from server
 //            dpreceive = new DatagramPacket(new byte[4096], 4096);
 //            socket.receive(dpreceive);
 //            try {
@@ -101,7 +101,6 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public static void main(String args[])throws IOException,NoSuchAlgorithmException,InvalidKeySpecException{
-
+    public static void main(String args[]){
     }
 }

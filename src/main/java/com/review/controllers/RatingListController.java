@@ -77,25 +77,9 @@ public class RatingListController implements Initializable {
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };
-    private List<Rate> getData() {
-        List<Rate> rates = new ArrayList<>();
-        Rate rate;
-
-        for (int i = 0; i < 10; i++){
-            rate = new Rate();
-            rate.setComment("Xin chao nhe");
-            rate.setImageUrl("/images/product.png");
-            rate.setDate("7/11/2022");
-            rate.setUsername("Phan Minh Phat");
-            rate.setUserImageUrl("/images/user.png");
-            rates.add(rate);
-        }
-        return rates;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        rateList.addAll(getData());
 
         int row = 1;
         try {

@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ItemListController implements Initializable {
-    private Client client = PrimaryController.getClient() ;
     @FXML
     private AnchorPane amazon_button;
     @FXML
@@ -104,21 +103,6 @@ public class ItemListController implements Initializable {
     void pagination_right_press(MouseEvent event) {
         setStepPagination(this.stepPagination+1);
         setPagination();
-    }
-    public List<Product> getData()throws IOException,ClassNotFoundException {
-        List<Product> products = new ArrayList<>();
-        List<Product> data = client.ReceiveList();
-        Product product;
-            for(int i=0;i<=9;i++)
-            {
-                product = new Product();
-                product.setProductName(data.get(i).getProductName());
-                product.setPrice(data.get(i).getPrice());
-                product.setPrice_sale(data.get(i).getPrice_sale());
-                product.setImageUrl(data.get(i).getImageUrl());
-                products.add(product);
-            }
-        return products;
     }
     public void setStepPagination(int stepPagination) {
         this.stepPagination = stepPagination;
