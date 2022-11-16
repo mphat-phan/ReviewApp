@@ -60,6 +60,14 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void disconnect() throws IOException,ClassNotFoundException{
+        String data = "bye";
+        data=aes.encrypt(data);
+        byte[] data2 = data.getBytes();
+        dpsend = new DatagramPacket(data2, data2.length, add, destPort);
+        socket.send(dpsend);
+        socket.close();
+    }
     public List<Product> ReceiveList() throws IOException,ClassNotFoundException{
             dpreceive = new DatagramPacket(new byte[4096],4096);
             socket.receive(dpreceive);
@@ -73,7 +81,7 @@ public class Client {
         return ListDataReviews;
     }
     public void ConnectClient() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
-            traodoikey(socket, dpsend, add);
+        traodoikey(socket, dpsend, add);
 //        while (true) {
 //            System.out.print("Client input: \n");
 //            String tmp = stdIn.nextLine();

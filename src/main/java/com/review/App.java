@@ -1,12 +1,16 @@
 package com.review;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.review.controllers.PrimaryController;
 import com.review.models.Client;
+import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -17,14 +21,27 @@ import java.security.spec.InvalidKeySpecException;
 public class App extends Application {
 
     public static Scene scene;
-    private static Client client;
     @Override
     public void start(Stage stage) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("primary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/primary.fxml"));
+        Parent root = fxmlLoader.load();
+        PrimaryController primaryController = fxmlLoader.getController();
         root.getStylesheets().add("stylesheets.css");
         stage.setTitle("Product Review App");
         stage.setScene(new Scene(root));
+
+        //Bắt sự kiện close
+        stage.setOnHidden(e -> {
+            try {
+                primaryController.disconnect();
+                Platform.exit();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         stage.show();
 
     }

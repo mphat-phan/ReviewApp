@@ -72,6 +72,7 @@ public class Server {
         else if(token[0].equals("click")){
             ReviewProduct(Integer.parseInt(token[1]));
         }
+
     }
     public void SearchProduct(String query)throws IOException{
         Tiki tiki = new Tiki();

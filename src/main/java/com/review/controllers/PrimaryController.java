@@ -9,14 +9,17 @@ import java.util.ResourceBundle;
 import com.review.models.Client;
 import com.review.models.Product;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class PrimaryController implements Initializable {
     private Client client ;
@@ -111,6 +114,9 @@ public class PrimaryController implements Initializable {
 
         }
     }
+    public void disconnect() throws IOException, ClassNotFoundException {
+        client.disconnect();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
             try {
@@ -134,6 +140,7 @@ public class PrimaryController implements Initializable {
 
                 swapRatingAggregator();
                 swapItemList();
+
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -151,4 +158,5 @@ public class PrimaryController implements Initializable {
     public Client getClient(){
         return client;
     }
+
 }
