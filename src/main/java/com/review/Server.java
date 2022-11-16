@@ -5,10 +5,11 @@ import com.review.Encryptions.RSA;
 import com.review.models.Product;
 import com.review.models.Rate;
 import com.review.models.Tiki;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.net.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
@@ -30,6 +31,18 @@ public class Server {
         System.out.println("Sever send :");
         System.out.println(value);
         socket.send(dpsend);
+    }
+    public static void ShareIp() throws IOException, NullPointerException, UnknownHostException {
+        Socket s=new Socket("210.211.117.37", 80);
+        String localip=s.getLocalAddress().toString().substring(1);
+        String aip="https://api-generator.retool.com/ed49kC/ipserver/1";
+        String jsondata="{\"Ip\": \""+localip+"\",\"id\": 1}";
+        System.out.println(localip);
+        Jsoup.connect(aip)
+                .ignoreContentType(true).ignoreHttpErrors(true)
+                .header("Content-Type","application/json")
+                .requestBody(jsondata)
+                .method(Connection.Method.PUT).execute();
     }
     public void SendList(List<Product> list,String ip){
         AES aes=listip.get(ip);
@@ -69,6 +82,7 @@ public class Server {
         SendListReviews(tiki.getRatesByQuery(ID),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
+        ShareIp();
             rsa.createkey();
             while(true){
                 socket.receive(dpreceive);

@@ -2,6 +2,10 @@ package com.review.models;
 
 import com.review.Encryptions.AES;
 import com.review.Encryptions.RSA;
+import org.json.JSONObject;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.net.*;
@@ -24,12 +28,21 @@ public class Client {
     private List<Rate> ListDataReviews;
     private static RSA rsa=new RSA();
     private static AES aes=new AES();
-    public Client(int destPort, String hostname) throws IOException {
-        this.destPort = destPort;
-        this.hostname = hostname;
+    public Client() throws IOException {
+        this.destPort = 1234;
+        this.hostname = GetIpServer();
         this.add = InetAddress.getByName(hostname);
         this.socket = new DatagramSocket();
         this.stdIn = new Scanner(System.in);
+    }
+    public String GetIpServer() throws IOException{
+        String api="https://api-generator.retool.com/ed49kC/ipserver/1";
+        Document doc= Jsoup.connect(api)
+                .ignoreContentType(true).ignoreHttpErrors(true)
+                .header("Content-Type","application/json")
+                .method(Connection.Method.GET).execute().parse();
+        JSONObject jso=new JSONObject(doc.text());
+        return jso.getString("Ip");
     }
     public void SearchProduct(String query) throws IOException,ClassNotFoundException{
         query = "search#"+query;

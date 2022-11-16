@@ -114,7 +114,7 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
             try {
-                client=new Client(1234,"localhost");
+                client=new Client();
                 client.ConnectClient();
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
