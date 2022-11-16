@@ -19,7 +19,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 public class PrimaryController implements Initializable {
-    private Client client ;
+    private static Client client ;
     private Product Tiki;
     private Product Shopee;
     private Product Sendo;
@@ -40,23 +40,12 @@ public class PrimaryController implements Initializable {
     @FXML
     void search_enter(ActionEvent event)throws IOException,ClassNotFoundException {
         client.SearchProduct(search_product.getText());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
-        fxmlLoader.load();
-        itemListController = fxmlLoader.getController();
-        itemListController.productList = client.ReceiveList();
-        swapItemList();
     }
 
     @FXML
-    void rating_aggregator_press(MouseEvent event) throws IOException, ClassNotFoundException {
+    void rating_aggregator_press(MouseEvent event) {
         this.rating_aggregator_button.getStyleClass().remove("action");
         this.search_product_button.getStyleClass().remove("action");
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
-        fxmlLoader.load();
-        client.GetReviewProduct(184061913);
-        ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
@@ -76,13 +65,18 @@ public class PrimaryController implements Initializable {
     }
 
     public void swapItemList(){
-
-        itemListController.openItemList(this);
-
+        try {
+            itemListController.productList = client.ReceiveList();
+            itemListController.openItemList(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void swapRatingAggregator(){
         try {
-
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
             ratingAggregatorController.openRatingAggregator(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -109,24 +103,18 @@ public class PrimaryController implements Initializable {
             try {
                 client=new Client(1234,"localhost");
                 client.ConnectClient();
+                client.SearchProduct("ipad");
+                client.GetReviewProduct(184061913);
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
                 fxmlLoader.load();
                 itemListController = fxmlLoader.getController();
-
                 fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
                 fxmlLoader.load();
                 ratingAggregatorController = fxmlLoader.getController();
 
-                client.SearchProduct("ipad");
-                itemListController.productList = client.ReceiveList();
-
-                client.GetReviewProduct(184061913);
-                ratingAggregatorController.rateList = client.ReceiveListReviews();
-
                 swapRatingAggregator();
-                swapItemList();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

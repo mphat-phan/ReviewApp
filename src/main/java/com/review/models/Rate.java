@@ -1,9 +1,8 @@
 package com.review.models;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Rate implements Serializable {
+public class Rate {
     private String username;
     private String date;
     private List<String> imageUrl;

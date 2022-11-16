@@ -115,6 +115,8 @@ public class RatingAggregatorController implements Initializable {
                 node = pagination_list.getChildren().get(i);
                 node.getStyleClass().remove("button-pagination-action");
             }
+
+
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };

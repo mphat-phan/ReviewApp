@@ -95,22 +95,6 @@ public class AES {
         }
         return null;
     }
-
-    public List<Product> decryptList(String strToDecrypt) throws IOException, ClassNotFoundException{
-        try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, key,iv);
-            ByteArrayInputStream bis = new ByteArrayInputStream(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-            ObjectInputStream ois = new ObjectInputStream(bis);
-            List<Product> list = (List<Product>)ois.readObject();
-            return list;
-        }
-        catch (Exception e) {
-            System.out.println("Error while decrypting: "
-                    + e.toString());
-        }
-        return null;
-    }
     public  String encryptListReviews(List<Rate> Rate)
     {
         try {
@@ -142,7 +126,21 @@ public class AES {
         }
         return null;
     }
-
+    public List<Product> decryptList(String strToDecrypt) throws IOException, ClassNotFoundException{
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, key,iv);
+            ByteArrayInputStream bis = new ByteArrayInputStream(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            List<Product> list = (List<Product>)ois.readObject();
+            return list;
+        }
+        catch (Exception e) {
+            System.out.println("Error while decrypting: "
+                    + e.toString());
+        }
+        return null;
+    }
     public String getPassword() {
         return password;
     }
