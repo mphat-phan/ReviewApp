@@ -106,7 +106,7 @@ public class Server {
     }
     public static void main(String[] args) throws IOException,NoSuchAlgorithmException,InvalidKeySpecException
     {
-            Server sv = new Server(1234, 512);
+        Server sv = new Server(1234, 512);
         while(true) {
             sv.ConnectSever();
         }
