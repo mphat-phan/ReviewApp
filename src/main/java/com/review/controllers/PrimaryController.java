@@ -37,6 +37,15 @@ public class PrimaryController implements Initializable {
     private Label search_product_button;
     @FXML
     private TextField search_product;
+
+    public ItemDetailController getItemDetailController() {
+        return itemDetailController;
+    }
+
+    public void setItemDetailController(ItemDetailController itemDetailController) {
+        this.itemDetailController = itemDetailController;
+    }
+
     @FXML
     void search_enter(ActionEvent event)throws IOException,ClassNotFoundException {
         client.SearchProduct(search_product.getText());
@@ -97,9 +106,7 @@ public class PrimaryController implements Initializable {
             fxmlLoader.load();
             itemDetailController = fxmlLoader.getController();
             itemDetailController.openItemDetail(this);
-            itemDetailController.ProductName.setText(product.getProductName());
-            itemDetailController.price.setText(product.getPrice_sale().toString());
-            itemDetailController.originalPrice.setText(product.getPrice().toString());
+            itemDetailController.product_name_label.setText(product.getProductName());
         }catch (IOException e){
 
         }

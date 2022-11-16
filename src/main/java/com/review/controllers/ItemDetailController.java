@@ -16,13 +16,13 @@ import java.util.ResourceBundle;
 
 public class ItemDetailController implements Initializable{
     @FXML
-    public Text ProductName;
+    public Text product_name_label;
 
     @FXML
-    public Label originalPrice;
+    public Label product_price_label;
 
     @FXML
-    public Label price;
+    public Label product_sale_price_label;
     @FXML
     private AnchorPane info_button;
 
@@ -72,7 +72,7 @@ public class ItemDetailController implements Initializable{
             Pane newPane = fxmlLoader.load();
             ItemDetailController itemDetailController = fxmlLoader.getController();
             primaryController.setContainer(newPane);
-
+            primaryController.setItemDetailController(itemDetailController);
             newPane = FXMLLoader.load(getClass().getResource("/com/review/info_detail.fxml"));
             itemDetailController.rating_list.getChildren().addAll(newPane);
         } catch (IOException e) {

@@ -28,7 +28,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ba Lô UNISEX Thời Trang HARAS HR133 Ba Lô UNISEX Thời Trang HARAS HR133" textAlignment="JUSTIFY" wrappingWidth="730.7141723632812">
+                  <Text fx:id="product_name_label" strokeType="OUTSIDE" strokeWidth="0.0" text="Ba Lô UNISEX Thời Trang HARAS HR133 Ba Lô UNISEX Thời Trang HARAS HR133" textAlignment="JUSTIFY" wrappingWidth="730.7141723632812">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -37,12 +37,12 @@
             </HBox>
             <VBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="730.0">
                <children>
-                  <Label text="đ 20.000">
+                  <Label fx:id="product_price_label" text="đ 20.000">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label text="đ 30.000" textFill="#c1bfbf">
+                  <Label fx:id="product_sale_price_label" text="đ 30.000" textFill="#c1bfbf">
                      <font>
                         <Font size="18.0" />
                      </font>
