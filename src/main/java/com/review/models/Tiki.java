@@ -26,8 +26,9 @@ public class Tiki {
                 product.setproductID(jsonArray.getJSONObject(i).getInt("id"));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("thumbnail_url"));
-                product.setPrice(jsonArray.getJSONObject(i).getInt("original_price"));
-                product.setPrice_sale(jsonArray.getJSONObject(i).getInt("price"));
+                product.setPrice(String.valueOf(jsonArray.getJSONObject(i).getInt("original_price")));
+                product.setPrice_sale(String.valueOf(jsonArray.getJSONObject(i).getInt("price")));
+                product.setRatingAverage(jsonArray.getJSONObject(i).getInt("rating_average"));
                 productList.add(product);
             }
         } catch (JSONException e) {
@@ -63,8 +64,8 @@ public class Tiki {
         Tiki tiki = new Tiki();
           List<Product> productList = new ArrayList<>();
         productList = tiki.getProductsByQuery("iphone");
-        List<Rate> productListReviews = new ArrayList<>();
-        productListReviews = tiki.getRatesByQuery(184061913);
+//        List<Rate> productListReviews = new ArrayList<>();
+//        productListReviews = tiki.getRatesByQuery(184061913);
         System.out.println("Hello");
     }
 }
