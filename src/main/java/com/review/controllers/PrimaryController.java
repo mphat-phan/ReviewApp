@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.review.models.Client;
 import com.review.models.Product;
+import com.review.models.ProductDetail;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -32,6 +35,7 @@ public class PrimaryController implements Initializable {
     private BorderPane container;
     private ItemListController itemListController;
     private ItemDetailController itemDetailController;
+    private InfoDetailController infoDetailController;
     private RatingAggregatorController ratingAggregatorController;
     @FXML
     private Label rating_aggregator_button;
@@ -41,6 +45,13 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField search_product;
 
+    public void setInfoDetailController(InfoDetailController infoDetailController) {
+        this.infoDetailController = infoDetailController;
+    }
+
+    public InfoDetailController getInfoDetailController() {
+        return infoDetailController;
+    }
     public ItemDetailController getItemDetailController() {
         return itemDetailController;
     }
@@ -67,8 +78,8 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        client.GetReviewProduct(184061913);
-        ratingAggregatorController.rateList = client.ReceiveListReviews();
+        //client.GetReviewProduct(184061913);
+        //ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
@@ -102,14 +113,32 @@ public class PrimaryController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    public void swapItemDetail(Product product){
+    public void swapItemDetail(Product product, ProductDetail productDetail){
         try{
+
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_detail.fxml"));
             fxmlLoader.load();
             itemDetailController = fxmlLoader.getController();
             itemDetailController.openItemDetail(this);
             itemDetailController.product_name_label.setText(product.getProductName());
+            itemDetailController.product_price_label.setText("VNĐ"+product.getPrice());
+            itemDetailController.product_sale_price_label.setText("VNĐ"+product.getPrice_sale());
+            String[] images ;
+            images = productDetail.getImagesUrl();
+                if(images.length>=3) {
+                    Image image = new Image(product.getImageUrl());
+                    Image image2 = new Image(images[1]);
+                    Image image3 = new Image(images[2]);
+                    itemDetailController.product_image_1.setImage(image);
+                    itemDetailController.product_image_2.setImage(image2);
+                    itemDetailController.product_image_3.setImage(image3);
+                }
+                else {
+                    Image image = new Image(product.getImageUrl());
+                    itemDetailController.product_image_1.setImage(image);
+                }
         }catch (IOException e){
 
         }
@@ -135,8 +164,8 @@ public class PrimaryController implements Initializable {
                 client.SearchProduct("ipad");
                 itemListController.productList = client.ReceiveList();
 
-                client.GetReviewProduct(184061913);
-                ratingAggregatorController.rateList = client.ReceiveListReviews();
+//                client.GetReviewProduct(184061913);
+//                ratingAggregatorController.rateList = client.ReceiveListReviews();
 
                 swapRatingAggregator();
                 swapItemList();

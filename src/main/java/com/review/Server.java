@@ -2,9 +2,7 @@ package com.review;
 
 import com.review.Encryptions.AES;
 import com.review.Encryptions.RSA;
-import com.review.models.Product;
-import com.review.models.Rate;
-import com.review.models.Tiki;
+import com.review.models.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
@@ -52,6 +50,14 @@ public class Server {
             throw new RuntimeException(e);
         }
     }
+    public void SendDetailProduct(ProductDetail productDetail, String ip){
+        AES aes=listip.get(ip);
+        try {
+            Send(aes.encryptProductDetail(productDetail));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void SendListReviews(List<Rate> Rate, String ip){
         AES aes=listip.get(ip);
         try {
@@ -72,15 +78,29 @@ public class Server {
         else if(token[0].equals("click")){
             ReviewProduct(Integer.parseInt(token[1]));
         }
+        else if (token[0].equals("clickDetail")) {
+            DetailProduct(Integer.parseInt(token[1]));
+        }
+        else if(token[0].equals(("searchSendo"))){
+            SearchProductSendo(token[1]);
+        }
 
     }
     public void SearchProduct(String query)throws IOException{
         Tiki tiki = new Tiki();
         SendList(tiki.getProductsByQuery(query),dpreceive.getAddress().getHostAddress());
     }
+    public void SearchProductSendo(String query)throws IOException{
+        Sendo sendo = new Sendo();
+        SendList(sendo.getProductsByQuerySendo(query),dpreceive.getAddress().getHostAddress());
+    }
     public void ReviewProduct(Integer ID)throws IOException{
         Tiki tiki = new Tiki();
         SendListReviews(tiki.getRatesByQuery(ID),dpreceive.getAddress().getHostAddress());
+    }
+    public void DetailProduct(Integer ID)throws IOException{
+        Tiki tiki = new Tiki();
+        SendDetailProduct(tiki.getDetailProduct(ID),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
         ShareIp();

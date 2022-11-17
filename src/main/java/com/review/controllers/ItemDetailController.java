@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -20,6 +21,14 @@ public class ItemDetailController implements Initializable{
     @FXML
     public Label product_price_label;
 
+    @FXML
+    public ImageView product_image_1;
+
+    @FXML
+    public ImageView product_image_2;
+
+    @FXML
+    public ImageView product_image_3;
     @FXML
     public Label product_sale_price_label;
     @FXML

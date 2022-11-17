@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Lazada {
     private String url ;
-    public List<Product> getProductsByQuery(String q) throws IOException,RuntimeException {
+    public List<Product> getProductsByQueryLazada(String q) throws IOException,RuntimeException {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
         List<Product> productList = new ArrayList<>();
         Product product;
@@ -26,8 +26,8 @@ public class Lazada {
                 product.setproductID(jsonArray.getJSONObject(i).getInt("itemId"));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
-                product.setPrice(jsonArray.getJSONObject(i).getString("originalPrice"));
-                product.setPrice_sale(jsonArray.getJSONObject(i).getString("price"));
+                product.setPrice(jsonArray.getJSONObject(i).getInt("Price"));
+                product.setPrice_sale(jsonArray.getJSONObject(i).getInt("originalPrice"));
                 productList.add(product);
             }
         } catch (JSONException e) {
@@ -35,7 +35,7 @@ public class Lazada {
         }
         return productList;
     }
-    public List<Rate> getRatesByQuery(Integer id) throws IOException,RuntimeException {
+    public List<Rate> getRatesByQueryLazada(Integer id) throws IOException,RuntimeException {
         url = "https://tiki.vn/api/v2/reviews?product_id=";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
@@ -62,7 +62,7 @@ public class Lazada {
     public static void main(String[] args) throws IOException {
         Lazada lazada = new Lazada();
         List<Product> productList = new ArrayList<>();
-        productList = lazada.getProductsByQuery("iphone");
+        productList = lazada.getProductsByQueryLazada("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
 //        productListReviews = tiki.getRatesByQuery(184061913);
         System.out.println("Hello");

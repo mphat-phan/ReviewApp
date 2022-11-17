@@ -49,42 +49,23 @@
                   </Label>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <ImageView fitHeight="250.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="250.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="250.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <ImageView fitHeight="230.0" fitWidth="324.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="250.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="250.0" fitWidth="229.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/product.png" />
-                     </image>
-                  </ImageView>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="product_image_1" fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <ImageView fx:id="product_image_2" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ImageView>
+                        <ImageView fx:id="product_image_3" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>

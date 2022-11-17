@@ -1,15 +1,17 @@
 package com.review.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Product implements Serializable {
-    private  int productID;
+    private List<Rate> rates;
+    private Integer productID;
     private String productName;
-    private String price;
-    private String price_sale;
+    private int price;
+    private Integer price_sale;
     private String imageUrl;
 
-    private Integer ratingAverage;
+
     public Integer getproductID() {
         return productID;
     }
@@ -25,19 +27,19 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getPrice_sale() {
+    public int getPrice_sale() {
         return price_sale;
     }
 
-    public void setPrice_sale(String price_sale) {
+    public void setPrice_sale(int price_sale) {
         this.price_sale = price_sale;
     }
 
@@ -48,13 +50,4 @@ public class Product implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-    public Integer getRatingAverage() {
-        return ratingAverage;
-    }
-
-    public void setRatingAverage(Integer ratingAverage) {
-        this.ratingAverage = ratingAverage;
-    }
-
 }

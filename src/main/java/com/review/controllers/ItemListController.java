@@ -3,6 +3,7 @@ package com.review.controllers;
 import com.review.MyListener;
 import com.review.models.Client;
 import com.review.models.Product;
+import com.review.models.ProductDetail;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -42,6 +44,7 @@ public class ItemListController implements Initializable {
     @FXML
     private HBox pagination_list;
     public List<Product> productList = new ArrayList<>();
+    public ProductDetail productDetail ;
     private MyListener myListener;
     private Pane pane;
     private int stepPagination = 0;
@@ -145,8 +148,16 @@ public class ItemListController implements Initializable {
             if(productList.size()>0){
                 myListener = new MyListener() {
                     @Override
-                    public void onClickListener(Product product) {
-                        primaryController.swapItemDetail(product);
+                    public void onClickListener(Product product,ProductDetail productDetail) {
+                        try {
+                            primaryController.getClient().GetDetailProduct(product.getproductID());
+                            ProductDetail productDetail1 = primaryController.getClient().ReceiveProductDetail();
+                            primaryController.swapItemDetail(product,productDetail1);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 };
             }
@@ -168,7 +179,7 @@ public class ItemListController implements Initializable {
                     AnchorPane anchorPane = fxmlLoader.load();
 
                     ItemController itemController = fxmlLoader.getController();
-                    itemController.setData(productList.get(i), myListener);
+                    itemController.setData(productList.get(i),productDetail, myListener);
 
                     if(col == 5){
                         col = 0;

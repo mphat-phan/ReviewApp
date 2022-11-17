@@ -1,6 +1,7 @@
 package com.review.Encryptions;
 
 import com.review.models.Product;
+import com.review.models.ProductDetail;
 import com.review.models.Rate;
 
 import java.io.ByteArrayInputStream;
@@ -127,6 +128,22 @@ public class AES {
         }
         return null;
     }
+    public  String encryptProductDetail(ProductDetail productDetail)
+    {
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, key,iv);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(productDetail);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(bos.toByteArray()));
+        }
+        catch (Exception e) {
+            System.out.println("Error while encrypting: "
+                    + e.toString());
+        }
+        return null;
+    }
     public List<Rate> decryptListReviews(String strToDecrypt) throws IOException, ClassNotFoundException{
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
@@ -135,6 +152,21 @@ public class AES {
             ObjectInputStream ois = new ObjectInputStream(bis);
             List<Rate> list = (List<Rate>)ois.readObject();
             return list;
+        }
+        catch (Exception e) {
+            System.out.println("Error while decrypting: "
+                    + e.toString());
+        }
+        return null;
+    }
+    public ProductDetail decryptProductDetail(String strToDecrypt) throws IOException, ClassNotFoundException{
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, key,iv);
+            ByteArrayInputStream bis = new ByteArrayInputStream(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            ProductDetail productDetail = (ProductDetail)ois.readObject();
+            return productDetail;
         }
         catch (Exception e) {
             System.out.println("Error while decrypting: "

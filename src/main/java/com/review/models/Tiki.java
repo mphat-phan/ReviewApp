@@ -26,15 +26,38 @@ public class Tiki {
                 product.setproductID(jsonArray.getJSONObject(i).getInt("id"));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("thumbnail_url"));
-                product.setPrice(String.valueOf(jsonArray.getJSONObject(i).getInt("original_price")));
-                product.setPrice_sale(String.valueOf(jsonArray.getJSONObject(i).getInt("price")));
-                product.setRatingAverage(jsonArray.getJSONObject(i).getInt("rating_average"));
+                product.setPrice(jsonArray.getJSONObject(i).getInt("original_price"));
+                product.setPrice_sale(jsonArray.getJSONObject(i).getInt("price"));
                 productList.add(product);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return productList;
+    }
+    public ProductDetail getDetailProduct(Integer ID) throws IOException,RuntimeException {
+        ProductDetail ProductDetail;
+        url = "https://api.tiki.vn/product-detail/api/v1/products/";
+        Connection.Response res = Jsoup.connect(url+ID).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Document doc =res.parse();
+        JSONObject json= new JSONObject(doc.text());
+        JSONArray jsonArray= null;
+        try {
+            ProductDetail = new ProductDetail();
+            jsonArray = new JSONObject(doc.text()).getJSONArray("images");
+            ProductDetail.setRating_average(json.getInt("rating_average"));
+            ProductDetail.setReview_count(json.getInt("review_count"));
+            ProductDetail.setDescription(json.getString("description"));
+            String[] a = new String[jsonArray.length()];
+            for(int i = 0; i < jsonArray.length(); i++) {
+                a[i] = jsonArray.getJSONObject(i).getString("base_url");
+            }
+            ProductDetail.setImagesUrl(a);
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return ProductDetail;
     }
     public List<Rate> getRatesByQuery(Integer id) throws IOException,RuntimeException {
         url = "https://tiki.vn/api/v2/reviews?product_id=";
@@ -62,8 +85,10 @@ public class Tiki {
 
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
-          List<Product> productList = new ArrayList<>();
-        productList = tiki.getProductsByQuery("iphone");
+        ProductDetail productDetail = new ProductDetail();
+        productDetail = tiki.getDetailProduct(184061913);
+//          List<Product> productList = new ArrayList<>();
+//        productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
 //        productListReviews = tiki.getRatesByQuery(184061913);
         System.out.println("Hello");

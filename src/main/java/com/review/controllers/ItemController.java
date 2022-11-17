@@ -2,6 +2,7 @@ package com.review.controllers;
 
 import com.review.MyListener;
 import com.review.models.Product;
+import com.review.models.ProductDetail;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -27,20 +28,22 @@ public class ItemController {
     private Label sale_price_label;
 
     private Product product;
+    private ProductDetail productDetail;
     private MyListener myListener;
 
     @FXML
     private void click(MouseEvent mouseEvent) {
-        myListener.onClickListener(product);
+        myListener.onClickListener(product,productDetail);
     }
-    public void setData(Product product, MyListener myListener){
+    public void setData(Product product,ProductDetail productDetail, MyListener myListener){
         this.product = product;
+        this.productDetail = productDetail;
         this.myListener = myListener;
         product_name_label.setText(product.getProductName());
         price_label.setText("đ"+ product.getPrice());
         sale_price_label.setText("đ"+ product.getPrice_sale());
         Image image = new Image(product.getImageUrl());
         image_view.setImage(image);
-        rating_label.setRating(product.getRatingAverage());
+        //rating_label.setRating(productDetail.getRating_average());
     }
 }
