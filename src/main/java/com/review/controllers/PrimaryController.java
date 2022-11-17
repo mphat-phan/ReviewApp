@@ -42,6 +42,11 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private Label search_product_button;
+
+    public TextField getSearch_product() {
+        return search_product;
+    }
+
     @FXML
     private TextField search_product;
 
@@ -99,9 +104,7 @@ public class PrimaryController implements Initializable {
     }
 
     public void swapItemList(){
-
         itemListController.openItemList(this);
-
     }
     public void swapRatingAggregator(){
         try {
@@ -139,6 +142,7 @@ public class PrimaryController implements Initializable {
                     Image image = new Image(product.getImageUrl());
                     itemDetailController.product_image_1.setImage(image);
                 }
+            //infoDetailController.Info_detail.setText(productDetail.getDescription());
         }catch (IOException e){
 
         }

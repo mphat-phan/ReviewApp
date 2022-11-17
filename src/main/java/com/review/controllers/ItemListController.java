@@ -79,6 +79,13 @@ public class ItemListController implements Initializable {
 
     @FXML
     void sendo_button_press(MouseEvent event) {
+        try {
+            primaryController.getClient().SearchProductSendo(primaryController.getSearch_product().getText());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
