@@ -69,22 +69,27 @@ public class Shopee {
         }
         return ProductDetail;
     }
-    public List<Rate> getRatesByQuery(Integer id) throws IOException,RuntimeException {
-        url = "https://tiki.vn/api/v2/reviews?product_id=";
+    public List<Rate> getRatesByQuery(String itemid,String shopid) throws IOException,RuntimeException {
+        url = "https://shopee.vn/api/v2/item/get_ratings?flag=1&itemid="+itemid+"&limit=10&offset=0&shopid="+shopid;
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
-        Connection.Response res = Jsoup.connect(url+id).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
         try {
-            jsonArray = new JSONObject(doc.text()).getJSONArray("data");
+            jsonArray = new JSONObject(doc.text()).getJSONObject("data").getJSONArray("ratings");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
-                rate.setDate(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("created_time"));
-                rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
-                rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
-                rate.setUserImageUrl(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("avatar_url"));
-                rate.setComment(jsonArray.getJSONObject(i).getString("content"));
+                rate.setRating(jsonArray.getJSONObject(i).getInt("rating_star"));
+                rate.setUsername(jsonArray.getJSONObject(i).getString("author_username"));
+                rate.setUserImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getString("author_portrait"));
+                rate.setComment(jsonArray.getJSONObject(i).getString("comment"));
+                String[] n=change(jsonArray.getJSONObject(i).get("images").toString());
+                List<String> c=new ArrayList<>();
+                for(int j=0;j<n.length;j++) {
+                    c.add("https://cf.shopee.vn/file/"+n[j]);
+                }
+                rate.setImageUrl(c);
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
@@ -100,7 +105,7 @@ public class Shopee {
 //        productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
 //        productListReviews = tiki.getRatesByQuery(184061913);
-        ProductDetail pdd=shopee.getDetailProduct("5600084939","88201679");
-        System.out.println(pdd.getDescription());
+        List<Rate>list=shopee.getRatesByQuery("5600084939","88201679");
+        System.out.println(list.get(1).getComment());
     }
 }
