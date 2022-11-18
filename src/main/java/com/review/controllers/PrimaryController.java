@@ -48,7 +48,7 @@ public class PrimaryController implements Initializable {
     }
 
     @FXML
-    private TextField search_product;
+    private TextField search_product ;
 
     public void setInfoDetailController(InfoDetailController infoDetailController) {
         this.infoDetailController = infoDetailController;
@@ -118,8 +118,6 @@ public class PrimaryController implements Initializable {
     }
     public void swapItemDetail(Product product, ProductDetail productDetail){
         try{
-
-
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_detail.fxml"));
             fxmlLoader.load();
@@ -130,16 +128,19 @@ public class PrimaryController implements Initializable {
             itemDetailController.product_sale_price_label.setText("VNĐ"+product.getPrice_sale());
             String[] images ;
             images = productDetail.getImagesUrl();
+            String deteleWebp1 = product.getImageUrl().replace(".webp","");
                 if(images.length>=3) {
-                    Image image = new Image(product.getImageUrl());
-                    Image image2 = new Image(images[1]);
-                    Image image3 = new Image(images[2]);
-                    itemDetailController.product_image_1.setImage(image);
-                    itemDetailController.product_image_2.setImage(image2);
-                    itemDetailController.product_image_3.setImage(image3);
+                    String deteleWebp2 = images[1].replace(".webp","");
+                    String deteleWebp3 = images[2].replace(".webp","");
+                        Image image = new Image(deteleWebp1);
+                        Image image2 = new Image(deteleWebp2);
+                        Image image3 = new Image(deteleWebp3);
+                        itemDetailController.product_image_1.setImage(image);
+                        itemDetailController.product_image_2.setImage(image2);
+                        itemDetailController.product_image_3.setImage(image3);
                 }
                 else {
-                    Image image = new Image(product.getImageUrl());
+                    Image image = new Image(deteleWebp1);
                     itemDetailController.product_image_1.setImage(image);
                 }
             //infoDetailController.Info_detail.setText(productDetail.getDescription());
@@ -167,6 +168,7 @@ public class PrimaryController implements Initializable {
 
                 client.SearchProduct("ipad");
                 itemListController.productList = client.ReceiveList();
+                search_product.setText("ipad");
 
 //                client.GetReviewProduct(184061913);
 //                ratingAggregatorController.rateList = client.ReceiveListReviews();

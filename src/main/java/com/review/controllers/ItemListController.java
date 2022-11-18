@@ -80,7 +80,7 @@ public class ItemListController implements Initializable {
     @FXML
     void sendo_button_press(MouseEvent event) {
         try {
-            primaryController.getClient().SearchProductSendo(primaryController.getSearch_product().getText());
+            this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -158,8 +158,8 @@ public class ItemListController implements Initializable {
                     public void onClickListener(Product product,ProductDetail productDetail) {
                         try {
                             primaryController.getClient().GetDetailProduct(product.getproductID());
-                            ProductDetail productDetail1 = primaryController.getClient().ReceiveProductDetail();
-                            primaryController.swapItemDetail(product,productDetail1);
+                            productDetail = primaryController.getClient().ReceiveProductDetail();
+                            primaryController.swapItemDetail(product,productDetail);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         } catch (ClassNotFoundException e) {

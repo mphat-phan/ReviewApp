@@ -99,7 +99,7 @@ public class Client {
         return ListDataReviews;
     }
     public ProductDetail ReceiveProductDetail() throws IOException,ClassNotFoundException{
-        dpreceive = new DatagramPacket(new byte[9216],9216);
+        dpreceive = new DatagramPacket(new byte[100*1024],100*1024);
         socket.receive(dpreceive);
         productDetail = aes.decryptProductDetail(new String(dpreceive.getData(),0,dpreceive.getLength()));
         return productDetail;

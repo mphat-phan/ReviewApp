@@ -86,7 +86,7 @@ public class Tiki {
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
         ProductDetail productDetail = new ProductDetail();
-        productDetail = tiki.getDetailProduct(184061913);
+        productDetail = tiki.getDetailProduct(13362558);
 //          List<Product> productList = new ArrayList<>();
 //        productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
