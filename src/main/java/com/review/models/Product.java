@@ -11,6 +11,15 @@ public class Product implements Serializable {
     private Integer price_sale;
     private String imageUrl;
 
+    private int idshop;
+
+    public int getIdshop() {
+        return idshop;
+    }
+
+    public void setIdshop(int idshop) {
+        this.idshop = idshop;
+    }
 
     public Integer getproductID() {
         return productID;

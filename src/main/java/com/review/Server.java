@@ -30,18 +30,6 @@ public class Server {
         System.out.println(value);
         socket.send(dpsend);
     }
-    public static void ShareIp() throws IOException, NullPointerException, UnknownHostException {
-        Socket s=new Socket("210.211.117.37", 80);
-        String localip=s.getLocalAddress().toString().substring(1);
-        String aip="https://api-generator.retool.com/ed49kC/ipserver/1";
-        String jsondata="{\"Ip\": \""+localip+"\",\"id\": 1}";
-        System.out.println(localip);
-        Jsoup.connect(aip)
-                .ignoreContentType(true).ignoreHttpErrors(true)
-                .header("Content-Type","application/json")
-                .requestBody(jsondata)
-                .method(Connection.Method.PUT).execute();
-    }
     public void SendList(List<Product> list,String ip){
         AES aes=listip.get(ip);
         try {
@@ -125,6 +113,18 @@ public class Server {
                 }
 
             }
+    }
+    public static void ShareIp() throws IOException, NullPointerException, UnknownHostException {
+        Socket s=new Socket("210.211.117.37", 80);
+        String localip=s.getLocalAddress().toString().substring(1);
+        String aip="https://api-generator.retool.com/ed49kC/ipserver/1";
+        String jsondata="{\"Ip\": \""+localip+"\",\"id\": 1}";
+        System.out.println(localip);
+        Jsoup.connect(aip)
+                .ignoreContentType(true).ignoreHttpErrors(true)
+                .header("Content-Type","application/json")
+                .requestBody(jsondata)
+                .method(Connection.Method.PUT).execute();
     }
     public static void traodoikey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         dpsend = new DatagramPacket(rsa.publickey.getEncoded(), rsa.publickey.getEncoded().length,dpreceive.getAddress(),dpreceive.getPort());
