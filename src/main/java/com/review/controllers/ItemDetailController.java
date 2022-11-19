@@ -18,6 +18,7 @@ public class ItemDetailController implements Initializable{
     @FXML
     public Text product_name_label;
     public InfoDetailController infoDetailController;
+    public RatingListController ratingListController;
     @FXML
     public Label product_price_label;
 
@@ -58,14 +59,14 @@ public class ItemDetailController implements Initializable{
     void rating_button_press(MouseEvent event) throws IOException{
         if(rating_pane != null){
             this.rating_list.getChildren().clear();
-            this.rating_list.getChildren().addAll(rating_pane);
+            this.rating_list.getChildren().addAll(primaryController.getItemDetailController().rating_pane);
             this.info_button.getStyleClass().remove("action");
             this.rating_button.getStyleClass().add("action");
         }
         else{
             this.rating_pane = FXMLLoader.load(getClass().getResource("/com/review/rating_list.fxml"));
             this.rating_list.getChildren().clear();
-            this.rating_list.getChildren().addAll(rating_pane);
+            this.rating_list.getChildren().addAll(primaryController.getItemDetailController().rating_pane);
             this.info_button.getStyleClass().remove("action");
             this.rating_button.getStyleClass().add("action");
         }

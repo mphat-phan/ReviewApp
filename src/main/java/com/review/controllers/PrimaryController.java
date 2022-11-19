@@ -153,6 +153,7 @@ public class PrimaryController implements Initializable {
                     Image image = new Image(deteleWebp1);
                     itemDetailController.product_image_1.setImage(image);
                 }
+            //info_detail
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/info_detail.fxml"));
             Pane newpane = fxmlLoader.load();
@@ -160,6 +161,14 @@ public class PrimaryController implements Initializable {
             itemDetailController.infoDetailController.Info_detail.setText(productDetail.getDescription());
             itemDetailController.rating_list.getChildren().addAll(newpane);
             itemDetailController.info_pane = newpane;
+            //rating_list_detail
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/rating_list.fxml"));
+            Pane newpane1 = fxmlLoader.load();
+            itemDetailController.ratingListController = fxmlLoader.getController();
+            itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
+            itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
+            itemDetailController.rating_pane = newpane1;
         }catch (IOException e){
 
         }

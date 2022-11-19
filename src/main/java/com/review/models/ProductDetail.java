@@ -7,7 +7,7 @@ public class ProductDetail implements Serializable {
 
     private String description;
 
-    private Integer rating_average;
+    private Float rating_average;
     private Integer review_count;
     public void setImagesUrl(String[] imagesUrl) {
         this.imagesUrl = imagesUrl;
@@ -23,11 +23,11 @@ public class ProductDetail implements Serializable {
         this.description = description;
     }
 
-    public Integer getRating_average() {
+    public Float getRating_average() {
         return rating_average;
     }
 
-    public void setRating_average(Integer rating_average) {
+    public void setRating_average(Float rating_average) {
         this.rating_average = rating_average;
     }
 

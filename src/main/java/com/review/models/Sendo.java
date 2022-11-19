@@ -45,7 +45,7 @@ public class Sendo {
         try {
             ProductDetail = new ProductDetail();
             jsonArray = new JSONObject(doc.text()).getJSONArray("images");
-            ProductDetail.setRating_average(json.getInt("rating_average"));
+            ProductDetail.setRating_average(json.getFloat("rating_average"));
             ProductDetail.setReview_count(json.getInt("review_count"));
             ProductDetail.setDescription(json.getString("description"));
             String[] a = new String[jsonArray.length()];

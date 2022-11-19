@@ -56,7 +56,7 @@ public class Shopee {
         try {
             ProductDetail = new ProductDetail();
             jsonArray = json.getJSONArray("tier_variations");
-            ProductDetail.setRating_average(json.getJSONObject("item_rating").getInt("rating_star"));
+            ProductDetail.setRating_average(json.getJSONObject("item_rating").getFloat("rating_star"));
             String[] n=change(json.getJSONObject("item_rating").get("rating_count").toString());
             ProductDetail.setReview_count(Integer.parseInt(n[0]));
             ProductDetail.setDescription(json.getString("description"));
