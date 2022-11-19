@@ -58,7 +58,7 @@ public class Lazada {
             return cookie;
         }
     public List<Rate> getRatesByQueryLazada(String id) throws IOException,RuntimeException {
-        url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=1&filter=0&sort=0&pageNo=1";
+        url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=5&filter=0&sort=0&pageNo=1";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -74,7 +74,7 @@ public class Lazada {
                 rate.setUsername(jsonArray.getJSONObject(i).getString("buyerName"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("reviewContent"));
                 JSONArray jsa=jsonArray.getJSONObject(i).getJSONArray("images");
-                for(int j=0;j<jsa.length();i++)
+                for(int j=0;j<jsa.length();j++)
                     images.add(jsa.getJSONObject(j).getString("url"));
                 rate.setImageUrl(images);
                 ReviewList.add(rate);
