@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,12 @@ import java.util.ResourceBundle;
 public class RatingListController implements Initializable {
     @FXML
     private GridPane rating_grid;
+
+    @FXML
+    public Label count_rating_product;
+
+    @FXML
+    public Label rating_detail_product;
 
     @FXML
     private ScrollPane rating_scroll;

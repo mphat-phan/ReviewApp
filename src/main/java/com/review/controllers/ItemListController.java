@@ -81,6 +81,12 @@ public class ItemListController implements Initializable {
     void sendo_button_press(MouseEvent event) {
         try {
             this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+            fxmlLoader.load();
+            this.primaryController.setItemListController(fxmlLoader.getController()) ;
+            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.swapItemList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -177,6 +183,7 @@ public class ItemListController implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
                 pane = fxmlLoader.load();
                 ItemListController itemListController = fxmlLoader.getController();
+                itemListController.primaryController = primaryController1;
                 primaryController.setContainer(pane);
 
                 /*--------------------View Product List-------------*/

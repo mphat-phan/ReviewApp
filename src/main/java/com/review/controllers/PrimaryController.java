@@ -24,6 +24,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
 public class PrimaryController implements Initializable {
     private Client client ;
     private Product Tiki;
@@ -33,6 +34,15 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private BorderPane container;
+
+    public ItemListController getItemListController() {
+        return itemListController;
+    }
+
+    public void setItemListController(ItemListController itemListController) {
+        this.itemListController = itemListController;
+    }
+
     private ItemListController itemListController;
     private ItemDetailController itemDetailController;
     private InfoDetailController infoDetailController;
@@ -143,7 +153,13 @@ public class PrimaryController implements Initializable {
                     Image image = new Image(deteleWebp1);
                     itemDetailController.product_image_1.setImage(image);
                 }
-            //infoDetailController.Info_detail.setText(productDetail.getDescription());
+            fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/info_detail.fxml"));
+            Pane newpane = fxmlLoader.load();
+            itemDetailController.infoDetailController = fxmlLoader.getController();
+            itemDetailController.infoDetailController.Info_detail.setText(productDetail.getDescription());
+            itemDetailController.rating_list.getChildren().addAll(newpane);
+            itemDetailController.info_pane = newpane;
         }catch (IOException e){
 
         }

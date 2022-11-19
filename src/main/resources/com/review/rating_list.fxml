@@ -25,12 +25,12 @@
                   <Font size="18.0" />
                </font>
             </FontAwesomeIconView>
-            <Label text="4.8">
+            <Label fx:id="rating_detail_product" text="4.8">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label text="10 đánh giá">
+            <Label fx:id="count_rating_product" text="10 đánh giá">
                <HBox.margin>
                   <Insets left="25.0" />
                </HBox.margin>
