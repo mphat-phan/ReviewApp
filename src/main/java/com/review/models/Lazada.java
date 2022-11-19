@@ -4,17 +4,20 @@ package com.review.models;
 import org.jsoup.*;
 import org.json.*;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class Lazada {
     private String url ;
+    private HashMap<String,ProductDetail> listproductdetail=new HashMap<>();
     public List<Product> getProductsByQueryLazada(String q) throws IOException,RuntimeException {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
         List<Product> productList = new ArrayList<>();
@@ -31,7 +34,24 @@ public class Lazada {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(Integer.parseInt(jsonArray.getJSONObject(i).getString("originalPrice").split(".00")[0]));
                 product.setPrice_sale(Integer.parseInt(jsonArray.getJSONObject(i).getString("price").split(".00")[0]));
+                //get productDetail
+                ProductDetail pdd=new ProductDetail();
+                JSONArray jsa = jsonArray.getJSONObject(i).getJSONArray("thumbs");
+                Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
+                pdd.setRating_average(c.intValue());
+                String v=jsonArray.getJSONObject(i).getString("review");
+                pdd.setReview_count(Integer.parseInt(v==""? "0":v));
+                String urldes="https:"+jsonArray.getJSONObject(i).getString("itemUrl");
+                res = Jsoup.connect(urldes).method(Connection.Method.GET).ignoreContentType(true).followRedirects(true).execute();
+                doc=res.parse();
+                pdd.setDescription(doc.getElementsByAttribute("content").first().attributes().get("content"));
+                String[] a = new String[jsa.length()];
+                for(int j = 0; j < jsa.length(); j++) {
+                    a[j] = jsa.getJSONObject(j).getString("image");
+                }
+                pdd.setImagesUrl(a);
                 productList.add(product);
+                listproductdetail.put(String.valueOf(product.getproductID()),pdd);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -56,7 +76,10 @@ public class Lazada {
             System.out.println(ex);
         }
             return cookie;
-        }
+    }
+    public ProductDetail getDetailProduct(String ID) {
+        return listproductdetail.get(ID);
+    }
     public List<Rate> getRatesByQueryLazada(String id) throws IOException,RuntimeException {
         url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=5&filter=0&sort=0&pageNo=1";
         List<Rate> ReviewList = new ArrayList<>();
@@ -87,10 +110,10 @@ public class Lazada {
 
     public static void main(String[] args) throws IOException {
         Lazada lazada = new Lazada();
-//        List<Product> productList = new ArrayList<>();
-//        productList = lazada.getProductsByQueryLazada("iphone");
-        List<Rate> productListReviews = new ArrayList<>();
-        productListReviews = lazada.getRatesByQueryLazada("2016216850");
-        System.out.println("Hello");
+        List<Product> productList = new ArrayList<>();
+        productList = lazada.getProductsByQueryLazada("iphone");
+ //       List<Rate> productListReviews = new ArrayList<>()
+        // productListReviews = lazada.getRatesByQueryLazada("2016216850");
+        System.out.println("hello");
     }
 }
