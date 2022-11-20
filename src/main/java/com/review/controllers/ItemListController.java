@@ -51,7 +51,14 @@ public class ItemListController implements Initializable {
     private int pageNumDefault = 5;
     private PrimaryController primaryController;
     @FXML
-    void amazon_button_presss(MouseEvent event) {
+    void amazon_button_presss(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+        this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+        this.primaryController.swapItemList();
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -69,7 +76,14 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void lazada_button_press(MouseEvent event) {
+    void lazada_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+        this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+        this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");

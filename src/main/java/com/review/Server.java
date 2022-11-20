@@ -63,14 +63,23 @@ public class Server {
         if(token[0].equals("search")){
             SearchProduct(token[1]);
         }
-        else if(token[0].equals("click")){
+        else if(token[0].equals("ReviewProduct")){
             ReviewProduct(Integer.parseInt(token[1]));
         }
         else if (token[0].equals("clickDetail")) {
             DetailProduct(Integer.parseInt(token[1]));
         }
-        else if(token[0].equals(("searchSendo"))){
+        else if(token[0].equals("searchSendo")){
             SearchProductSendo(token[1]);
+        }
+        else if(token[0].equals("searchShopee")){
+            SearchProductShopee(token[1]);
+        }
+        else if (token[0].equals("clickDetailShopee")) {
+            DetailProductShopee(Integer.parseInt(token[1]),Integer.parseInt(token[2]));
+        }
+        else if(token[0].equals("searchLazada")){
+            SearchProductLazada(token[1]);
         }
 
     }
@@ -78,9 +87,17 @@ public class Server {
         Tiki tiki = new Tiki();
         SendList(tiki.getProductsByQuery(query),dpreceive.getAddress().getHostAddress());
     }
+    public void SearchProductLazada(String query)throws IOException{
+        Lazada lazada = new Lazada();
+        SendList(lazada.getProductsByQueryLazada(query),dpreceive.getAddress().getHostAddress());
+    }
     public void SearchProductSendo(String query)throws IOException{
         Sendo sendo = new Sendo();
         SendList(sendo.getProductsByQuerySendo(query),dpreceive.getAddress().getHostAddress());
+    }
+    public void SearchProductShopee(String query)throws IOException{
+        Shopee shopee = new Shopee();
+        SendList(shopee.getProductsByQueryShopee(query),dpreceive.getAddress().getHostAddress());
     }
     public void ReviewProduct(Integer ID)throws IOException{
         Tiki tiki = new Tiki();
@@ -89,6 +106,10 @@ public class Server {
     public void DetailProduct(Integer ID)throws IOException{
         Tiki tiki = new Tiki();
         SendDetailProduct(tiki.getDetailProduct(ID),dpreceive.getAddress().getHostAddress());
+    }
+    public void DetailProductShopee(Integer ID,Integer IDshop)throws IOException{
+        Shopee shopee = new Shopee();
+        SendDetailProduct(shopee.getDetailProduct(ID,IDshop),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
         ShareIp();

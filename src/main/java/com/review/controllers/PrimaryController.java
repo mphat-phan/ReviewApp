@@ -47,6 +47,7 @@ public class PrimaryController implements Initializable {
     private ItemDetailController itemDetailController;
     private InfoDetailController infoDetailController;
     private RatingAggregatorController ratingAggregatorController;
+
     @FXML
     private Label rating_aggregator_button;
 
@@ -93,8 +94,8 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        //client.GetReviewProduct(184061913);
-        //ratingAggregatorController.rateList = client.ReceiveListReviews();
+        client.GetReviewProduct(184061913);
+        ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
@@ -118,7 +119,6 @@ public class PrimaryController implements Initializable {
     }
     public void swapRatingAggregator(){
         try {
-
             ratingAggregatorController.openRatingAggregator(this);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -168,8 +168,10 @@ public class PrimaryController implements Initializable {
             itemDetailController.ratingListController = fxmlLoader.getController();
             itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
             itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
+            client.GetReviewProduct(184061913);
+            itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
             itemDetailController.rating_pane = newpane1;
-        }catch (IOException e){
+        }catch (IOException | ClassNotFoundException e){
 
         }
     }
@@ -198,7 +200,7 @@ public class PrimaryController implements Initializable {
 //                client.GetReviewProduct(184061913);
 //                ratingAggregatorController.rateList = client.ReceiveListReviews();
 
-                swapRatingAggregator();
+//                swapRatingAggregator();
                 swapItemList();
 
             } catch (ClassNotFoundException e) {

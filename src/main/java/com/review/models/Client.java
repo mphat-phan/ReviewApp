@@ -59,6 +59,20 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void SearchProductShopee(String query) throws IOException,ClassNotFoundException{
+        query = "searchShopee#"+query;
+        query=aes.encrypt(query);
+        byte[] data = query.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
+    public void SearchProductLazada(String query) throws IOException,ClassNotFoundException{
+        query = "searchLazada#"+query;
+        query=aes.encrypt(query);
+        byte[] data = query.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
     public void GetDetailProduct(Integer ID) throws IOException,ClassNotFoundException{
         String IDProduct="";
         IDProduct = ID.toString();
@@ -68,10 +82,21 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void GetDetailProductShopee(Integer ID,Integer IDShop) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        String IDShop2="";
+        IDShop2 = IDShop.toString();
+        IDProduct = ID.toString();
+        IDProduct = "clickDetailShopee#"+IDProduct+"#"+IDShop2;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
     public void GetReviewProduct(Integer ID) throws IOException,ClassNotFoundException{
         String IDProduct="";
         IDProduct = ID.toString();
-        IDProduct = "click#"+IDProduct;
+        IDProduct = "ReviewProduct#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
@@ -93,7 +118,7 @@ public class Client {
             return listdata;
     }
     public List<Rate> ReceiveListReviews() throws IOException,ClassNotFoundException{
-        dpreceive = new DatagramPacket(new byte[9216],9216);
+        dpreceive = new DatagramPacket(new byte[100*1024],100*1024);
         socket.receive(dpreceive);
         ListDataReviews = aes.decryptListReviews(new String(dpreceive.getData(),0,dpreceive.getLength()));
         return ListDataReviews;

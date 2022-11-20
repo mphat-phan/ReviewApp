@@ -46,9 +46,11 @@ public class Shopee {
     public String[] change(String s){
         return s.replaceAll("[^0-9a-zA-Z,]","").split(",");
     }
-    public ProductDetail getDetailProduct(String itemid,String shopid) throws IOException,RuntimeException {
+    public ProductDetail getDetailProduct(Integer itemid,Integer shopid) throws IOException,RuntimeException {
         ProductDetail ProductDetail;
-        url = "https://shopee.vn/api/v4/item/get?itemid="+itemid+"&shopid="+shopid;
+        String itemid1 = itemid.toString();
+        String shopid1 = shopid.toString();
+        url = "https://shopee.vn/api/v4/item/get?itemid="+itemid1+"&shopid="+shopid1;
         Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text()).getJSONObject("data");
@@ -100,12 +102,12 @@ public class Shopee {
 
     public static void main(String[] args) throws IOException {
         Shopee shopee = new Shopee();
-        //List<Product> list=shopee.getProductsByQueryShopee("iphone");;
-//          List<Product> productList = new ArrayList<>();
-//        productList = tiki.getProductsByQuery("iphone");
+       List<Product> list=shopee.getProductsByQueryShopee("iphone");;
+//         List<Product> productList = new ArrayList<>();
+ //       productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
 //        productListReviews = tiki.getRatesByQuery(184061913);
-        List<Rate>list=shopee.getRatesByQuery("5600084939","88201679");
-        System.out.println(list.get(1).getComment());
+//        List<Rate>list=shopee.getRatesByQuery("5600084939","88201679");
+        System.out.println("list.get(1).getComment()");
     }
 }

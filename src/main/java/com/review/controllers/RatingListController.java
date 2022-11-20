@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class RatingListController implements Initializable {
     private int stepPagination = 0;
     private int pageNumDefault = 5;
 
-    private List<Rate> rateList = new ArrayList<>();
+    public List<Rate> rateList = new ArrayList<>();
     @FXML
     void pagination_left_press(MouseEvent event) {
         if(this.stepPagination != 0){
@@ -79,8 +80,6 @@ public class RatingListController implements Initializable {
                 node = pagination_list.getChildren().get(i);
                 node.getStyleClass().remove("button-pagination-action");
             }
-
-
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };
@@ -110,8 +109,6 @@ public class RatingListController implements Initializable {
 
                 pagination_list.getChildren().clear();
                 setPagination();
-
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
