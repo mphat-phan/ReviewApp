@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -164,12 +166,18 @@ public class PrimaryController implements Initializable {
             //rating_list_detail
             fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/rating_list.fxml"));
+
             Pane newpane1 = fxmlLoader.load();
             itemDetailController.ratingListController = fxmlLoader.getController();
-            itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
-            itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
+
             client.GetReviewProduct(184061913);
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
+
+            itemDetailController.ratingListController.openRatingList(this);
+
+            itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
+            itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
+
             itemDetailController.rating_pane = newpane1;
         }catch (IOException | ClassNotFoundException e){
 
