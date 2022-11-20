@@ -4,19 +4,25 @@ package com.review.models;
 import org.jsoup.*;
 import org.json.*;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Lazada {
     private String url ;
+    private HashMap<String,ProductDetail> listproductdetail=new HashMap<>();
     public List<Product> getProductsByQueryLazada(String q) throws IOException,RuntimeException {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
         List<Product> productList = new ArrayList<>();
         Product product;
-        Connection.Response res = Jsoup.connect(url+q).method(Connection.Method.GET).cookie("x5sec","7b22617365727665722d6c617a6164613b32223a226163646331643964383766393931356232396666643239343663626632333564434a4868305a7347454f53366a4e5777395a32514b7a434b6d5a6e332b2f2f2f2f2f384251414d3d227d").ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url+q).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
         try {
@@ -26,31 +32,74 @@ public class Lazada {
                 product.setproductID(jsonArray.getJSONObject(i).getInt("itemId"));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
-                product.setPrice(jsonArray.getJSONObject(i).getInt("Price"));
-                product.setPrice_sale(jsonArray.getJSONObject(i).getInt("originalPrice"));
+                product.setPrice(Integer.parseInt(jsonArray.getJSONObject(i).getString("originalPrice").split(".00")[0]));
+                product.setPrice_sale(Integer.parseInt(jsonArray.getJSONObject(i).getString("price").split(".00")[0]));
+                //get productDetail
+                ProductDetail pdd=new ProductDetail();
+                JSONArray jsa = jsonArray.getJSONObject(i).getJSONArray("thumbs");
+                Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
+                pdd.setRating_average(c.intValue());
+                String v=jsonArray.getJSONObject(i).getString("review");
+                pdd.setReview_count(Integer.parseInt(v==""? "0":v));
+                String urldes="https:"+jsonArray.getJSONObject(i).getString("itemUrl");
+                res = Jsoup.connect(urldes).method(Connection.Method.GET).ignoreContentType(true).followRedirects(true).execute();
+                doc=res.parse();
+                pdd.setDescription(doc.getElementsByAttribute("content").first().attributes().get("content"));
+                String[] a = new String[jsa.length()];
+                for(int j = 0; j < jsa.length(); j++) {
+                    a[j] = jsa.getJSONObject(j).getString("image");
+                }
+                pdd.setImagesUrl(a);
                 productList.add(product);
+                listproductdetail.put(String.valueOf(product.getproductID()),pdd);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return productList;
     }
-    public List<Rate> getRatesByQueryLazada(Integer id) throws IOException,RuntimeException {
-        url = "https://tiki.vn/api/v2/reviews?product_id=";
+    public String getCookie(){
+        File f=new File("cookie.txt");
+        String cookie=null;
+        String url="https://my.lazada.vn/pdp/review/getReviewList?itemId=911354757&pageSize=5&filter=0&sort=0&pageNo=1";
+        try {
+            Connection.Response re = Jsoup.connect("https://www.lazada.vn/products/tui-10-chiec-khau-trang-hinh-cua-khau-trang-y-te-thiet-ke-thoi-trang-khang-khuanchong-tia-uvkhong-gay-dau-tai-i2039435757-s9519293441.html?spm=a2o4n.home.just4u.1.19056afeZVm19M&&scm=1007.17519.162103.0&pvid=920240d1-5fb2-4406-a6bf-9b43d5893aaa&search=0&clickTrackInfo=tctags%3A1215065286%3Btcsceneid%3AHPJFY%3Bbuyernid%3A686555bf-8fbd-4527-e2ea-341799b2f15b%3Btcboost%3A0%3Bpvid%3A920240d1-5fb2-4406-a6bf-9b43d5893aaa%3Bchannel_id%3A0000%3Bmt%3Ai2i%3Bitem_id%3A2039435757%3Bself_ab_id%3A162103%3Bself_app_id%3A7519%3Blayer_buckets%3A955.7333_5437.25236_6059.28889%3Bpos%3A0%3B").ignoreContentType(true).followRedirects(true).method(Connection.Method.GET).execute();
+            cookie=re.cookie("x5sec");
+            if(cookie==null){
+                Scanner sc=new Scanner(f);
+                cookie=sc.nextLine();
+            }
+            else {
+                FileWriter fr=new FileWriter("cookie.txt");
+            fr.write(cookie);}
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+            return cookie;
+    }
+    public ProductDetail getDetailProduct(String ID) {
+        return listproductdetail.get(ID);
+    }
+    public List<Rate> getRatesByQueryLazada(String id) throws IOException,RuntimeException {
+        url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=5&filter=0&sort=0&pageNo=1";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
-        Connection.Response res = Jsoup.connect(url+id).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
+        List<String> images=new ArrayList<>();
         try {
-            jsonArray = new JSONObject(doc.text()).getJSONArray("data");
+            jsonArray = new JSONObject(doc.text()).getJSONObject("model").getJSONArray("items");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
-                rate.setDate(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("created_time"));
+                rate.setDate(jsonArray.getJSONObject(i).getString("boughtDate"));
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
-                rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
-                rate.setUserImageUrl(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("avatar_url"));
-                rate.setComment(jsonArray.getJSONObject(i).getString("content"));
+                rate.setUsername(jsonArray.getJSONObject(i).getString("buyerName"));
+                rate.setComment(jsonArray.getJSONObject(i).getString("reviewContent"));
+                JSONArray jsa=jsonArray.getJSONObject(i).getJSONArray("images");
+                for(int j=0;j<jsa.length();j++)
+                    images.add(jsa.getJSONObject(j).getString("url"));
+                rate.setImageUrl(images);
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
@@ -63,8 +112,8 @@ public class Lazada {
         Lazada lazada = new Lazada();
         List<Product> productList = new ArrayList<>();
         productList = lazada.getProductsByQueryLazada("iphone");
-//        List<Rate> productListReviews = new ArrayList<>();
-//        productListReviews = tiki.getRatesByQuery(184061913);
-        System.out.println("Hello");
+ //       List<Rate> productListReviews = new ArrayList<>()
+        // productListReviews = lazada.getRatesByQueryLazada("2016216850");
+        System.out.println("hello");
     }
 }
