@@ -33,7 +33,7 @@ public class Shopee {
                 product.setproductID(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("itemid"));
                 product.setIdshop(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("shopid"));
                 product.setProductName(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("name"));
-                product.setImageUrl(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
+                product.setImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price_max_before_discount"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price"));
                 productList.add(product);
@@ -45,6 +45,9 @@ public class Shopee {
     }
     public String[] change(String s){
         return s.replaceAll("[^0-9a-zA-Z,]","").split(",");
+    }
+    public String[] changeImage(String s){
+        return s.replaceAll("\"","").split(",");
     }
     public ProductDetail getDetailProduct(Integer itemid,Integer shopid) throws IOException,RuntimeException {
         ProductDetail ProductDetail;
@@ -62,7 +65,7 @@ public class Shopee {
             String[] n=change(json.getJSONObject("item_rating").get("rating_count").toString());
             ProductDetail.setReview_count(Integer.parseInt(n[0]));
             ProductDetail.setDescription(json.getString("description"));
-            n=change(jsonArray.getJSONObject(0).get("images").toString());
+            n=changeImage(jsonArray.getJSONObject(0).get("images").toString());
             for(int i=0;i<n.length;i++)
                 n[i]="https://cf.shopee.vn/file/"+n[i];
             ProductDetail.setImagesUrl(n);
