@@ -6,7 +6,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="530.4" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.InfoDetailController">
    <children>
-      <Label fx:id="Info_detail" text="LabHelloel">
+      <Label fx:id="Info_detail">
          <VBox.margin>
             <Insets top="25.0" />
          </VBox.margin></Label>
