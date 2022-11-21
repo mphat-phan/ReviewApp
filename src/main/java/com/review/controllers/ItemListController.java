@@ -52,7 +52,6 @@ public class ItemListController implements Initializable {
     private PrimaryController primaryController;
     @FXML
     void amazon_button_presss(MouseEvent event) throws IOException, ClassNotFoundException {
-        this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
@@ -94,12 +93,19 @@ public class ItemListController implements Initializable {
     @FXML
     void sendo_button_press(MouseEvent event) {
         try {
-            this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
+            this.primaryController.setCheck("sendo");
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();
-            this.primaryController.setItemListController(fxmlLoader.getController()) ;
-            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.setItemListController(fxmlLoader.getController());
+            if(primaryController.getSendo().isEmpty()) {
+                this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
+                this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                this.primaryController.setSendo(this.primaryController.getItemListController().productList);
+            }
+            else {
+                this.primaryController.getItemListController().productList = this.primaryController.getSendo();
+            }
             this.primaryController.swapItemList();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -114,7 +120,23 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void tiki_button_press(MouseEvent event) {
+    void tiki_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+            this.primaryController.setCheck("tiki");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+            fxmlLoader.load();
+            this.primaryController.setItemListController(fxmlLoader.getController());
+            if(primaryController.getTiki().isEmpty()) {
+                this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
+                this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                this.primaryController.setTiki(this.primaryController.getItemListController().productList);
+                this.primaryController.swapItemList();
+            }
+            else
+            {
+                this.primaryController.getItemListController().productList = this.primaryController.getTiki();
+            }
+            this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
@@ -177,7 +199,14 @@ public class ItemListController implements Initializable {
                     @Override
                     public void onClickListener(Product product,ProductDetail productDetail) {
                         try {
-                            primaryController.getClient().GetDetailProduct(product.getproductID());
+                            if(primaryController.getCheck().equals("tiki"))
+                            {
+                                primaryController.getClient().GetDetailProduct(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("sendo"))
+                            {
+                                primaryController.getClient().GetDetailProduct(13362558);
+                            }
                             productDetail = primaryController.getClient().ReceiveProductDetail();
                             primaryController.swapItemDetail(product,productDetail);
                         } catch (IOException e) {

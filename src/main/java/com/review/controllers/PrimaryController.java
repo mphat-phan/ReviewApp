@@ -4,35 +4,59 @@ import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import com.review.models.Client;
-import com.review.models.Product;
-import com.review.models.ProductDetail;
+import com.review.models.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 
 public class PrimaryController implements Initializable {
     private Client client ;
-    private Product Tiki;
-    private Product Shopee;
-    private Product Sendo;
-    private Product Lazada;
+
+    public String getCheck() {
+        return check;
+    }
+
+    public void setCheck(String check) {
+        this.check = check;
+    }
+
+    private String check;
+
+    public List<Product> getTiki() {
+        return Tiki;
+    }
+
+    public void setTiki(List<Product> tiki) {
+        Tiki = tiki;
+    }
+
+    private List<Product> Tiki = new ArrayList<>();
+    private List<Product> Shopee = new ArrayList<>();
+
+    public List<Product> getSendo() {
+        return Sendo;
+    }
+
+    public void setSendo(List<Product> sendo) {
+        Sendo = sendo;
+    }
+
+    private List<Product> Sendo = new ArrayList<>() ;
+    private List<Product> Lazada = new ArrayList<>();
 
     @FXML
     private BorderPane container;
@@ -81,6 +105,8 @@ public class PrimaryController implements Initializable {
     @FXML
     void search_enter(ActionEvent event)throws IOException,ClassNotFoundException {
         client.SearchProduct(search_product.getText());
+         Tiki = new ArrayList<>();
+         Sendo = new ArrayList<>();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
@@ -170,7 +196,7 @@ public class PrimaryController implements Initializable {
             Pane newpane1 = fxmlLoader.load();
             itemDetailController.ratingListController = fxmlLoader.getController();
 
-            client.GetReviewProduct(184061913);
+            client.GetReviewProduct(product.getproductID());
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
 
             itemDetailController.ratingListController.openRatingList(this);
@@ -204,6 +230,7 @@ public class PrimaryController implements Initializable {
                 client.SearchProduct("ipad");
                 itemListController.productList = client.ReceiveList();
                 search_product.setText("ipad");
+                setCheck("tiki");
 
 //                client.GetReviewProduct(184061913);
 //                ratingAggregatorController.rateList = client.ReceiveListReviews();
