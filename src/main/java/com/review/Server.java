@@ -72,14 +72,31 @@ public class Server {
         else if(token[0].equals("searchSendo")){
             SearchProductSendo(token[1]);
         }
+        else if(token[0].equals("clickDetailSendo")){
+            DetailProductSendo(Integer.valueOf(token[1]));
+        }
+        else if(token[0].equals("ReviewProductSendo")){
+            ReviewProductSendo(Integer.valueOf(token[1]));
+        }
         else if(token[0].equals("searchShopee")){
             SearchProductShopee(token[1]);
         }
         else if (token[0].equals("clickDetailShopee")) {
             DetailProductShopee(Integer.parseInt(token[1]),Integer.parseInt(token[2]));
         }
+        else if (token[0].equals("ReviewProductShopee")) {
+            ReviewProductShopee(token[1],token[2]);
+        }
         else if(token[0].equals("searchLazada")){
             SearchProductLazada(token[1]);
+        }
+        else if(token[0].equals("clickDetailLazada"))
+        {
+            DetailProductLazada(Integer.parseInt(token[1]));
+        }
+        else if(token[0].equals("ReviewProductLazada"))
+        {
+            ReviewProductLazada(Integer.parseInt(token[1]));
         }
 
     }
@@ -95,6 +112,14 @@ public class Server {
         Sendo sendo = new Sendo();
         SendList(sendo.getProductsByQuerySendo(query),dpreceive.getAddress().getHostAddress());
     }
+    public void DetailProductSendo(Integer ID)throws IOException{
+        Sendo sendo = new Sendo();
+        SendDetailProduct(sendo.getDetailProductSendo(ID),dpreceive.getAddress().getHostAddress());
+    }
+    public void ReviewProductSendo(Integer ID)throws IOException{
+        Sendo sendo = new Sendo();
+        SendListReviews(sendo.getRatesByQuerySendo(ID),dpreceive.getAddress().getHostAddress());
+    }
     public void SearchProductShopee(String query)throws IOException{
         Shopee shopee = new Shopee();
         SendList(shopee.getProductsByQueryShopee(query),dpreceive.getAddress().getHostAddress());
@@ -103,13 +128,26 @@ public class Server {
         Tiki tiki = new Tiki();
         SendListReviews(tiki.getRatesByQuery(ID),dpreceive.getAddress().getHostAddress());
     }
+
     public void DetailProduct(Integer ID)throws IOException{
         Tiki tiki = new Tiki();
         SendDetailProduct(tiki.getDetailProduct(ID),dpreceive.getAddress().getHostAddress());
     }
+    public void ReviewProductLazada(Integer ID)throws IOException{
+        Lazada lazada = new Lazada();
+        SendListReviews(lazada.getRatesByQueryLazada(String.valueOf(ID)),dpreceive.getAddress().getHostAddress());
+    }
+    public void DetailProductLazada(Integer ID)throws IOException{
+        Lazada lazada = new Lazada();
+        SendDetailProduct(lazada.getDetailProduct(String.valueOf(ID)),dpreceive.getAddress().getHostAddress());
+    }
     public void DetailProductShopee(Integer ID,Integer IDshop)throws IOException{
         Shopee shopee = new Shopee();
         SendDetailProduct(shopee.getDetailProduct(ID,IDshop),dpreceive.getAddress().getHostAddress());
+    }
+    public void ReviewProductShopee(String ID,String IDshop)throws IOException{
+        Shopee shopee = new Shopee();
+        SendListReviews(shopee.getRatesByQuery(ID,IDshop),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
         ShareIp();

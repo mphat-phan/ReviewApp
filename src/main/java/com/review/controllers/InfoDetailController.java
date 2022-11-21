@@ -13,7 +13,7 @@ public class InfoDetailController implements Initializable {
     public Label Info_detail;
 
     @FXML
-    private WebView description_view;
+    public WebView description_view;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

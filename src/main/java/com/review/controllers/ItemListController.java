@@ -55,9 +55,7 @@ public class ItemListController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
-        this.primaryController.setItemListController(fxmlLoader.getController()) ;
-        this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
-        this.primaryController.swapItemList();
+
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -66,7 +64,21 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void ebay_button_press(MouseEvent event) {
+    void ebay_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.setCheck("shopee");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+        this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        if(primaryController.getShopee().isEmpty()) {
+            this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
+            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.setShopee(this.primaryController.getItemListController().productList);
+        }
+        else {
+            this.primaryController.getItemListController().productList = this.primaryController.getShopee();
+        }
+        this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -76,12 +88,19 @@ public class ItemListController implements Initializable {
 
     @FXML
     void lazada_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
-        this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
+        this.primaryController.setCheck("lazada");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
         this.primaryController.setItemListController(fxmlLoader.getController()) ;
-        this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+        if(primaryController.getLazada().isEmpty()) {
+            this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
+            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.setLazada(this.primaryController.getItemListController().productList);
+        }
+        else {
+            this.primaryController.getItemListController().productList = this.primaryController.getLazada();
+        }
         this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
@@ -91,8 +110,8 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void sendo_button_press(MouseEvent event) {
-        try {
+    void sendo_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+
             this.primaryController.setCheck("sendo");
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
@@ -107,11 +126,6 @@ public class ItemListController implements Initializable {
                 this.primaryController.getItemListController().productList = this.primaryController.getSendo();
             }
             this.primaryController.swapItemList();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
@@ -205,7 +219,15 @@ public class ItemListController implements Initializable {
                             }
                             else if (primaryController.getCheck().equals("sendo"))
                             {
-                                primaryController.getClient().GetDetailProduct(13362558);
+                                primaryController.getClient().GetDetailProductSendo(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("lazada"))
+                            {
+                                primaryController.getClient().GetDetailProductLazada(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("shopee"))
+                            {
+                                primaryController.getClient().GetDetailProductShopee(product.getproductID(),product.getIdshop());
                             }
                             productDetail = primaryController.getClient().ReceiveProductDetail();
                             primaryController.swapItemDetail(product,productDetail);
@@ -262,7 +284,6 @@ public class ItemListController implements Initializable {
                             node = itemListController.pagination_list.getChildren().get(j);
                             node.getStyleClass().remove("button-pagination-action");
                         }
-
                         ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
                     });
                     button.setText(String.valueOf(startPage++));
