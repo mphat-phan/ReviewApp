@@ -45,6 +45,15 @@ public class PrimaryController implements Initializable {
     }
 
     private List<Product> Tiki = new ArrayList<>();
+
+    public List<Product> getShopee() {
+        return Shopee;
+    }
+
+    public void setShopee(List<Product> shopee) {
+        Shopee = shopee;
+    }
+
     private List<Product> Shopee = new ArrayList<>();
 
     public List<Product> getSendo() {
@@ -56,6 +65,15 @@ public class PrimaryController implements Initializable {
     }
 
     private List<Product> Sendo = new ArrayList<>() ;
+
+    public List<Product> getLazada() {
+        return Lazada;
+    }
+
+    public void setLazada(List<Product> lazada) {
+        Lazada = lazada;
+    }
+
     private List<Product> Lazada = new ArrayList<>();
 
     @FXML
@@ -186,7 +204,7 @@ public class PrimaryController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("/com/review/info_detail.fxml"));
             Pane newpane = fxmlLoader.load();
             itemDetailController.infoDetailController = fxmlLoader.getController();
-            itemDetailController.infoDetailController.Info_detail.setText(productDetail.getDescription());
+            itemDetailController.infoDetailController.description_view.getEngine().loadContent(productDetail.getDescription(),"text/html");
             itemDetailController.rating_list.getChildren().addAll(newpane);
             itemDetailController.info_pane = newpane;
             //rating_list_detail
@@ -229,6 +247,7 @@ public class PrimaryController implements Initializable {
 
                 client.SearchProduct("ipad");
                 itemListController.productList = client.ReceiveList();
+                Tiki = itemListController.productList;
                 search_product.setText("ipad");
                 setCheck("tiki");
 

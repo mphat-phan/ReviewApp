@@ -82,6 +82,15 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void GetDetailProductLazada(Integer ID) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        IDProduct = ID.toString();
+        IDProduct = "clickDetailLazada#"+IDProduct;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
     public void GetDetailProductShopee(Integer ID,Integer IDShop) throws IOException,ClassNotFoundException{
         String IDProduct="";
         String IDShop2="";
@@ -93,10 +102,48 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
+    public void GetDetailProductSendo(Integer ID) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        IDProduct = ID.toString();
+        IDProduct = "clickDetailSendo#"+IDProduct;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
     public void GetReviewProduct(Integer ID) throws IOException,ClassNotFoundException{
         String IDProduct="";
         IDProduct = ID.toString();
         IDProduct = "ReviewProduct#"+IDProduct;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
+    public void GetReviewProductShopee(Integer ID,Integer IDShop) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        String IDShop2="";
+        IDShop2 = IDShop.toString();
+        IDProduct = ID.toString();
+        IDProduct = "ReviewProductShopee#"+IDProduct+"#"+IDShop2;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
+    public void GetReviewProductSendo(Integer ID) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        IDProduct = ID.toString();
+        IDProduct = "ReviewProductSendo#"+IDProduct;
+        IDProduct=aes.encrypt(IDProduct);
+        byte[] data = IDProduct.getBytes();
+        dpsend = new DatagramPacket(data, data.length, add, destPort);
+        socket.send(dpsend);
+    }
+    public void GetReviewProductLazada(Integer ID) throws IOException,ClassNotFoundException{
+        String IDProduct="";
+        IDProduct = ID.toString();
+        IDProduct = "ReviewProductLazada#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
