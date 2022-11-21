@@ -10,8 +10,16 @@ public class Product implements Serializable {
     private int price;
     private Integer price_sale;
     private String imageUrl;
-
+    private String part;
     private int idshop;
+
+    public String getPart() {
+        return part;
+    }
+
+    public void setPart(String part) {
+        this.part = part;
+    }
 
     public int getIdshop() {
         return idshop;

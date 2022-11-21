@@ -109,7 +109,7 @@ public class Server {
     }
     public void DetailProductShopee(Integer ID,Integer IDshop)throws IOException{
         Shopee shopee = new Shopee();
-        SendDetailProduct(shopee.getDetailProduct(ID,IDshop),dpreceive.getAddress().getHostAddress());
+        SendDetailProduct(shopee.getDetailProduct(String.valueOf(ID),String.valueOf(IDshop)),dpreceive.getAddress().getHostAddress());
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
         ShareIp();
@@ -121,7 +121,7 @@ public class Server {
                     AES aes=listip.get(dpreceive.getAddress().getHostAddress());
                     tmp=aes.decrypt(tmp);
                     if(tmp.equals("bye")){
-                        System.out.println(listip.get(dpreceive.getAddress().getHostAddress())+" has disconnected");
+                        System.out.println(dpreceive.getAddress().getHostAddress()+" has disconnected");
                         listip.remove(dpreceive.getAddress().getHostAddress());
                     }
                     else {
