@@ -51,7 +51,12 @@ public class ItemListController implements Initializable {
     private int pageNumDefault = 5;
     private PrimaryController primaryController;
     @FXML
-    void amazon_button_presss(MouseEvent event) {
+    void amazon_button_presss(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -60,7 +65,21 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void ebay_button_press(MouseEvent event) {
+    void ebay_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.setCheck("shopee");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+        this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        if(primaryController.getShopee().isEmpty()) {
+            this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
+            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.setShopee(this.primaryController.getItemListController().productList);
+        }
+        else {
+            this.primaryController.getItemListController().productList = this.primaryController.getShopee();
+        }
+        this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -69,7 +88,21 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void lazada_button_press(MouseEvent event) {
+    void lazada_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.setCheck("lazada");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+        fxmlLoader.load();
+        this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        if(primaryController.getLazada().isEmpty()) {
+            this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
+            this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            this.primaryController.setLazada(this.primaryController.getItemListController().productList);
+        }
+        else {
+            this.primaryController.getItemListController().productList = this.primaryController.getLazada();
+        }
+        this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.sendo_button.getStyleClass().remove("action");
@@ -78,7 +111,22 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void sendo_button_press(MouseEvent event) {
+    void sendo_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+
+            this.primaryController.setCheck("sendo");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+            fxmlLoader.load();
+            this.primaryController.setItemListController(fxmlLoader.getController());
+            if(primaryController.getSendo().isEmpty()) {
+                this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
+                this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                this.primaryController.setSendo(this.primaryController.getItemListController().productList);
+            }
+            else {
+                this.primaryController.getItemListController().productList = this.primaryController.getSendo();
+            }
+            this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
@@ -87,7 +135,23 @@ public class ItemListController implements Initializable {
     }
 
     @FXML
-    void tiki_button_press(MouseEvent event) {
+    void tiki_button_press(MouseEvent event) throws IOException, ClassNotFoundException {
+            this.primaryController.setCheck("tiki");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
+            fxmlLoader.load();
+            this.primaryController.setItemListController(fxmlLoader.getController());
+            if(primaryController.getTiki().isEmpty()) {
+                this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
+                this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                this.primaryController.setTiki(this.primaryController.getItemListController().productList);
+                this.primaryController.swapItemList();
+            }
+            else
+            {
+                this.primaryController.getItemListController().productList = this.primaryController.getTiki();
+            }
+            this.primaryController.swapItemList();
         this.amazon_button.getStyleClass().remove("action");
         this.ebay_button.getStyleClass().remove("action");
         this.lazada_button.getStyleClass().remove("action");
@@ -119,8 +183,7 @@ public class ItemListController implements Initializable {
                 node = pagination_list.getChildren().get(i);
                 node.getStyleClass().remove("button-pagination-action");
             }
-
-
+            String t = ((Button)event.getSource()).getText();
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };
@@ -150,9 +213,24 @@ public class ItemListController implements Initializable {
                     @Override
                     public void onClickListener(Product product,ProductDetail productDetail) {
                         try {
-                            primaryController.getClient().GetDetailProduct(product.getproductID());
-                            ProductDetail productDetail1 = primaryController.getClient().ReceiveProductDetail();
-                            primaryController.swapItemDetail(product,productDetail1);
+                            if(primaryController.getCheck().equals("tiki"))
+                            {
+                                primaryController.getClient().GetDetailProduct(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("sendo"))
+                            {
+                                primaryController.getClient().GetDetailProductSendo(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("lazada"))
+                            {
+                                primaryController.getClient().GetDetailProductLazada(product.getproductID());
+                            }
+                            else if (primaryController.getCheck().equals("shopee"))
+                            {
+                                primaryController.getClient().GetDetailProductShopee(product.getproductID(),product.getIdshop());
+                            }
+                            productDetail = primaryController.getClient().ReceiveProductDetail();
+                            primaryController.swapItemDetail(product,productDetail);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         } catch (ClassNotFoundException e) {
@@ -170,6 +248,7 @@ public class ItemListController implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
                 pane = fxmlLoader.load();
                 ItemListController itemListController = fxmlLoader.getController();
+                itemListController.primaryController = primaryController1;
                 primaryController.setContainer(pane);
 
                 /*--------------------View Product List-------------*/
@@ -205,7 +284,6 @@ public class ItemListController implements Initializable {
                             node = itemListController.pagination_list.getChildren().get(j);
                             node.getStyleClass().remove("button-pagination-action");
                         }
-
                         ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
                     });
                     button.setText(String.valueOf(startPage++));

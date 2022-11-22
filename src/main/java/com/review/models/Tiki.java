@@ -45,7 +45,7 @@ public class Tiki {
         try {
             ProductDetail = new ProductDetail();
             jsonArray = new JSONObject(doc.text()).getJSONArray("images");
-            ProductDetail.setRating_average(json.getInt("rating_average"));
+            ProductDetail.setRating_average(json.getFloat("rating_average"));
             ProductDetail.setReview_count(json.getInt("review_count"));
             ProductDetail.setDescription(json.getString("description"));
             String[] a = new String[jsonArray.length()];
@@ -86,7 +86,7 @@ public class Tiki {
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
         ProductDetail productDetail = new ProductDetail();
-        productDetail = tiki.getDetailProduct(184061913);
+        productDetail = tiki.getDetailProduct(13362558);
 //          List<Product> productList = new ArrayList<>();
 //        productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();

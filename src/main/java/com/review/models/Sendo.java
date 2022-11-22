@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Sendo {
     private String url ;
+
     public List<Product> getProductsByQuerySendo(String q) throws IOException,RuntimeException {
         url = "https://searchlist-api.sendo.vn/web/products?page=1&size=10&sortType=rank&q=";
         List<Product> productList = new ArrayList<>();
@@ -28,6 +29,8 @@ public class Sendo {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("default_price_max"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getInt("sale_price_max"));
+                String [] n=jsonArray.getJSONObject(i).getString("category_path").split(".html");
+                product.setPart(n[0]);
                 productList.add(product);
             }
         } catch (JSONException e) {
@@ -35,22 +38,25 @@ public class Sendo {
         }
         return productList;
     }
-    public ProductDetail getDetailProductSendo(Integer ID) throws IOException,RuntimeException {
+    public ProductDetail getDetailProductSendo(String part) throws IOException,RuntimeException {
         ProductDetail ProductDetail;
-        url = "https://api.tiki.vn/product-detail/api/v1/products/";
-        Connection.Response res = Jsoup.connect(url+ID).method(Connection.Method.GET).ignoreContentType(true).execute();
+        url = "https://detail-api.sendo.vn/full/"+part;
+        Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
-        JSONObject json= new JSONObject(doc.text());
-        JSONArray jsonArray= null;
+        JSONObject json= new JSONObject(doc.text()).getJSONObject("data");
         try {
             ProductDetail = new ProductDetail();
-            jsonArray = new JSONObject(doc.text()).getJSONArray("images");
-            ProductDetail.setRating_average(json.getInt("rating_average"));
-            ProductDetail.setReview_count(json.getInt("review_count"));
-            ProductDetail.setDescription(json.getString("description"));
+            JSONArray jsonArray= json.getJSONArray("media");
+            ProductDetail.setRating_average(Float.parseFloat(json.getJSONObject("rating_info").getString("percent_star")));
+            ProductDetail.setReview_count(json.getJSONObject("rating_info").getInt("total_rated"));
+            ProductDetail.setDescription(json.getString("short_description"));
             String[] a = new String[jsonArray.length()];
+            int j=0;
             for(int i = 0; i < jsonArray.length(); i++) {
-                a[i] = jsonArray.getJSONObject(i).getString("base_url");
+               if(jsonArray.getJSONObject(i).getString("type").equals("image")){
+                   a[j] = jsonArray.getJSONObject(i).getString("base_url");
+                   j++;
+               }
             }
             ProductDetail.setImagesUrl(a);
 
@@ -85,8 +91,8 @@ public class Sendo {
 
     public static void main(String[] args) throws IOException {
         Sendo sendo = new Sendo();
-//        List<Product> productList = new ArrayList<>();
-//        productList = sendo.getProductsByQuery("iphone");
+        List<Product> productList = new ArrayList<>();
+        productList = sendo.getProductsByQuerySendo("iphone");
       List<Rate> productListReviews = new ArrayList<>();
       productListReviews = sendo.getRatesByQuerySendo(28188634);
         System.out.println("Hello");

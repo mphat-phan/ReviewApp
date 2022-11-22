@@ -33,7 +33,7 @@ public class Shopee {
                 product.setproductID(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("itemid"));
                 product.setIdshop(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("shopid"));
                 product.setProductName(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("name"));
-                product.setImageUrl(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
+                product.setImageUrl("https://shopee.vn/file/"+jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price_max_before_discount"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price"));
                 productList.add(product);
@@ -44,11 +44,16 @@ public class Shopee {
         return productList;
     }
     public String[] change(String s){
-        return s.replaceAll("[^0-9a-zA-Z,]","").split(",");
+        return s.replaceAll("[^0-9a-zA-Z,-]","").split(",");
+    }
+    public String[] changeimage(String s){
+        return s.replaceAll("\"","").split(",");
     }
     public ProductDetail getDetailProduct(String itemid,String shopid) throws IOException,RuntimeException {
         ProductDetail ProductDetail;
-        url = "https://shopee.vn/api/v4/item/get?itemid="+itemid+"&shopid="+shopid;
+        String itemid1 = itemid.toString();
+        String shopid1 = shopid.toString();
+        url = "https://shopee.vn/api/v4/item/get?itemid="+itemid1+"&shopid="+shopid1;
         Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text()).getJSONObject("data");
@@ -56,11 +61,11 @@ public class Shopee {
         try {
             ProductDetail = new ProductDetail();
             jsonArray = json.getJSONArray("tier_variations");
-            ProductDetail.setRating_average(json.getJSONObject("item_rating").getInt("rating_star"));
+            ProductDetail.setRating_average(json.getJSONObject("item_rating").getFloat("rating_star"));
             String[] n=change(json.getJSONObject("item_rating").get("rating_count").toString());
             ProductDetail.setReview_count(Integer.parseInt(n[0]));
             ProductDetail.setDescription(json.getString("description"));
-            n=change(jsonArray.getJSONObject(0).get("images").toString());
+            n=changeimage(jsonArray.getJSONObject(0).get("images").toString());
             for(int i=0;i<n.length;i++)
                 n[i]="https://cf.shopee.vn/file/"+n[i];
             ProductDetail.setImagesUrl(n);
@@ -82,9 +87,9 @@ public class Shopee {
                 rate = new Rate();
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating_star"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("author_username"));
-                rate.setUserImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getString("author_portrait"));
+                rate.setUserImageUrl("https://shopee.vn/file/"+jsonArray.getJSONObject(i).getString("author_portrait"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("comment"));
-                String[] n=change(jsonArray.getJSONObject(i).get("images").toString());
+                String[] n=changeimage(jsonArray.getJSONObject(i).get("images").toString());
                 List<String> c=new ArrayList<>();
                 for(int j=0;j<n.length;j++) {
                     c.add("https://cf.shopee.vn/file/"+n[j]);
@@ -100,12 +105,12 @@ public class Shopee {
 
     public static void main(String[] args) throws IOException {
         Shopee shopee = new Shopee();
-        //List<Product> list=shopee.getProductsByQueryShopee("iphone");;
-//          List<Product> productList = new ArrayList<>();
-//        productList = tiki.getProductsByQuery("iphone");
+       List<Product> list=shopee.getProductsByQueryShopee("iphone");;
+//         List<Product> productList = new ArrayList<>();
+//       productList = tiki.getProductsByQuery("iphone");
 //        List<Rate> productListReviews = new ArrayList<>();
 //        productListReviews = tiki.getRatesByQuery(184061913);
-        List<Rate>list=shopee.getRatesByQuery("5600084939","88201679");
-        System.out.println(list.get(1).getComment());
+//        ProductDetail pđ=shopee.getDetailProduct("5600084939","88201679");
+        System.out.println("list.get(1).getComment()");
     }
 }

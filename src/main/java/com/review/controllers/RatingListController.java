@@ -10,12 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,16 +27,22 @@ import java.util.ResourceBundle;
 
 public class RatingListController implements Initializable {
     @FXML
-    private GridPane rating_grid;
+    public GridPane rating_grid;
 
     @FXML
-    private ScrollPane rating_scroll;
+    public Label count_rating_product;
+
     @FXML
-    private HBox pagination_list;
+    public Label rating_detail_product;
+
+    @FXML
+    public ScrollPane rating_scroll;
+    @FXML
+    public HBox pagination_list;
     private int stepPagination = 0;
     private int pageNumDefault = 5;
 
-    private List<Rate> rateList = new ArrayList<>();
+    public List<Rate> rateList = new ArrayList<>();
     @FXML
     void pagination_left_press(MouseEvent event) {
         if(this.stepPagination != 0){
@@ -72,11 +80,37 @@ public class RatingListController implements Initializable {
                 node = pagination_list.getChildren().get(i);
                 node.getStyleClass().remove("button-pagination-action");
             }
-
-
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };
+    public void openRatingList(PrimaryController primaryController){
+        int row = 1;
+        try {
+            for (int i = 0; i < primaryController.getItemDetailController().ratingListController.rateList.size(); i++){
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/com/review/rating.fxml"));
+                AnchorPane anchorPane = fxmlLoader.load();
+
+                RatingController ratingController = fxmlLoader.getController();
+                ratingController.setData(primaryController.getItemDetailController().ratingListController.rateList.get(i));
+
+                primaryController.getItemDetailController().ratingListController.rating_grid.add(anchorPane, 0, row++);
+                GridPane.setMargin(anchorPane, new Insets(10));
+                primaryController.getItemDetailController().ratingListController.rating_scroll.setPadding(new Insets(0, 0, 0, 0));
+
+                //set grid height
+                primaryController.getItemDetailController().ratingListController.rating_grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                primaryController.getItemDetailController().ratingListController.rating_grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                primaryController.getItemDetailController().ratingListController.rating_grid.setMaxHeight(Region.USE_PREF_SIZE);
+                primaryController.getItemDetailController().ratingListController.rating_grid.setAlignment(Pos.TOP_CENTER);
+
+                primaryController.getItemDetailController().ratingListController.pagination_list.getChildren().clear();
+                primaryController.getItemDetailController().ratingListController.setPagination();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,8 +137,6 @@ public class RatingListController implements Initializable {
 
                 pagination_list.getChildren().clear();
                 setPagination();
-
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
