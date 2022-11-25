@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Product implements Serializable {
     private List<Rate> rates;
-    private Integer productID;
+    private String productID;
     private String productName;
     private int price;
     private Integer price_sale;
     private String imageUrl;
     private String part;
-    private int idshop;
+    private String idshop;
 
     public String getPart() {
         return part;
@@ -21,19 +21,19 @@ public class Product implements Serializable {
         this.part = part;
     }
 
-    public int getIdshop() {
+    public String getIdshop() {
         return idshop;
     }
 
-    public void setIdshop(int idshop) {
+    public void setIdshop(String idshop) {
         this.idshop = idshop;
     }
 
-    public Integer getproductID() {
+    public String getproductID() {
         return productID;
     }
 
-    public void setproductID(Integer productID) {
+    public void setproductID(String productID) {
         this.productID = productID;
     }
     public String getProductName() {

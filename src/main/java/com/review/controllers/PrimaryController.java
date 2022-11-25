@@ -140,7 +140,7 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        client.GetReviewProduct(184061913);
+        client.GetReviewProduct("184061913");
         ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
@@ -182,12 +182,12 @@ public class PrimaryController implements Initializable {
             itemDetailController.product_name_label.setText(product.getProductName());
             itemDetailController.product_price_label.setText("VNĐ"+product.getPrice());
             itemDetailController.product_sale_price_label.setText("VNĐ"+product.getPrice_sale());
-            String[] images ;
+            List<String> images=new ArrayList<>();
             images = productDetail.getImagesUrl();
             String deteleWebp1 = product.getImageUrl().replace(".webp","");
-                if(images.length>=3) {
-                    String deteleWebp2 = images[1].replace(".webp","");
-                    String deteleWebp3 = images[2].replace(".webp","");
+                if(images.size()>=3) {
+                    String deteleWebp2 = images.get(1).replace(".webp","");
+                    String deteleWebp3 = images.get(2).replace(".webp","");
                         Image image = new Image(deteleWebp1);
                         Image image2 = new Image(deteleWebp2);
                         Image image3 = new Image(deteleWebp3);

@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Tiki {
     private String url ;
+    private exception ex=new exception();
     public List<Product> getProductsByQuery(String q) throws IOException,RuntimeException {
         url = "https://tiki.vn/api/v2/products?limit=10&q=";
         List<Product> productList = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Tiki {
             jsonArray = new JSONObject(doc.text()).getJSONArray("data");
             for(int i = 0; i < jsonArray.length(); i++) {
                 product = new Product();
-                product.setproductID(jsonArray.getJSONObject(i).getInt("id"));
+                product.setproductID(String.valueOf(jsonArray.getJSONObject(i).getInt("id")));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("thumbnail_url"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("original_price"));
@@ -35,31 +36,25 @@ public class Tiki {
         }
         return productList;
     }
-    public ProductDetail getDetailProduct(Integer ID) throws IOException,RuntimeException {
+    public ProductDetail getDetailProduct(String ID) throws IOException,RuntimeException {
         ProductDetail ProductDetail;
         url = "https://api.tiki.vn/product-detail/api/v1/products/";
         Connection.Response res = Jsoup.connect(url+ID).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text());
-        JSONArray jsonArray= null;
         try {
             ProductDetail = new ProductDetail();
-            jsonArray = new JSONObject(doc.text()).getJSONArray("images");
             ProductDetail.setRating_average(json.getFloat("rating_average"));
             ProductDetail.setReview_count(json.getInt("review_count"));
             ProductDetail.setDescription(json.getString("description"));
-            String[] a = new String[jsonArray.length()];
-            for(int i = 0; i < jsonArray.length(); i++) {
-                a[i] = jsonArray.getJSONObject(i).getString("base_url");
-            }
-            ProductDetail.setImagesUrl(a);
+            ProductDetail.setImagesUrl(ex.getListImage(json,"images","base_url"));
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return ProductDetail;
     }
-    public List<Rate> getRatesByQuery(Integer id) throws IOException,RuntimeException {
+    public List<Rate> getRatesByQuery(String id) throws IOException,RuntimeException {
         url = "https://tiki.vn/api/v2/reviews?product_id=";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
@@ -75,6 +70,7 @@ public class Tiki {
                 rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
                 rate.setUserImageUrl(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("avatar_url"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("content"));
+                rate.setImageUrl(ex.getListImage(jsonArray.getJSONObject(i),"images","full_path"));
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
@@ -86,11 +82,11 @@ public class Tiki {
     public static void main(String[] args) throws IOException {
         Tiki tiki = new Tiki();
         ProductDetail productDetail = new ProductDetail();
-        productDetail = tiki.getDetailProduct(13362558);
+        productDetail = tiki.getDetailProduct("13362558");
 //          List<Product> productList = new ArrayList<>();
 //        productList = tiki.getProductsByQuery("iphone");
-//        List<Rate> productListReviews = new ArrayList<>();
-//        productListReviews = tiki.getRatesByQuery(184061913);
+        List<Rate> productListReviews = new ArrayList<>();
+        productListReviews = tiki.getRatesByQuery("184061913");
         System.out.println("Hello");
     }
 }
