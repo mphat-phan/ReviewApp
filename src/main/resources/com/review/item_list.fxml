@@ -19,24 +19,6 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <AnchorPane fx:id="amazon_button" onMouseReleased="#amazon_button_presss" styleClass="button-brands">
-               <children>
-                  <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/amazon_logo.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Amazon">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="ebay_button" onMousePressed="#ebay_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,7 +28,7 @@
                               <Image url="@../../images/ebay.png" />
                            </image>
                         </ImageView>
-                        <Label text="Ebay">
+                        <Label text="Shopee">
                            <font>
                               <Font size="18.0" />
                            </font>

@@ -1,22 +1,23 @@
 package com.review.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ProductDetail implements Serializable {
-    private String[] imagesUrl;
+    private List<String> imagesUrl;
 
     private String description;
 
     private Float rating_average;
     private Integer review_count;
-    public void setImagesUrl(String[] imagesUrl) {
+    public void setImagesUrl(List<String> imagesUrl) {
         this.imagesUrl = imagesUrl;
     }
 
     public String getDescription() {
         return description;
     }
-    public String[] getImagesUrl() {
+    public List<String> getImagesUrl() {
         return imagesUrl;
     }
     public void setDescription(String description) {

@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 public class Lazada {
     private String url ;
+    private exception ex=new exception();
     private HashMap<String,ProductDetail> listproductdetail=new HashMap<>();
     public List<Product> getProductsByQueryLazada(String q) throws IOException,RuntimeException {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
@@ -29,14 +30,13 @@ public class Lazada {
             jsonArray = new JSONObject(doc.text()).getJSONObject("mods").getJSONArray("listItems");
             for(int i = 0; i < jsonArray.length(); i++) {
                 product = new Product();
-                product.setproductID(jsonArray.getJSONObject(i).getInt("itemId"));
+                product.setproductID(String.valueOf(jsonArray.getJSONObject(i).getInt("itemId")));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(Integer.parseInt(jsonArray.getJSONObject(i).getString("originalPrice").split(".00")[0]));
                 product.setPrice_sale(Integer.parseInt(jsonArray.getJSONObject(i).getString("price").split(".00")[0]));
                 //get productDetail
                 ProductDetail pdd=new ProductDetail();
-                JSONArray jsa = jsonArray.getJSONObject(i).getJSONArray("thumbs");
                 Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
                 pdd.setRating_average(c);
                 String v=jsonArray.getJSONObject(i).getString("review");
@@ -45,11 +45,7 @@ public class Lazada {
                 res = Jsoup.connect(urldes).method(Connection.Method.GET).ignoreContentType(true).followRedirects(true).execute();
                 doc=res.parse();
                 pdd.setDescription(doc.getElementsByAttribute("content").first().attributes().get("content"));
-                String[] a = new String[jsa.length()];
-                for(int j = 0; j < jsa.length(); j++) {
-                    a[j] = jsa.getJSONObject(j).getString("image");
-                }
-                pdd.setImagesUrl(a);
+                pdd.setImagesUrl(ex.getListImage(jsonArray.getJSONObject(i),"thumbs","image"));
                 productList.add(product);
                 listproductdetail.put(String.valueOf(product.getproductID()),pdd);
             }
@@ -87,7 +83,6 @@ public class Lazada {
         Connection.Response res = Jsoup.connect(url).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
-        List<String> images=new ArrayList<>();
         try {
             jsonArray = new JSONObject(doc.text()).getJSONObject("model").getJSONArray("items");
             for(int i = 0; i < jsonArray.length(); i++) {
@@ -96,10 +91,7 @@ public class Lazada {
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("buyerName"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("reviewContent"));
-                JSONArray jsa=jsonArray.getJSONObject(i).getJSONArray("images");
-                for(int j=0;j<jsa.length();j++)
-                    images.add(jsa.getJSONObject(j).getString("url"));
-                rate.setImageUrl(images);
+                rate.setImageUrl(ex.getListImage(jsonArray.getJSONObject(i),"images","url"));
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
