@@ -200,7 +200,7 @@ public class ItemListController implements Initializable {
                             }
                             else if (primaryController.getCheck().equals("sendo"))
                             {
-                                primaryController.getClient().GetDetailProductSendo(product.getproductID());
+                                primaryController.getClient().GetDetailProductSendo(product.getPart());
                             }
                             else if (primaryController.getCheck().equals("lazada"))
                             {
