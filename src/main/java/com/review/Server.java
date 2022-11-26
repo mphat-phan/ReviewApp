@@ -64,25 +64,25 @@ public class Server {
             SearchProduct(token[1],s);
         }
         else if(token[0].equals("ReviewProduct")){
-            ReviewProduct(Integer.parseInt(token[1]),s);
+            ReviewProduct(token[1],s);
         }
         else if (token[0].equals("clickDetail")) {
-            DetailProduct(Integer.parseInt(token[1]),s);
+            DetailProduct(token[1],s);
         }
         else if(token[0].equals("searchSendo")){
             SearchProductSendo(token[1],s);
         }
         else if(token[0].equals("clickDetailSendo")){
-            DetailProductSendo(Integer.valueOf(token[1]),s);
+            DetailProductSendo(token[1],s);
         }
         else if(token[0].equals("ReviewProductSendo")){
-            ReviewProductSendo(Integer.valueOf(token[1]),s);
+            ReviewProductSendo(token[1],s);
         }
         else if(token[0].equals("searchShopee")){
             SearchProductShopee(token[1],s);
         }
         else if (token[0].equals("clickDetailShopee")) {
-            DetailProductShopee(Integer.parseInt(token[1]),Integer.parseInt(token[2]),s);
+            DetailProductShopee(token[1],token[2],s);
         }
         else if (token[0].equals("ReviewProductShopee")) {
             ReviewProductShopee(token[1],token[2],s);
@@ -92,11 +92,11 @@ public class Server {
         }
         else if(token[0].equals("clickDetailLazada"))
         {
-            DetailProductLazada(Integer.parseInt(token[1]),s);
+            DetailProductLazada(token[1],s);
         }
         else if(token[0].equals("ReviewProductLazada"))
         {
-            ReviewProductLazada(Integer.parseInt(token[1]),s);
+            ReviewProductLazada(token[1],s);
         }
 
     }
@@ -112,11 +112,11 @@ public class Server {
         Sendo sendo = new Sendo();
         SendList(sendo.getProductsByQuerySendo(query),s);
     }
-    public void DetailProductSendo(Integer ID,String[] s)throws IOException{
+    public void DetailProductSendo(String part,String[] s)throws IOException{
         Sendo sendo = new Sendo();
-        SendDetailProduct(sendo.getDetailProductSendo(String.valueOf(ID)),s);
+        SendDetailProduct(sendo.getDetailProductSendo(part),s);
     }
-    public void ReviewProductSendo(Integer ID,String[] s)throws IOException{
+    public void ReviewProductSendo(String ID,String[] s)throws IOException{
         Sendo sendo = new Sendo();
         SendListReviews(sendo.getRatesByQuerySendo(ID),s);
     }
@@ -124,24 +124,24 @@ public class Server {
         Shopee shopee = new Shopee();
         SendList(shopee.getProductsByQueryShopee(query),s);
     }
-    public void ReviewProduct(Integer ID,String[] s)throws IOException{
+    public void ReviewProduct(String ID,String[] s)throws IOException{
         Tiki tiki = new Tiki();
         SendListReviews(tiki.getRatesByQuery(ID),s);
     }
 
-    public void DetailProduct(Integer ID,String[] s)throws IOException{
+    public void DetailProduct(String ID,String[] s)throws IOException{
         Tiki tiki = new Tiki();
         SendDetailProduct(tiki.getDetailProduct(ID),s);
     }
-    public void ReviewProductLazada(Integer ID,String[] s)throws IOException{
+    public void ReviewProductLazada(String ID,String[] s)throws IOException{
         Lazada lazada = new Lazada();
         SendListReviews(lazada.getRatesByQueryLazada(String.valueOf(ID)),s);
     }
-    public void DetailProductLazada(Integer ID,String[] s)throws IOException{
+    public void DetailProductLazada(String ID,String[] s)throws IOException{
         Lazada lazada = new Lazada();
         SendDetailProduct(lazada.getDetailProduct(String.valueOf(ID)),s);
     }
-    public void DetailProductShopee(Integer ID,Integer IDshop,String[] s)throws IOException{
+    public void DetailProductShopee(String ID,String IDshop,String[] s)throws IOException{
         Shopee shopee = new Shopee();
         SendDetailProduct(shopee.getDetailProduct(String.valueOf(ID),String.valueOf(IDshop)),s);
     }

@@ -73,79 +73,59 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetDetailProduct(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
+    public void GetDetailProduct(String IDProduct) throws IOException,ClassNotFoundException{
         IDProduct = "clickDetail#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetDetailProductLazada(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
+    public void GetDetailProductLazada(String IDProduct) throws IOException,ClassNotFoundException{
         IDProduct = "clickDetailLazada#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetDetailProductShopee(Integer ID,Integer IDShop) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        String IDShop2="";
-        IDShop2 = IDShop.toString();
-        IDProduct = ID.toString();
-        IDProduct = "clickDetailShopee#"+IDProduct+"#"+IDShop2;
+    public void GetDetailProductShopee(String IDProduct,String IDShop) throws IOException,ClassNotFoundException{
+        IDProduct = "clickDetailShopee#"+IDProduct+"#"+IDShop;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetDetailProductSendo(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
+    public void GetDetailProductSendo(String IDProduct) throws IOException,ClassNotFoundException{
         IDProduct = "clickDetailSendo#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProduct(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
+    public void GetReviewProduct(String IDProduct) throws IOException,ClassNotFoundException{
         IDProduct = "ReviewProduct#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductShopee(Integer ID,Integer IDShop) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        String IDShop2="";
-        IDShop2 = IDShop.toString();
-        IDProduct = ID.toString();
-        IDProduct = "ReviewProductShopee#"+IDProduct+"#"+IDShop2;
+    public void GetReviewProductShopee(String IDProduct,String IDShop) throws IOException,ClassNotFoundException{
+        IDProduct = "ReviewProductShopee#"+IDProduct+"#"+IDShop;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductSendo(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
+    public void GetReviewProductSendo(String IDProduct) throws IOException,ClassNotFoundException{
         IDProduct = "ReviewProductSendo#"+IDProduct;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductLazada(Integer ID) throws IOException,ClassNotFoundException{
-        String IDProduct="";
-        IDProduct = ID.toString();
-        IDProduct = "ReviewProductLazada#"+IDProduct;
-        IDProduct=aes.encrypt(IDProduct);
-        byte[] data = IDProduct.getBytes();
+    public void GetReviewProductLazada(String ID) throws IOException,ClassNotFoundException{
+        ID = "ReviewProductLazada#"+ID;
+        ID=aes.encrypt(ID);
+        byte[] data = ID.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
