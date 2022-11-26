@@ -38,7 +38,7 @@ public class Lazada {
                 ProductDetail pdd=new ProductDetail();
                 JSONArray jsa = jsonArray.getJSONObject(i).getJSONArray("thumbs");
                 Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
-                pdd.setRating_average(Float.valueOf(c.intValue()));
+                pdd.setRating_average(c);
                 String v=jsonArray.getJSONObject(i).getString("review");
                 pdd.setReview_count(Integer.parseInt(v==""? "0":v));
                 String urldes="https:"+jsonArray.getJSONObject(i).getString("itemUrl");

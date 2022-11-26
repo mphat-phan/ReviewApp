@@ -52,6 +52,7 @@ public class ItemListController implements Initializable {
     private PrimaryController primaryController;
     @FXML
     void amazon_button_presss(MouseEvent event) throws IOException, ClassNotFoundException {
+        this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
@@ -182,8 +183,7 @@ public class ItemListController implements Initializable {
                 node = pagination_list.getChildren().get(i);
                 node.getStyleClass().remove("button-pagination-action");
             }
-
-
+            String t = ((Button)event.getSource()).getText();
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
         }
     };
