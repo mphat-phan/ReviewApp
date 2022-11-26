@@ -216,6 +216,15 @@ public class PrimaryController implements Initializable {
             if(check.equals("tiki")) {
                 client.GetReviewProduct(product.getproductID());
             }
+            if(check.equals("sendo")){
+                client.GetReviewProductSendo(product.getproductID());
+            }
+            if(check.equals("shopee")){
+                client.GetReviewProductShopee(product.getproductID(),product.getIdshop());
+            }
+            if(check.equals("lazada")){
+                client.GetReviewProductLazada(product.getproductID());
+            }
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
 
             itemDetailController.ratingListController.openRatingList(this);
