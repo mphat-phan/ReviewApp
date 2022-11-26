@@ -213,8 +213,9 @@ public class PrimaryController implements Initializable {
 
             Pane newpane1 = fxmlLoader.load();
             itemDetailController.ratingListController = fxmlLoader.getController();
-
-            client.GetReviewProduct(product.getproductID());
+            if(check.equals("tiki")) {
+                client.GetReviewProduct(product.getproductID());
+            }
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
 
             itemDetailController.ratingListController.openRatingList(this);
