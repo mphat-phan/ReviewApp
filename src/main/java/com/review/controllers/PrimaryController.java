@@ -126,6 +126,8 @@ public class PrimaryController implements Initializable {
         client.SearchProduct(search_product.getText());
          Tiki = new ArrayList<>();
          Sendo = new ArrayList<>();
+         Shopee = new ArrayList<>();
+         Lazada = new ArrayList<>();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
@@ -141,7 +143,7 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        client.GetReviewProduct("184061913");
+        client.GetReviewProductSendo("23066374");
         ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
@@ -214,8 +216,18 @@ public class PrimaryController implements Initializable {
 
             Pane newpane1 = fxmlLoader.load();
             itemDetailController.ratingListController = fxmlLoader.getController();
-
-            client.GetReviewProduct(product.getproductID());
+            if(check.equals("tiki")) {
+                client.GetReviewProduct(product.getproductID());
+            }
+            if(check.equals("sendo")){
+                client.GetReviewProductSendo(product.getproductID());
+            }
+            if(check.equals("shopee")){
+                client.GetReviewProductShopee(product.getproductID(),product.getIdshop());
+            }
+            if(check.equals("lazada")){
+                client.GetReviewProductLazada(product.getproductID());
+            }
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
 
             itemDetailController.ratingListController.openRatingList(this,page);

@@ -74,7 +74,6 @@ public class Sendo {
             jsonArray = new JSONObject(doc.text()).getJSONArray("data");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
-                rate.setDate("");
                 rate.setRating(jsonArray.getJSONObject(i).getInt("star"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("user_name"));
                 rate.setUserImageUrl(ex.getImage(jsonArray.getJSONObject(i),"avatar"));
