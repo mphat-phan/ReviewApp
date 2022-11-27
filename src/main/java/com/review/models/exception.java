@@ -9,6 +9,7 @@ import java.util.List;
 public class exception {
     private  String[] urlDefault = {"//tiki.vn/assets/img/avatar.png",""};
     private String dirPath = new java.io.File("images/an-danh.png").getAbsolutePath();
+    private String dirPathNull = new java.io.File("images/null.jpg").getAbsolutePath();
     public Boolean checkUrl(String Url){
         for (int i=0;i< urlDefault.length;i++){
             if(Url.equals(urlDefault[i])){
@@ -49,6 +50,9 @@ public class exception {
             for(int i=0;i<n.length;i++) {
                 if(!checkUrl(n[i])) {
                     listimage.add(a + n[i]);
+                }
+                else{
+                    listimage.add(dirPathNull);
                 }
             }
         }
