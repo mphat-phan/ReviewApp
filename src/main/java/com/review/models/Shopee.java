@@ -66,7 +66,7 @@ public class Shopee {
         return ProductDetail;
     }
     public List<Rate> getRatesByQuery(String itemid,String shopid) throws IOException,RuntimeException {
-        url = "https://shopee.vn/api/v2/item/get_ratings?flag=1&itemid="+itemid+"&limit=10&offset=0&shopid="+shopid;
+        url = "https://shopee.vn/api/v2/item/get_ratings?&itemid="+itemid+"&limit=20&shopid="+shopid+"&type=5";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();

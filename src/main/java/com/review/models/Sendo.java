@@ -64,7 +64,7 @@ public class Sendo {
         return ProductDetail;
     }
     public List<Rate> getRatesByQuerySendo(String id) throws IOException,RuntimeException {
-        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=5&star=all";
+        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=20&star=3%20";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();

@@ -55,7 +55,7 @@ public class Tiki {
         return ProductDetail;
     }
     public List<Rate> getRatesByQuery(String id) throws IOException,RuntimeException {
-        url = "https://tiki.vn/api/v2/reviews?product_id=";
+        url = "https://tiki.vn/api/v2/reviews?sort=stars%7C4&page=1&product_id="+id+"&limit=20";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url+id).method(Connection.Method.GET).ignoreContentType(true).execute();
