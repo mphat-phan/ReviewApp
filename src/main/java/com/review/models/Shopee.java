@@ -78,7 +78,7 @@ public class Shopee {
                 rate = new Rate();
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating_star"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("author_username"));
-                rate.setUserImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getString("author_portrait"));
+                rate.setUserImageUrl("https://cf.shopee.vn/file/"+ex.getImage(jsonArray.getJSONObject(i),"author_portrait"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("comment"));
                 rate.setImageUrl(ex.getListImagebyString(jsonArray.getJSONObject(i),"images","https://cf.shopee.vn/file/"));
                 ReviewList.add(rate);

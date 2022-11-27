@@ -125,6 +125,8 @@ public class PrimaryController implements Initializable {
         client.SearchProduct(search_product.getText());
          Tiki = new ArrayList<>();
          Sendo = new ArrayList<>();
+         Shopee = new ArrayList<>();
+         Lazada = new ArrayList<>();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
@@ -140,7 +142,7 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        client.GetReviewProduct("184061913");
+        client.GetReviewProductSendo("23066374");
         ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();

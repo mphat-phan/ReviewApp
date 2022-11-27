@@ -77,7 +77,7 @@ public class Sendo {
                 rate.setDate("");
                 rate.setRating(jsonArray.getJSONObject(i).getInt("star"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("user_name"));
-                rate.setUserImageUrl(jsonArray.getJSONObject(i).getString("avatar"));
+                rate.setUserImageUrl(ex.getImage(jsonArray.getJSONObject(i),"avatar"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("comment"));
                 rate.setImageUrl(ex.getListImagebyString(jsonArray.getJSONObject(i),"images",""));
                 ReviewList.add(rate);
