@@ -29,6 +29,7 @@ public class Sendo {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("default_price_max"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getInt("sale_price_max"));
+//                product.setRating_average(jsonArray.getJSONObject(i).getJSONObject("rated").getFloat("star"));
                 String [] n=jsonArray.getJSONObject(i).getString("category_path").split(".html");
                 product.setPart(n[0]);
                 productList.add(product);
@@ -70,10 +71,18 @@ public class Sendo {
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
+        JSONArray jsonArrayImages= null;
+
         try {
             jsonArray = new JSONObject(doc.text()).getJSONArray("data");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
+                List<String> a = new ArrayList<>();
+                jsonArrayImages = jsonArray.getJSONObject(i).getJSONArray("images");
+                for(int j=0;j<jsonArrayImages.length();j++){
+                    a.add(jsonArrayImages.get(j).toString());
+                }
+                rate.setImageUrl(a);
                 rate.setDate("");
                 rate.setRating(jsonArray.getJSONObject(i).getInt("star"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("user_name"));

@@ -29,6 +29,7 @@ public class Tiki {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("thumbnail_url"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("original_price"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getInt("price"));
+                product.setRating_average(jsonArray.getJSONObject(i).getFloat("rating_average"));
                 productList.add(product);
             }
         } catch (JSONException e) {
@@ -55,7 +56,7 @@ public class Tiki {
         return ProductDetail;
     }
     public List<Rate> getRatesByQuery(String id) throws IOException,RuntimeException {
-        url = "https://tiki.vn/api/v2/reviews?product_id=";
+        url = "https://tiki.vn/api/v2/reviews?limit=10&product_id=";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url+id).method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -83,8 +84,8 @@ public class Tiki {
         Tiki tiki = new Tiki();
         ProductDetail productDetail = new ProductDetail();
         productDetail = tiki.getDetailProduct("13362558");
-//          List<Product> productList = new ArrayList<>();
-//        productList = tiki.getProductsByQuery("iphone");
+          List<Product> productList = new ArrayList<>();
+        productList = tiki.getProductsByQuery("iphone");
         List<Rate> productListReviews = new ArrayList<>();
         productListReviews = tiki.getRatesByQuery("184061913");
         System.out.println("Hello");
