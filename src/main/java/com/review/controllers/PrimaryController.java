@@ -90,6 +90,15 @@ public class PrimaryController implements Initializable {
     private ItemListController itemListController;
     private ItemDetailController itemDetailController;
     private InfoDetailController infoDetailController;
+
+    public RatingAggregatorController getRatingAggregatorController() {
+        return ratingAggregatorController;
+    }
+
+    public void setRatingAggregatorController(RatingAggregatorController ratingAggregatorController) {
+        this.ratingAggregatorController = ratingAggregatorController;
+    }
+
     private RatingAggregatorController ratingAggregatorController;
 
     @FXML
@@ -133,6 +142,7 @@ public class PrimaryController implements Initializable {
         fxmlLoader.load();
         itemListController = fxmlLoader.getController();
         itemListController.productList = client.ReceiveList();
+
         swapItemList();
     }
 
@@ -143,7 +153,8 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        client.GetReviewProductSendo("23066374");
+        ratingAggregatorController = fxmlLoader.getController();
+        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID());
         ratingAggregatorController.rateList = client.ReceiveListReviews();
 
         swapRatingAggregator();
@@ -169,6 +180,7 @@ public class PrimaryController implements Initializable {
     public void swapRatingAggregator(){
         try {
             ratingAggregatorController.openRatingAggregator(this);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -263,11 +275,6 @@ public class PrimaryController implements Initializable {
                 Tiki = itemListController.productList;
                 search_product.setText("ipad");
                 setCheck("tiki");
-
-//                client.GetReviewProduct(184061913);
-//                ratingAggregatorController.rateList = client.ReceiveListReviews();
-
-//                swapRatingAggregator();
                 swapItemList();
 
             } catch (ClassNotFoundException e) {

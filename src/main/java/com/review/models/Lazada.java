@@ -33,6 +33,7 @@ public class Lazada {
                 product.setproductID(String.valueOf(jsonArray.getJSONObject(i).getInt("itemId")));
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
+                product.setRating_average(jsonArray.getJSONObject(i).getFloat("ratingScore"));
                 product.setPrice(Integer.parseInt(jsonArray.getJSONObject(i).getString("originalPrice").split(".00")[0]));
                 product.setPrice_sale(Integer.parseInt(jsonArray.getJSONObject(i).getString("price").split(".00")[0]));
                 //get productDetail

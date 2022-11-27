@@ -12,6 +12,7 @@ public class Product implements Serializable {
     private String imageUrl;
     private String part;
     private String idshop;
+    private Float rating_average;
 
     public String getPart() {
         return part;
@@ -66,5 +67,13 @@ public class Product implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Float getRating_average() {
+        return rating_average;
+    }
+
+    public void setRating_average(Float rating_average) {
+        this.rating_average = rating_average;
     }
 }
