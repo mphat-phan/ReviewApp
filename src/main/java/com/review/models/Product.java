@@ -7,8 +7,8 @@ public class Product implements Serializable {
     private List<Rate> rates;
     private String productID;
     private String productName;
-    private int price;
-    private Integer price_sale;
+    private long price;
+    private long price_sale;
     private String imageUrl;
     private String part;
     private String idshop;
@@ -44,19 +44,19 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public int getPrice_sale() {
+    public long getPrice_sale() {
         return price_sale;
     }
 
-    public void setPrice_sale(int price_sale) {
+    public void setPrice_sale(long price_sale) {
         this.price_sale = price_sale;
     }
 

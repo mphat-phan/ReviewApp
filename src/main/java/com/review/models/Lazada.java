@@ -57,7 +57,7 @@ public class Lazada {
     public String getCookie(){
         File f=new File("cookie.txt");
         String cookie=null;
-        String url="https://my.lazada.vn/pdp/review/getReviewList?itemId=911354757&pageSize=5&filter=0&sort=0&pageNo=1";
+        String url= "https://my.lazada.vn/pdp/review/getReviewList?itemId=911354757&pageSize=5&filter=0&sort=0&pageNo=1";
         try {
             Connection.Response re = Jsoup.connect("https://www.lazada.vn/products/tui-10-chiec-khau-trang-hinh-cua-khau-trang-y-te-thiet-ke-thoi-trang-khang-khuanchong-tia-uvkhong-gay-dau-tai-i2039435757-s9519293441.html?spm=a2o4n.home.just4u.1.19056afeZVm19M&&scm=1007.17519.162103.0&pvid=920240d1-5fb2-4406-a6bf-9b43d5893aaa&search=0&clickTrackInfo=tctags%3A1215065286%3Btcsceneid%3AHPJFY%3Bbuyernid%3A686555bf-8fbd-4527-e2ea-341799b2f15b%3Btcboost%3A0%3Bpvid%3A920240d1-5fb2-4406-a6bf-9b43d5893aaa%3Bchannel_id%3A0000%3Bmt%3Ai2i%3Bitem_id%3A2039435757%3Bself_ab_id%3A162103%3Bself_app_id%3A7519%3Blayer_buckets%3A955.7333_5437.25236_6059.28889%3Bpos%3A0%3B").ignoreContentType(true).followRedirects(true).method(Connection.Method.GET).execute();
             cookie=re.cookie("x5sec");
@@ -87,7 +87,6 @@ public class Lazada {
             jsonArray = new JSONObject(doc.text()).getJSONObject("model").getJSONArray("items");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
-                rate.setDate(jsonArray.getJSONObject(i).getString("boughtDate"));
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
                 rate.setUsername(jsonArray.getJSONObject(i).getString("buyerName"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("reviewContent"));

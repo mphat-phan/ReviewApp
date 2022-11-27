@@ -65,7 +65,6 @@ public class Tiki {
             jsonArray = new JSONObject(doc.text()).getJSONArray("data");
             for(int i = 0; i < jsonArray.length(); i++) {
                 rate = new Rate();
-                rate.setDate(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("created_time"));
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
                 rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
                 rate.setUserImageUrl(ex.getImage(jsonArray.getJSONObject(i).getJSONObject("created_by"),"avatar_url"));

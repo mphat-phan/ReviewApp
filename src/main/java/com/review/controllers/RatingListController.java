@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class RatingListController implements Initializable {
     @FXML
     public GridPane rating_grid;
-
+    PrimaryController pr;
     @FXML
     public Label count_rating_product;
 
@@ -81,12 +81,16 @@ public class RatingListController implements Initializable {
                 node.getStyleClass().remove("button-pagination-action");
             }
             ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
+            openRatingList(pr,Integer.parseInt(((Button)event.getSource()).getText()));
         }
     };
-    public void openRatingList(PrimaryController primaryController){
+    public void openRatingList(PrimaryController primaryController,int page){
         int row = 1;
+        int start=10*(page-1);
+        pr=primaryController;
+        int end= primaryController.getItemDetailController().ratingListController.rateList.size()==start+10 ? start+10 : primaryController.getItemDetailController().ratingListController.rateList.size();
         try {
-            for (int i = 0; i < primaryController.getItemDetailController().ratingListController.rateList.size(); i++){
+            for (int i = start; i < end; i++){
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/com/review/rating.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();

@@ -104,6 +104,7 @@ public class PrimaryController implements Initializable {
 
     @FXML
     private TextField search_product ;
+    private int page=1;
 
     public void setInfoDetailController(InfoDetailController infoDetailController) {
         this.infoDetailController = infoDetailController;
@@ -217,7 +218,7 @@ public class PrimaryController implements Initializable {
             client.GetReviewProduct(product.getproductID());
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
 
-            itemDetailController.ratingListController.openRatingList(this);
+            itemDetailController.ratingListController.openRatingList(this,page);
 
             itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
             itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
