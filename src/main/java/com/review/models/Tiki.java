@@ -68,7 +68,7 @@ public class Tiki {
                 rate.setDate(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("created_time"));
                 rate.setRating(jsonArray.getJSONObject(i).getInt("rating"));
                 rate.setUsername(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("full_name"));
-                rate.setUserImageUrl(jsonArray.getJSONObject(i).getJSONObject("created_by").getString("avatar_url"));
+                rate.setUserImageUrl(ex.getImage(jsonArray.getJSONObject(i).getJSONObject("created_by"),"avatar_url"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("content"));
                 rate.setImageUrl(ex.getListImage(jsonArray.getJSONObject(i),"images","full_path"));
                 ReviewList.add(rate);
