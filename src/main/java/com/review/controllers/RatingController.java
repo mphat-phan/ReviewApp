@@ -39,7 +39,6 @@ public class RatingController {
         user_name_label.setText(rate.getUsername());
         user_image_label.setImage(user_image);
         comment_label.setText(rate.getComment());
-        date_label.setText(rate.getDate());
 
     }
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.Rating?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="489.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="489.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingController">
    <styleClass>
       <String fx:value="rating-box" />
       <String fx:value="shadow2" />
@@ -34,7 +34,6 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="date_label" text="7/11/2022" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_RIGHT" prefHeight="62.0" prefWidth="241.0">
