@@ -29,7 +29,7 @@ public class Sendo {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("default_price_max"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getInt("sale_price_max"));
-//                product.setRating_average(jsonArray.getJSONObject(i).getJSONObject("rated").getFloat("star"));
+                product.setRating_average((float) ex.getradting(jsonArray.getJSONObject(i).getJSONObject("rated"),"star"));
                 String [] n=jsonArray.getJSONObject(i).getString("category_path").split(".html");
                 product.setPart(n[0]);
                 productList.add(product);

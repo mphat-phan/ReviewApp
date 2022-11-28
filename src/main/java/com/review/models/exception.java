@@ -1,7 +1,5 @@
 package com.review.models;
-import org.jsoup.*;
 import org.json.*;
-import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +15,16 @@ public class exception {
             }
         }
         return false;
+    }
+    public double getradting(JSONObject js, String s){
+        double f;
+        try{
+            f= js.getFloat(s);
+        }
+        catch (JSONException e){
+            f=1.0*0;
+        }
+        return f;
     }
     public String getImage(JSONObject js,String s){
         String image;
