@@ -19,6 +19,10 @@ public class Lazada {
     private String url ;
     private exception ex=new exception();
     private HashMap<String,ProductDetail> listproductdetail=new HashMap<>();
+
+    public Lazada() throws IOException {
+    }
+
     public List<Product> getProductsByQueryLazada(String q) throws IOException,RuntimeException {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
         List<Product> productList = new ArrayList<>();

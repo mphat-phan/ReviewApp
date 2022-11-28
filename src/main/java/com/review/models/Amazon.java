@@ -14,6 +14,10 @@ public class Amazon {
     private String url ;
     private exception ex=new exception();
     private String key="E7B3149FDA74489EB75EAB3FD69437F7";
+
+    public Amazon() throws IOException {
+    }
+
     public List<Product> getProductsByQueryAmazon(String q) throws IOException,RuntimeException {
         url = "https://api.rainforestapi.com/request?api_key="+key+"&type=search&amazon_domain=amazon.com&search_term=";
         List<Product> productList = new ArrayList<>();

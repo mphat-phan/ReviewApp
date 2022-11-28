@@ -40,7 +40,9 @@ public class RatingController {
         user_image_label.setImage(user_image);
         comment_label.setText(rate.getComment());
 //        date_label.setText(rate.getDate());
-        rating_label.setRating(rate.getRating());
+        if(rate.getRating() != null){
+            rating_label.setRating(rate.getRating());
+        }
     }
 
 }

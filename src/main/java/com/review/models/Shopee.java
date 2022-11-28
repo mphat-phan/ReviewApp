@@ -16,6 +16,10 @@ import java.util.Scanner;
 public class Shopee {
     private String url ;
     private exception ex=new exception();
+
+    public Shopee() throws IOException {
+    }
+
     public List<Product> getProductsByQueryShopee(String q) throws IOException,RuntimeException {
         url = "https://shopee.vn/api/v4/search/search_items?by=relevancy&keyword="+q+"&limit=10&newest=0&order=desc";
         List<Product> productList = new ArrayList<>();

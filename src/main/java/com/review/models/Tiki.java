@@ -13,6 +13,10 @@ import java.util.List;
 public class Tiki {
     private String url ;
     private exception ex=new exception();
+
+    public Tiki() throws IOException {
+    }
+
     public List<Product> getProductsByQuery(String q) throws IOException,RuntimeException {
         url = "https://tiki.vn/api/v2/products?limit=10&q=";
         List<Product> productList = new ArrayList<>();

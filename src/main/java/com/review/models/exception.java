@@ -3,13 +3,15 @@ import org.jsoup.*;
 import org.json.*;
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class exception {
     private  String[] urlDefault = {"//tiki.vn/assets/img/avatar.png",""};
-    private String dirPath = new java.io.File("images/an-danh.png").getAbsolutePath();
-    private String dirPathNull = new java.io.File("images/null.jpg").getAbsolutePath();
+    private String dirPath = new java.io.File("C:\\Users\\VIP\\IdeaProjects\\ReviewApp\\src\\main\\resources\\images\\an-danh.png").getAbsolutePath();
+    private String dirPathNull = new java.io.File("C:\\Users\\VIP\\IdeaProjects\\ReviewApp\\src\\main\\resources\\images\\null.jpg").getAbsolutePath();
+
     public Boolean checkUrl(String Url){
         for (int i=0;i< urlDefault.length;i++){
             if(Url.equals(urlDefault[i])){

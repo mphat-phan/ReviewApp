@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,11 +37,11 @@ public class RatingAggregatorController implements Initializable {
 
 
     @FXML
-    private AnchorPane lazada_button;
+    public AnchorPane lazada_button;
     @FXML
-    private AnchorPane sendo_button;
+    public AnchorPane sendo_button;
     @FXML
-    private AnchorPane tiki_button;
+    public AnchorPane tiki_button;
     @FXML
     private ScrollPane rating_scroll;
     @FXML
@@ -100,8 +101,8 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
-        if(this.primaryController.getRatingAggregatorController().getSendo().isEmpty()) {
-            this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText().split(" ")[0]);
+        if(this.primaryController.getRatingAggregatorController().getShoppe().isEmpty()) {
+            this.primaryController.getClient().SearchProductShopee(this.primaryController.getItemListController().productList.get(0).getProductName());
             Product p = this.primaryController.getClient().ReceiveList().get(0);
             this.primaryController.getClient().GetReviewProductShopee(p.getproductID(),p.getIdshop());
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
@@ -124,7 +125,7 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getSendo().isEmpty()) {
-            this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText().split(" ")[0]);
+            this.primaryController.getClient().SearchProductLazada(this.primaryController.getItemListController().productList.get(0).getProductName());
             Product p = this.primaryController.getClient().ReceiveList().get(0);
             this.primaryController.getClient().GetReviewProductSendo(p.getproductID());
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
@@ -147,7 +148,7 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getSendo().isEmpty()) {
-            this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText().split(" ")[0]);
+            this.primaryController.getClient().SearchProductSendo(this.primaryController.getItemListController().productList.get(0).getProductName());
             Product p = this.primaryController.getClient().ReceiveList().get(0);
                 this.primaryController.getClient().GetReviewProductSendo(p.getproductID());
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
@@ -274,6 +275,7 @@ public class RatingAggregatorController implements Initializable {
 
                     ratingAggregatorController.pagination_list.getChildren().clear();
                     setPagination();
+
 
 
                 }

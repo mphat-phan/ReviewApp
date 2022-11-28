@@ -44,6 +44,8 @@ public class ItemController {
         sale_price_label.setText("đ"+ product.getPrice_sale());
         Image image = new Image(product.getImageUrl());
         image_view.setImage(image);
-//        rating_label.setRating(Float.valueOf(product.getRating_average()));
+        if(product.getRating_average() != null){
+            rating_label.setRating(Float.valueOf(product.getRating_average()));
+        }
     }
 }

@@ -13,6 +13,10 @@ import java.util.List;
 public class Sendo {
     private String url ;
     private exception ex=new exception();
+
+    public Sendo() throws IOException {
+    }
+
     public List<Product> getProductsByQuerySendo(String q) throws IOException,RuntimeException {
         url = "https://searchlist-api.sendo.vn/web/products?page=1&size=10&sortType=rank&q=";
         List<Product> productList = new ArrayList<>();
@@ -65,7 +69,7 @@ public class Sendo {
         return ProductDetail;
     }
     public List<Rate> getRatesByQuerySendo(String id) throws IOException,RuntimeException {
-        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=5&star=all";
+        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=&star=all";
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -102,7 +106,7 @@ public class Sendo {
         List<Product> productList = new ArrayList<>();
         productList = sendo.getProductsByQuerySendo("ipad");
       List<Rate> productListReviews = new ArrayList<>();
-      productListReviews = sendo.getRatesByQuerySendo("23066374");
+      productListReviews = sendo.getRatesByQuerySendo("99075654");
         System.out.println("Hello");
     }
 }
