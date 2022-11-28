@@ -2,11 +2,19 @@ package com.review.controllers;
 
 import com.review.models.Rate;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
+
+import java.io.IOException;
 
 public class RatingController {
     @FXML
@@ -26,6 +34,8 @@ public class RatingController {
 
     @FXML
     private Label user_name_label;
+    @FXML
+    private HBox image_box;
 
 
     private String dirPath = new java.io.File("images/an-danh.png").getAbsolutePath();
@@ -33,8 +43,34 @@ public class RatingController {
         Image user_image = new Image(rate.getUserImageUrl());
         if(!rate.getImageUrl().isEmpty())
         {
-            Image image = new Image(rate.getImageUrl().get(0));
-            image_label.setImage(image);
+            for(int i = 0; i < rate.getImageUrl().size(); i++){
+                ImageView imageView = new ImageView();
+                imageView.setFitHeight(50);
+                imageView.setFitWidth(50);
+                Image image = new Image(rate.getImageUrl().get(i));
+                imageView.setImage(image);
+                image_box.getChildren().add(imageView);
+
+                imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/com/review/image.fxml"));
+                    Parent root = null;
+                    try {
+                        root = fxmlLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    ImageController imageController = fxmlLoader.getController();
+                    imageController.image_view.setImage(image);
+                    root.getStylesheets().add("stylesheets.css");
+                    stage.setTitle("Image");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                });
+            }
+            //Image image = new Image(rate.getImageUrl().get(0));
+            //image_label.setImage(image);
         }
         user_name_label.setText(rate.getUsername());
         user_image_label.setImage(user_image);

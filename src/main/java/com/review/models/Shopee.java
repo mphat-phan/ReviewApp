@@ -39,8 +39,8 @@ public class Shopee {
                 product.setIdshop(String.valueOf(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("shopid")));
                 product.setProductName(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("name"));
                 product.setImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
-                product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price_max_before_discount"));
-                product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price"));
+                product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("price_max_before_discount")/100000);
+                product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("price")/100000);
                 product.setRating_average(jsonArray.getJSONObject(i).getJSONObject("item_basic").getJSONObject("item_rating").getFloat("rating_star"));
                 productList.add(product);
             }
@@ -70,8 +70,8 @@ public class Shopee {
         }
         return ProductDetail;
     }
-    public List<Rate> getRatesByQuery(String itemid,String shopid) throws IOException,RuntimeException {
-        url = "https://shopee.vn/api/v2/item/get_ratings?flag=1&itemid="+itemid+"&limit=10&offset=0&shopid="+shopid;
+    public List<Rate> getRatesByQuery(String itemid,String shopid, int page) throws IOException,RuntimeException {
+        url = "https://shopee.vn/api/v2/item/get_ratings?flag=1&itemid="+itemid+"&limit=10&offset="+(10*(page-1))+"&shopid="+shopid;
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -100,7 +100,7 @@ public class Shopee {
 //         List<Product> productList = new ArrayList<>();
 //       productList = tiki.getProductsByQuery("iphone");
         List<Rate> productListReviews = new ArrayList<>();
-        productListReviews = shopee.getRatesByQuery("5600084939","88201679");
+        productListReviews = shopee.getRatesByQuery("5600084939","88201679",1);
         ProductDetail pđ=shopee.getDetailProduct("5600084939","88201679");
         System.out.println("list.get(1).getComment()");
     }

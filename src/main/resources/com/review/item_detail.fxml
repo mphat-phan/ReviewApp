@@ -74,7 +74,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="277.0">
                <children>
-                  <AnchorPane fx:id="info_button" onMousePressed="#info_button_press" styleClass="button-brands">
+                  <AnchorPane fx:id="info_button" onMousePressed="#info_button_press">
                      <children>
                         <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -94,6 +94,10 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <styleClass>
+                        <String fx:value="button-brands" />
+                        <String fx:value="action" />
+                     </styleClass>
                   </AnchorPane>
                   <AnchorPane fx:id="rating_button" onMousePressed="#rating_button_press" styleClass="button-brands">
                      <children>

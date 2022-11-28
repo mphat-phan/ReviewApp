@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.Rating;
 
+import java.text.DecimalFormat;
+
 public class ItemController {
 
     @FXML
@@ -36,12 +38,14 @@ public class ItemController {
         myListener.onClickListener(product,productDetail);
     }
     public void setData(Product product,ProductDetail productDetail, MyListener myListener){
+        String patternTienTe = "###,###,###đ";
+        DecimalFormat formatTienTe = new DecimalFormat(patternTienTe);
         this.product = product;
         this.productDetail = productDetail;
         this.myListener = myListener;
         product_name_label.setText(product.getProductName());
-        price_label.setText("đ"+ product.getPrice());
-        sale_price_label.setText("đ"+ product.getPrice_sale());
+        price_label.setText(formatTienTe.format(product.getPrice()));
+        sale_price_label.setText(formatTienTe.format(product.getPrice_sale()));
         Image image = new Image(product.getImageUrl());
         image_view.setImage(image);
         if(product.getRating_average() != null){

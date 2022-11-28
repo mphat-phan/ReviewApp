@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -59,6 +60,14 @@ public class ItemListController implements Initializable {
         if(primaryController.getShopee().isEmpty()) {
             this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
             this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            if(this.primaryController.getItemListController().productList.size() == 0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không tìm thấy sản phẩm trong Shopee!");
+                alert.showAndWait();
+                return;
+            }
             this.primaryController.setShopee(this.primaryController.getItemListController().productList);
         }
         else {
@@ -81,6 +90,14 @@ public class ItemListController implements Initializable {
         if(primaryController.getLazada().isEmpty()) {
             this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
             this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+            if(this.primaryController.getItemListController().productList.size() == 0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không tìm thấy sản phẩm trong Lazada!");
+                alert.showAndWait();
+                return;
+            }
             this.primaryController.setLazada(this.primaryController.getItemListController().productList);
         }
         else {
@@ -104,6 +121,14 @@ public class ItemListController implements Initializable {
             if(primaryController.getSendo().isEmpty()) {
                 this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
                 this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                if(this.primaryController.getItemListController().productList.size() == 0){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning alert");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Không tìm thấy sản phẩm trong Sendo!");
+                    alert.showAndWait();
+                    return;
+                }
                 this.primaryController.setSendo(this.primaryController.getItemListController().productList);
             }
             else {
@@ -126,6 +151,14 @@ public class ItemListController implements Initializable {
             if(primaryController.getTiki().isEmpty()) {
                 this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
                 this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
+                if(this.primaryController.getItemListController().productList.size() == 0){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning alert");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Không tìm thấy sản phẩm trong tiki!");
+                    alert.showAndWait();
+                    return;
+                }
                 this.primaryController.setTiki(this.primaryController.getItemListController().productList);
                 this.primaryController.swapItemList();
             }

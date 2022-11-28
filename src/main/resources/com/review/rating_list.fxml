@@ -59,7 +59,7 @@
             </ScrollPane>
          </children>
       </HBox>
-      <AnchorPane prefHeight="59.0" prefWidth="615.0">
+      <AnchorPane prefHeight="59.0" prefWidth="615.0" visible="false">
          <children>
             <HBox alignment="CENTER" layoutX="77.0" layoutY="8.0" prefHeight="40.0" prefWidth="346.0">
                <children>

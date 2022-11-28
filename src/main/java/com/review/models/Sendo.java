@@ -13,10 +13,6 @@ import java.util.List;
 public class Sendo {
     private String url ;
     private exception ex=new exception();
-
-    public Sendo() throws IOException {
-    }
-
     public List<Product> getProductsByQuerySendo(String q) throws IOException,RuntimeException {
         url = "https://searchlist-api.sendo.vn/web/products?page=1&size=10&sortType=rank&q=";
         List<Product> productList = new ArrayList<>();
@@ -33,7 +29,7 @@ public class Sendo {
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setPrice(jsonArray.getJSONObject(i).getInt("default_price_max"));
                 product.setPrice_sale(jsonArray.getJSONObject(i).getInt("sale_price_max"));
-//                product.setRating_average(jsonArray.getJSONObject(i).getJSONObject("rated").getFloat("star"));
+                product.setRating_average((float) ex.getradting(jsonArray.getJSONObject(i).getJSONObject("rated"),"star"));
                 String [] n=jsonArray.getJSONObject(i).getString("category_path").split(".html");
                 product.setPart(n[0]);
                 productList.add(product);
@@ -68,8 +64,8 @@ public class Sendo {
         }
         return ProductDetail;
     }
-    public List<Rate> getRatesByQuerySendo(String id) throws IOException,RuntimeException {
-        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=&star=all";
+    public List<Rate> getRatesByQuerySendo(String id, int page) throws IOException,RuntimeException {
+        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=10&star=all&page="+page;
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -106,7 +102,7 @@ public class Sendo {
         List<Product> productList = new ArrayList<>();
         productList = sendo.getProductsByQuerySendo("ipad");
       List<Rate> productListReviews = new ArrayList<>();
-      productListReviews = sendo.getRatesByQuerySendo("99075654");
+      productListReviews = sendo.getRatesByQuerySendo("23066374",2);
         System.out.println("Hello");
     }
 }

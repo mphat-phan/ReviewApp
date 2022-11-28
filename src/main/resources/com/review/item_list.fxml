@@ -19,24 +19,6 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <AnchorPane fx:id="ebay_button" onMousePressed="#ebay_button_press" styleClass="button-brands">
-               <children>
-                  <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/ebay.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Shopee">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="tiki_button" onMousePressed="#tiki_button_press" styleClass="button-brands">
                <children>
                   <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -65,6 +47,24 @@
                            </image>
                         </ImageView>
                         <Label text="Sendo">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="ebay_button" onMousePressed="#ebay_button_press" styleClass="button-brands">
+               <children>
+                  <VBox alignment="CENTER" layoutX="39.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="138.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fitHeight="35.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/ebay.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Shopee">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -109,9 +109,9 @@
             </ScrollPane>
          </children>
       </HBox>
-      <AnchorPane prefHeight="78.0" prefWidth="1500.0" style="-fx-background-color: white;">
+      <AnchorPane prefHeight="78.0" prefWidth="1500.0" style="-fx-background-color: white;" visible="false">
          <children>
-            <HBox alignment="CENTER" layoutX="575.0" layoutY="22.0" prefHeight="40.0" prefWidth="346.0">
+            <HBox alignment="CENTER" layoutX="575.0" layoutY="22.0" prefHeight="40.0" prefWidth="346.0" visible="false">
                <children>
                   <FontAwesomeIconView glyphName="CHEVRON_LEFT" onMousePressed="#pagination_left_press" styleClass="button-pagination-arrow" />
                   <HBox fx:id="pagination_list" alignment="CENTER" prefHeight="36.0" prefWidth="278.0" spacing="10.0">

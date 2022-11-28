@@ -101,29 +101,29 @@ public class Client {
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProduct(String IDProduct) throws IOException,ClassNotFoundException{
-        IDProduct = "ReviewProduct#"+IDProduct;
+    public void GetReviewProduct(String IDProduct,int page) throws IOException,ClassNotFoundException{
+        IDProduct = "ReviewProduct#"+IDProduct+"#"+page;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductShopee(String IDProduct,String IDShop) throws IOException,ClassNotFoundException{
-        IDProduct = "ReviewProductShopee#"+IDProduct+"#"+IDShop;
+    public void GetReviewProductShopee(String IDProduct,String IDShop,int page) throws IOException,ClassNotFoundException{
+        IDProduct = "ReviewProductShopee#"+IDProduct+"#"+IDShop+"#"+page;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductSendo(String IDProduct) throws IOException,ClassNotFoundException{
-        IDProduct = "ReviewProductSendo#"+IDProduct;
+    public void GetReviewProductSendo(String IDProduct,int page) throws IOException,ClassNotFoundException{
+        IDProduct = "ReviewProductSendo#"+IDProduct+"#"+page;
         IDProduct=aes.encrypt(IDProduct);
         byte[] data = IDProduct.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
         socket.send(dpsend);
     }
-    public void GetReviewProductLazada(String ID) throws IOException,ClassNotFoundException{
-        ID = "ReviewProductLazada#"+ID;
+    public void GetReviewProductLazada(String ID, int page) throws IOException,ClassNotFoundException{
+        ID = "ReviewProductLazada#"+ID+"#"+page;
         ID=aes.encrypt(ID);
         byte[] data = ID.getBytes();
         dpsend = new DatagramPacket(data, data.length, add, destPort);
