@@ -35,18 +35,17 @@ public class Sendo {
                 productList.add(product);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return productList;
     }
     public ProductDetail getDetailProductSendo(String part) throws IOException,RuntimeException {
-        ProductDetail ProductDetail;
+        ProductDetail ProductDetail = new ProductDetail();;
         url = "https://detail-api.sendo.vn/full/"+part;
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).header("referer","https://www.sendo.vn/").ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text()).getJSONObject("data");
         try {
-            ProductDetail = new ProductDetail();
             JSONArray jsonArray= json.getJSONArray("media");
             ProductDetail.setRating_average(json.getJSONObject("rating_info").getFloat("percent_star"));
             ProductDetail.setReview_count(json.getJSONObject("rating_info").getInt("total_rated"));
@@ -60,7 +59,7 @@ public class Sendo {
             ProductDetail.setImagesUrl(a);
 
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ProductDetail;
     }
@@ -92,7 +91,7 @@ public class Sendo {
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ReviewList;
     }

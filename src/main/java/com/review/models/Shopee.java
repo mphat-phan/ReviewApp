@@ -41,28 +41,27 @@ public class Shopee {
                 productList.add(product);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return productList;
     }
     public ProductDetail getDetailProduct(String itemid,String shopid) throws IOException,RuntimeException {
-        ProductDetail ProductDetail;
-        String itemid1 = itemid.toString();
-        String shopid1 = shopid.toString();
+        ProductDetail ProductDetail = new ProductDetail();;
+        String itemid1 = itemid;
+        String shopid1 = shopid;
         url = "https://shopee.vn/api/v4/item/get?itemid="+itemid1+"&shopid="+shopid1;
         Connection.Response res = Jsoup.connect(url).header("af-ac-enc-dat", "hello").method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text()).getJSONObject("data");
         JSONArray jsonArray= null;
         try {
-            ProductDetail = new ProductDetail();
             jsonArray = json.getJSONArray("tier_variations");
             ProductDetail.setRating_average(json.getJSONObject("item_rating").getFloat("rating_star"));
             ProductDetail.setReview_count(Integer.parseInt(ex.getIntbyString(json.getJSONObject("item_rating").get("rating_count").toString())[0]));
             ProductDetail.setDescription(json.getString("description"));
             ProductDetail.setImagesUrl(ex.getListImagebyString(jsonArray.getJSONObject(0),"images","https://cf.shopee.vn/file/"));
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ProductDetail;
     }
@@ -85,7 +84,7 @@ public class Shopee {
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ReviewList;
     }
