@@ -25,7 +25,7 @@ import javafx.scene.image.Image;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-
+import java.text.DecimalFormat;
 
 public class PrimaryController implements Initializable {
     private Client client ;
@@ -232,11 +232,13 @@ public class PrimaryController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_detail.fxml"));
             fxmlLoader.load();
+            String patternTienTe = "###,###,###đ";
+            DecimalFormat formatTienTe = new DecimalFormat(patternTienTe);
             itemDetailController = fxmlLoader.getController();
             itemDetailController.openItemDetail(this);
             itemDetailController.product_name_label.setText(product.getProductName());
-            itemDetailController.product_price_label.setText("đ"+ product.getPrice_sale());
-            itemDetailController.product_sale_price_label.setText("đ"+product.getPrice());
+            itemDetailController.product_price_label.setText(formatTienTe.format(product.getPrice_sale()));
+            itemDetailController.product_sale_price_label.setText(formatTienTe.format(product.getPrice()));
             List<String> images=new ArrayList<>();
             images = productDetail.getImagesUrl();
             String deteleWebp1 = product.getImageUrl().replace(".webp","");
@@ -282,8 +284,8 @@ public class PrimaryController implements Initializable {
             }
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
             itemDetailController.ratingListController.openRatingList(this,page);
-
-            itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
+            DecimalFormat formatrating= new DecimalFormat("###.###");
+            itemDetailController.ratingListController.rating_detail_product.setText(formatrating.format(productDetail.getRating_average()));
             itemDetailController.ratingListController.count_rating_product.setText(String.valueOf(productDetail.getReview_count())+" Đánh giá");
 
             itemDetailController.rating_pane = newpane1;
