@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -385,11 +386,12 @@ public class RatingAggregatorController implements Initializable {
                 pane = fxmlLoader.load();
                 RatingAggregatorController ratingAggregatorController = fxmlLoader.getController();
                 ratingAggregatorController.productRating_name_label.setText(this.primaryController.getItemListController().productList.get(0).getProductName());
-
+                String patternTienTe = "###,###,###đ";
+                DecimalFormat formatTienTe = new DecimalFormat(patternTienTe);
                 Image img = new Image(this.primaryController.getItemListController().productList.get(0).getImageUrl());
                 ratingAggregatorController.ratingAgg_image.setImage(img);
-                ratingAggregatorController.price_ratingAgg_label.setText("VNĐ "+String.valueOf(this.primaryController.getItemListController().productList.get(0).getPrice()));
-                ratingAggregatorController.priceSale_ratingAgg_label.setText("VNĐ "+String.valueOf(this.primaryController.getItemListController().productList.get(0).getPrice_sale()));
+                ratingAggregatorController.price_ratingAgg_label.setText("VNĐ "+formatTienTe.format(this.primaryController.getItemListController().productList.get(0).getPrice()));
+                ratingAggregatorController.priceSale_ratingAgg_label.setText("VNĐ "+formatTienTe.format(this.primaryController.getItemListController().productList.get(0).getPrice_sale()));
                 ratingAggregatorController.rating_average.setText(String.valueOf(this.primaryController.getItemListController().productList.get(0).getRating_average()));
                 ratingAggregatorController.primaryController = primaryController1;
                 primaryController.setContainer(pane);

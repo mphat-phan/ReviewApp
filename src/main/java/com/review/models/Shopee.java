@@ -35,8 +35,8 @@ public class Shopee {
                 product.setIdshop(String.valueOf(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("shopid")));
                 product.setProductName(jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("name"));
                 product.setImageUrl("https://cf.shopee.vn/file/"+jsonArray.getJSONObject(i).getJSONObject("item_basic").getString("image"));
-                product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price_max_before_discount"));
-                product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getInt("price"));
+                product.setPrice(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("price_max_before_discount")/100000);
+                product.setPrice_sale(jsonArray.getJSONObject(i).getJSONObject("item_basic").getLong("price")/100000);
                 product.setRating_average(jsonArray.getJSONObject(i).getJSONObject("item_basic").getJSONObject("item_rating").getFloat("rating_star"));
                 productList.add(product);
             }
