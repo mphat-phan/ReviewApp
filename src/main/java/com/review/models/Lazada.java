@@ -77,8 +77,8 @@ public class Lazada {
     public ProductDetail getDetailProduct(String ID) {
         return listproductdetail.get(ID);
     }
-    public List<Rate> getRatesByQueryLazada(String id) throws IOException,RuntimeException {
-        url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=20&sort=0&pageNo=1";
+    public List<Rate> getRatesByQueryLazada(String id,int page) throws IOException,RuntimeException {
+        url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=10&sort=0&pageNo="+page;
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();

@@ -29,10 +29,14 @@
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="333.0" spacing="10.0">
                      <children>
-                        <Label fx:id="search_product_button" onMousePressed="#search_product_press" styleClass="button-pagination" text="Tìm kiếm sản phẩm">
+                        <Label fx:id="search_product_button" onMousePressed="#search_product_press" text="Tìm kiếm sản phẩm">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <styleClass>
+                              <String fx:value="button-pagination" />
+                              <String fx:value="action" />
+                           </styleClass>
                         </Label>
                         <Label fx:id="rating_aggregator_button" onMousePressed="#rating_aggregator_press" styleClass="button-pagination" text="Tổng hợp đánh giá">
                            <font>

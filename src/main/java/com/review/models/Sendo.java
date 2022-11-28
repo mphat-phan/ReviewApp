@@ -64,8 +64,8 @@ public class Sendo {
         }
         return ProductDetail;
     }
-    public List<Rate> getRatesByQuerySendo(String id) throws IOException,RuntimeException {
-        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=5&star=all";
+    public List<Rate> getRatesByQuerySendo(String id, int page) throws IOException,RuntimeException {
+        url = "https://ratingapi.sendo.vn/product/"+id+"/rating?limit=10&star=all&page="+page;
         List<Rate> ReviewList = new ArrayList<>();
         Rate rate;
         Connection.Response res = Jsoup.connect(url).method(Connection.Method.GET).ignoreContentType(true).execute();
@@ -102,7 +102,7 @@ public class Sendo {
         List<Product> productList = new ArrayList<>();
         productList = sendo.getProductsByQuerySendo("ipad");
       List<Rate> productListReviews = new ArrayList<>();
-      productListReviews = sendo.getRatesByQuerySendo("23066374");
+      productListReviews = sendo.getRatesByQuerySendo("23066374",2);
         System.out.println("Hello");
     }
 }

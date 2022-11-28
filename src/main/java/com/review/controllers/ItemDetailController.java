@@ -49,6 +49,7 @@ public class ItemDetailController implements Initializable{
 
         this.rating_list.getChildren().clear();
         this.rating_list.getChildren().addAll(primaryController.getItemDetailController().info_pane);
+        this.info_button.getStyleClass().remove("action");
         this.rating_button.getStyleClass().remove("action");
         this.info_button.getStyleClass().add("action");
 
@@ -61,6 +62,7 @@ public class ItemDetailController implements Initializable{
             this.rating_list.getChildren().clear();
             this.rating_list.getChildren().addAll(primaryController.getItemDetailController().rating_pane);
             this.info_button.getStyleClass().remove("action");
+            this.rating_button.getStyleClass().remove("action");
             this.rating_button.getStyleClass().add("action");
         }
         else{

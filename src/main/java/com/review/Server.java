@@ -64,7 +64,7 @@ public class Server {
             SearchProduct(token[1],s);
         }
         else if(token[0].equals("ReviewProduct")){
-            ReviewProduct(token[1],s);
+            ReviewProduct(token[1], Integer.parseInt(token[2]),s);
         }
         else if (token[0].equals("clickDetail")) {
             DetailProduct(token[1],s);
@@ -76,7 +76,7 @@ public class Server {
             DetailProductSendo(token[1],s);
         }
         else if(token[0].equals("ReviewProductSendo")){
-            ReviewProductSendo(token[1],s);
+            ReviewProductSendo(token[1], Integer.parseInt(token[2]),s);
         }
         else if(token[0].equals("searchShopee")){
             SearchProductShopee(token[1],s);
@@ -85,7 +85,7 @@ public class Server {
             DetailProductShopee(token[1],token[2],s);
         }
         else if (token[0].equals("ReviewProductShopee")) {
-            ReviewProductShopee(token[1],token[2],s);
+            ReviewProductShopee(token[1],token[2], Integer.parseInt(token[3]),s);
         }
         else if(token[0].equals("searchLazada")){
             SearchProductLazada(token[1],s);
@@ -96,7 +96,7 @@ public class Server {
         }
         else if(token[0].equals("ReviewProductLazada"))
         {
-            ReviewProductLazada(token[1],s);
+            ReviewProductLazada(token[1], Integer.parseInt(token[2]),s);
         }
 
     }
@@ -116,26 +116,26 @@ public class Server {
         Sendo sendo = new Sendo();
         SendDetailProduct(sendo.getDetailProductSendo(part),s);
     }
-    public void ReviewProductSendo(String ID,String[] s)throws IOException{
+    public void ReviewProductSendo(String ID,int page,String[] s)throws IOException{
         Sendo sendo = new Sendo();
-        SendListReviews(sendo.getRatesByQuerySendo(ID),s);
+        SendListReviews(sendo.getRatesByQuerySendo(ID, page),s);
     }
     public void SearchProductShopee(String query,String[] s)throws IOException{
         Shopee shopee = new Shopee();
         SendList(shopee.getProductsByQueryShopee(query),s);
     }
-    public void ReviewProduct(String ID,String[] s)throws IOException{
+    public void ReviewProduct(String ID,int page,String[] s)throws IOException{
         Tiki tiki = new Tiki();
-        SendListReviews(tiki.getRatesByQuery(ID),s);
+        SendListReviews(tiki.getRatesByQuery(ID,page),s);
     }
 
     public void DetailProduct(String ID,String[] s)throws IOException{
         Tiki tiki = new Tiki();
         SendDetailProduct(tiki.getDetailProduct(ID),s);
     }
-    public void ReviewProductLazada(String ID,String[] s)throws IOException{
+    public void ReviewProductLazada(String ID,int page,String[] s)throws IOException{
         Lazada lazada = new Lazada();
-        SendListReviews(lazada.getRatesByQueryLazada(String.valueOf(ID)),s);
+        SendListReviews(lazada.getRatesByQueryLazada(String.valueOf(ID),page),s);
     }
     public void DetailProductLazada(String ID,String[] s)throws IOException{
         Lazada lazada = new Lazada();
@@ -145,9 +145,9 @@ public class Server {
         Shopee shopee = new Shopee();
         SendDetailProduct(shopee.getDetailProduct(String.valueOf(ID),String.valueOf(IDshop)),s);
     }
-    public void ReviewProductShopee(String ID,String IDshop,String[] s)throws IOException{
+    public void ReviewProductShopee(String ID,String IDshop,int page,String[] s)throws IOException{
         Shopee shopee = new Shopee();
-        SendListReviews(shopee.getRatesByQuery(ID,IDshop),s);
+        SendListReviews(shopee.getRatesByQuery(ID,IDshop,page),s);
     }
     public void ConnectSever() throws IOException,NoSuchAlgorithmException,InvalidKeySpecException {
         ShareIp();

@@ -7,6 +7,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.review.models.*;
 import javafx.event.ActionEvent;
@@ -15,7 +17,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
@@ -132,31 +136,67 @@ public class PrimaryController implements Initializable {
 
     @FXML
     void search_enter(ActionEvent event)throws IOException,ClassNotFoundException {
-        client.SearchProduct(search_product.getText());
-         Tiki = new ArrayList<>();
-         Sendo = new ArrayList<>();
-         Shopee = new ArrayList<>();
-         Lazada = new ArrayList<>();
+        //Kiểm tra không nhap chữ
+        if(search_product.getText() == "" || search_product.getText() ==null || search_product.getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+            alert.showAndWait();
+            return;
+
+        }
+        //Kiểm tra kí tự đặc biệt
+        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasSpecial = special.matcher(search_product.getText());
+        if(hasSpecial.find()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Không được nhập ký tự đặc biệt!");
+            alert.showAndWait();
+            return;
+        }
+
+        this.rating_aggregator_button.getStyleClass().remove("action");
+        this.search_product_button.getStyleClass().remove("action");
+        client.SearchProduct(search_product.getText().trim());
+        Tiki = new ArrayList<>();
+        Sendo = new ArrayList<>();
+        Shopee = new ArrayList<>();
+        Lazada = new ArrayList<>();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
         itemListController = fxmlLoader.getController();
         itemListController.productList = client.ReceiveList();
 
+        ///Kiểm tra không có sản phẩm
+        if(itemListController.productList.size() == 0){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Không tìm thấy sản phẩm trong tiki!");
+            alert.showAndWait();
+            return;
+        }
         swapItemList();
+        this.search_product_button.getStyleClass().add("action");
     }
 
     @FXML
-    void rating_aggregator_press(MouseEvent event) throws IOException, ClassNotFoundException {
+    void rating_aggregator_press(MouseEvent event) throws IOException, ClassNotFoundException, InterruptedException {
+
         this.rating_aggregator_button.getStyleClass().remove("action");
         this.search_product_button.getStyleClass().remove("action");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
         ratingAggregatorController = fxmlLoader.getController();
-        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID());
+        //Get rating default tiki
+        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID(),1);
         ratingAggregatorController.rateList = client.ReceiveListReviews();
-
+        ratingAggregatorController.Tiki = ratingAggregatorController.rateList;
         swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
     }
@@ -168,6 +208,7 @@ public class PrimaryController implements Initializable {
 
         swapItemList();
         this.search_product_button.getStyleClass().add("action");
+
     }
 
     public void setContainer(Pane newPane){
@@ -180,7 +221,6 @@ public class PrimaryController implements Initializable {
     public void swapRatingAggregator(){
         try {
             ratingAggregatorController.openRatingAggregator(this);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -195,8 +235,8 @@ public class PrimaryController implements Initializable {
             itemDetailController = fxmlLoader.getController();
             itemDetailController.openItemDetail(this);
             itemDetailController.product_name_label.setText(product.getProductName());
-            itemDetailController.product_price_label.setText("VNĐ"+product.getPrice());
-            itemDetailController.product_sale_price_label.setText("VNĐ"+product.getPrice_sale());
+            itemDetailController.product_price_label.setText("đ"+ product.getPrice_sale());
+            itemDetailController.product_sale_price_label.setText("đ"+product.getPrice());
             List<String> images=new ArrayList<>();
             images = productDetail.getImagesUrl();
             String deteleWebp1 = product.getImageUrl().replace(".webp","");
@@ -229,19 +269,18 @@ public class PrimaryController implements Initializable {
             Pane newpane1 = fxmlLoader.load();
             itemDetailController.ratingListController = fxmlLoader.getController();
             if(check.equals("tiki")) {
-                client.GetReviewProduct(product.getproductID());
+                client.GetReviewProduct(product.getproductID(),1);
             }
             if(check.equals("sendo")){
-                client.GetReviewProductSendo(product.getproductID());
+                client.GetReviewProductSendo(product.getproductID(), 1);
             }
             if(check.equals("shopee")){
-                client.GetReviewProductShopee(product.getproductID(),product.getIdshop());
+                client.GetReviewProductShopee(product.getproductID(),product.getIdshop(),1);
             }
             if(check.equals("lazada")){
-                client.GetReviewProductLazada(product.getproductID());
+                client.GetReviewProductLazada(product.getproductID(), 1);
             }
             itemDetailController.ratingListController.rateList = client.ReceiveListReviews();
-
             itemDetailController.ratingListController.openRatingList(this,page);
 
             itemDetailController.ratingListController.rating_detail_product.setText(String.valueOf(productDetail.getRating_average()));
@@ -270,13 +309,12 @@ public class PrimaryController implements Initializable {
                 fxmlLoader.load();
                 ratingAggregatorController = fxmlLoader.getController();
 
-                client.SearchProduct("ipad");
+                client.SearchProduct("iphone");
                 itemListController.productList = client.ReceiveList();
                 Tiki = itemListController.productList;
-                search_product.setText("ipad");
+                search_product.setText("iphone");
                 setCheck("tiki");
                 swapItemList();
-
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
