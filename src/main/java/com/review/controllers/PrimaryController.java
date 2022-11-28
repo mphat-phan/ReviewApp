@@ -192,24 +192,11 @@ public class PrimaryController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
-        ratingAggregatorController = fxmlLoader.getController();
-        if(!this.getTiki().equals("tiki")){
-            client.SearchProduct(this.getSearch_product().getText());
-            itemListController.productList = client.ReceiveList();
-            client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID());
-            ratingAggregatorController.rateList = client.ReceiveListReviews();
-        }
-        else {
-            client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID());
-            ratingAggregatorController.rateList = client.ReceiveListReviews();
-            this.rating_aggregator_button.getStyleClass().add("action");
-        }
+        //Get rating default tiki
+        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID(),1);
+        ratingAggregatorController.rateList = client.ReceiveListReviews();
+        ratingAggregatorController.Tiki = ratingAggregatorController.rateList;
         swapRatingAggregator();
-//        //Get rating default tiki
-//        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID(),1);
-//        ratingAggregatorController.rateList = client.ReceiveListReviews();
-//        ratingAggregatorController.Tiki = ratingAggregatorController.rateList;
-//        swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
     }
 
