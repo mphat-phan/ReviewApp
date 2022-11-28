@@ -51,9 +51,6 @@ public class exception {
                 if(!checkUrl(n[i])) {
                     listimage.add(a + n[i]);
                 }
-                else{
-                    listimage.add(dirPathNull);
-                }
             }
         }
         catch (JSONException e){
