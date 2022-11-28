@@ -37,25 +37,24 @@ public class Tiki {
                 productList.add(product);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return productList;
     }
     public ProductDetail getDetailProduct(String ID) throws IOException,RuntimeException {
-        ProductDetail ProductDetail;
+        ProductDetail ProductDetail = new ProductDetail();;
         url = "https://api.tiki.vn/product-detail/api/v1/products/";
         Connection.Response res = Jsoup.connect(url+ID).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONObject json= new JSONObject(doc.text());
         try {
-            ProductDetail = new ProductDetail();
             ProductDetail.setRating_average(json.getFloat("rating_average"));
             ProductDetail.setReview_count(json.getInt("review_count"));
             ProductDetail.setDescription(json.getString("description"));
             ProductDetail.setImagesUrl(ex.getListImage(json,"images","base_url"));
 
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ProductDetail;
     }
@@ -79,7 +78,7 @@ public class Tiki {
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+
         }
         return ReviewList;
     }

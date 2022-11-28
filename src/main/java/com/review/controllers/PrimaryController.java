@@ -147,7 +147,7 @@ public class PrimaryController implements Initializable {
 
         }
         //Kiểm tra kí tự đặc biệt
-        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
         Matcher hasSpecial = special.matcher(search_product.getText());
         if(hasSpecial.find()){
             Alert alert = new Alert(Alert.AlertType.WARNING);

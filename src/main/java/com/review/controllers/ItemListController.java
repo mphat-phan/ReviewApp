@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ItemListController implements Initializable {
 
@@ -57,6 +59,16 @@ public class ItemListController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
         this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+        if(hasSpecial.find()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Không được nhập ký tự đặc biệt!");
+            alert.showAndWait();
+            return;
+        }
         if(primaryController.getShopee().isEmpty()) {
             this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
             this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
@@ -87,7 +99,18 @@ public class ItemListController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
         this.primaryController.setItemListController(fxmlLoader.getController()) ;
+        Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+        if(hasSpecial.find()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Không được nhập ký tự đặc biệt!");
+            alert.showAndWait();
+            return;
+        }
         if(primaryController.getLazada().isEmpty()) {
+
             this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
             this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
             if(this.primaryController.getItemListController().productList.size() == 0){
@@ -118,7 +141,18 @@ public class ItemListController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();
             this.primaryController.setItemListController(fxmlLoader.getController());
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
             if(primaryController.getSendo().isEmpty()) {
+
                 this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
                 this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
                 if(this.primaryController.getItemListController().productList.size() == 0){
@@ -148,7 +182,18 @@ public class ItemListController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();
             this.primaryController.setItemListController(fxmlLoader.getController());
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
             if(primaryController.getTiki().isEmpty()) {
+
                 this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
                 this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
                 if(this.primaryController.getItemListController().productList.size() == 0){

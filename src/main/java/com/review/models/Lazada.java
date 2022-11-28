@@ -55,7 +55,6 @@ public class Lazada {
                 listproductdetail.put(String.valueOf(product.getproductID()),pdd);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         return productList;
     }
@@ -99,7 +98,6 @@ public class Lazada {
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
         }
         return ReviewList;
     }
