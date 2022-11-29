@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="498.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingListController">
+<VBox prefHeight="498.0" prefWidth="500.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.RatingListController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="745.0" spacing="5.0">
          <children>

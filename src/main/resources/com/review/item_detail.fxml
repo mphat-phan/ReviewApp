@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox alignment="CENTER" prefHeight="100.0" prefWidth="900.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.ItemDetailController">
+<HBox alignment="CENTER" prefHeight="100.0" prefWidth="900.0" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.review.controllers.ItemDetailController">
    <children>
       <VBox prefHeight="600.0" prefWidth="731.0" spacing="10.0">
          <children>

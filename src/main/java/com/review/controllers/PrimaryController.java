@@ -181,6 +181,7 @@ public class PrimaryController implements Initializable {
             return;
         }
         ratingAggregatorController.setPane(null);
+        ratingAggregatorController.check = "tiki";
         swapItemList();
         this.search_product_button.getStyleClass().add("action");
     }
@@ -214,7 +215,8 @@ public class PrimaryController implements Initializable {
             ratingAggregatorController.rateList = client.ReceiveListReviews();
             ratingAggregatorController.Lazada = ratingAggregatorController.rateList;
         }
-        swapRatingAggregator();
+        Product product = this.getItemListController().productList.get(0);
+        swapRatingAggregator(product);
         this.rating_aggregator_button.getStyleClass().add("action");
     }
 
@@ -235,9 +237,9 @@ public class PrimaryController implements Initializable {
     public void swapItemList(){
         itemListController.openItemList(this);
     }
-    public void swapRatingAggregator(){
+    public void swapRatingAggregator(Product product){
         try {
-            ratingAggregatorController.openRatingAggregator(this);
+            ratingAggregatorController.openRatingAggregator(this,product);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
