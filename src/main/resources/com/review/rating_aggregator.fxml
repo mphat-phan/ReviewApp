@@ -100,7 +100,7 @@
             <Insets />
          </VBox.margin>
          <children>
-            <VBox prefHeight="515.0" prefWidth="288.0">
+            <VBox maxHeight="300.0" prefHeight="515.0" prefWidth="288.0">
                <children>
                   <ImageView fx:id="ratingAgg_image" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -29,7 +29,7 @@
                   </ImageView>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0">
                      <children>
-                        <Label fx:id="user_name_label" text="Phan Minh Phát">
+                        <Label fx:id="user_name_label" prefHeight="27.0" prefWidth="302.0" text="Phan Minh Phát">
                            <font>
                               <Font size="18.0" />
                            </font>
