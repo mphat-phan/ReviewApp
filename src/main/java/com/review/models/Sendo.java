@@ -49,7 +49,7 @@ public class Sendo {
             JSONArray jsonArray= json.getJSONArray("media");
             ProductDetail.setRating_average(json.getJSONObject("rating_info").getFloat("percent_star"));
             ProductDetail.setReview_count(json.getJSONObject("rating_info").getInt("total_rated"));
-            ProductDetail.setDescription(json.getString("short_description"));
+            ProductDetail.setDescription(ex.getchecknull(json,"short_description"));
             List<String>a=new ArrayList<>();
             for(int i = 0; i < jsonArray.length(); i++) {
                if(jsonArray.getJSONObject(i).getString("type").equals("image")){

@@ -68,6 +68,16 @@ public class exception {
         }
         return listimage;
     }
+    public String getchecknull(JSONObject js,String s){
+        String a;
+        try{
+            a=js.getString(s);
+        }
+        catch (JSONException e){
+            a="";
+        }
+        return a;
+    }
     public String[] getIntbyString(String s){
         return s.replaceAll("[^0-9a-zA-Z,-]","").split(",");
     }
