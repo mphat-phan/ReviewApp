@@ -160,6 +160,7 @@ public class PrimaryController implements Initializable {
         this.rating_aggregator_button.getStyleClass().remove("action");
         this.search_product_button.getStyleClass().remove("action");
         client.SearchProduct(search_product.getText().trim());
+        setCheck("tiki");
         Tiki = new ArrayList<>();
         Sendo = new ArrayList<>();
         Shopee = new ArrayList<>();

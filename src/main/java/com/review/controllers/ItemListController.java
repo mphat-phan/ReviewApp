@@ -69,6 +69,14 @@ public class ItemListController implements Initializable {
             alert.showAndWait();
             return;
         }
+        if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+            alert.showAndWait();
+            return;
+        }
         if(primaryController.getShopee().isEmpty()) {
             this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
             this.primaryController.getItemListController().productList = this.primaryController.getClient().ReceiveList();
@@ -106,6 +114,14 @@ public class ItemListController implements Initializable {
             alert.setTitle("Warning alert");
             alert.setHeaderText(null);
             alert.setContentText("Không được nhập ký tự đặc biệt!");
+            alert.showAndWait();
+            return;
+        }
+        if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
             alert.showAndWait();
             return;
         }
@@ -151,6 +167,14 @@ public class ItemListController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+        if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+            alert.showAndWait();
+            return;
+        }
             if(primaryController.getSendo().isEmpty()) {
 
                 this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
@@ -192,6 +216,14 @@ public class ItemListController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+        if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning alert");
+            alert.setHeaderText(null);
+            alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+            alert.showAndWait();
+            return;
+        }
             if(primaryController.getTiki().isEmpty()) {
 
                 this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
