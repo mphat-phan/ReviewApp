@@ -7,8 +7,8 @@ import java.util.List;
 
 public class exception {
     private  String[] urlDefault = {"//tiki.vn/assets/img/avatar.png",""};
-    private String dirPath = new java.io.File("C:\\Users\\VIP\\IdeaProjects\\ReviewApp\\src\\main\\resources\\images\\an-danh.png").getAbsolutePath();
-    private String dirPathNull = new java.io.File("C:\\Users\\VIP\\IdeaProjects\\ReviewApp\\src\\main\\resources\\images\\null.jpg").getAbsolutePath();
+    private String dirPath = "https://img.upanh.tv/2022/11/29/an-danh.png";
+    private String dirPathNull = "https://img.upanh.tv/2022/11/29/an-danh.png";
 
     public Boolean checkUrl(String Url){
         for (int i=0;i< urlDefault.length;i++){
@@ -32,7 +32,7 @@ public class exception {
         String image;
         try{
             image=js.getString(s);
-            if(checkUrl(image)){
+            if(checkUrl(image) || image==null){
                 image=dirPath;
             }
         }

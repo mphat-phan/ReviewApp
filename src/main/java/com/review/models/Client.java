@@ -139,7 +139,7 @@ public class Client {
     }
 
     public List<Product> ReceiveList() throws IOException,ClassNotFoundException{
-            dpreceive = new DatagramPacket(new byte[4096],4096);
+            dpreceive = new DatagramPacket(new byte[100*1024],100*1024);
             socket.receive(dpreceive);
             listdata=aes.decryptList(new String(dpreceive.getData(),0,dpreceive.getLength()));
             return listdata;

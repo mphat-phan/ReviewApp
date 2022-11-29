@@ -144,7 +144,6 @@ public class PrimaryController implements Initializable {
             alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
             alert.showAndWait();
             return;
-
         }
         //Kiểm tra kí tự đặc biệt
         Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");

@@ -38,7 +38,7 @@ public class RatingController {
     private HBox image_box;
 
 
-    private String dirPath = new java.io.File("images/an-danh.png").getAbsolutePath();
+    private String dirPath = "https://img.upanh.tv/2022/11/29/an-danh.png";
     public void setData(Rate rate){
         Image user_image = new Image(rate.getUserImageUrl());
         if(!rate.getImageUrl().isEmpty())

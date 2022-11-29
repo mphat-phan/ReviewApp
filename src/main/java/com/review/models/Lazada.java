@@ -38,21 +38,9 @@ public class Lazada {
                 product.setProductName(jsonArray.getJSONObject(i).getString("name"));
                 product.setImageUrl(jsonArray.getJSONObject(i).getString("image"));
                 product.setRating_average(jsonArray.getJSONObject(i).getFloat("ratingScore"));
-                product.setPrice(Integer.parseInt(jsonArray.getJSONObject(i).getString("originalPrice").split(".00")[0]));
-                product.setPrice_sale(Integer.parseInt(jsonArray.getJSONObject(i).getString("price").split(".00")[0]));
-                //get productDetail
-                ProductDetail pdd=new ProductDetail();
-                Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
-                pdd.setRating_average(c);
-                String v=jsonArray.getJSONObject(i).getString("review");
-                pdd.setReview_count(Integer.parseInt(v==""? "0":v));
-                String urldes="https:"+jsonArray.getJSONObject(i).getString("itemUrl");
-                res = Jsoup.connect(urldes).method(Connection.Method.GET).ignoreContentType(true).followRedirects(true).execute();
-                doc=res.parse();
-                pdd.setDescription(doc.getElementsByAttribute("content").first().attributes().get("content"));
-                pdd.setImagesUrl(ex.getListImage(jsonArray.getJSONObject(i),"thumbs","image"));
+                product.setPrice(Long.parseLong(jsonArray.getJSONObject(i).getString("originalPrice").replace(".00","")));
+                product.setPrice_sale(Long.parseLong(jsonArray.getJSONObject(i).getString("price").replace(".00","")));
                 productList.add(product);
-                listproductdetail.put(String.valueOf(product.getproductID()),pdd);
             }
         } catch (JSONException e) {
         }
@@ -77,8 +65,29 @@ public class Lazada {
         }
             return cookie;
     }
-    public ProductDetail getDetailProduct(String ID) {
-        return listproductdetail.get(ID);
+    public ProductDetail getDetailProduct(String ID)throws IOException,RuntimeException {
+        url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
+        Connection.Response res = Jsoup.connect(url+ID).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Document doc =res.parse();
+        JSONArray jsonArray= null;
+        ProductDetail pdd=new ProductDetail();
+        try {
+            jsonArray = new JSONObject(doc.text()).getJSONObject("mods").getJSONArray("listItems");
+            for(int i = 0; i < jsonArray.length(); i++) {
+                //get productDetail
+                Float c=Float.parseFloat(jsonArray.getJSONObject(i).getString("ratingScore"));
+                pdd.setRating_average(c);
+                String v=jsonArray.getJSONObject(i).getString("review");
+                pdd.setReview_count(Integer.parseInt(v==""? "0":v));
+                String urldes="https:"+jsonArray.getJSONObject(i).getString("itemUrl");
+                res = Jsoup.connect(urldes).method(Connection.Method.GET).ignoreContentType(true).followRedirects(true).execute();
+                doc=res.parse();
+                pdd.setDescription(doc.getElementsByAttribute("content").first().attributes().get("content"));
+                pdd.setImagesUrl(ex.getListImage(jsonArray.getJSONObject(i),"thumbs","image"));
+            }
+        } catch (JSONException e) {
+        }
+        return pdd;
     }
     public List<Rate> getRatesByQueryLazada(String id,int page) throws IOException,RuntimeException {
         url = "https://my.lazada.vn/pdp/review/getReviewList?itemId="+id+"&pageSize=10&sort=0&pageNo="+page;
@@ -95,6 +104,7 @@ public class Lazada {
                 rate.setUsername(jsonArray.getJSONObject(i).getString("buyerName"));
                 rate.setComment(jsonArray.getJSONObject(i).getString("reviewContent"));
                 rate.setImageUrl(ex.getListImage(jsonArray.getJSONObject(i),"images","url"));
+                rate.setUserImageUrl(ex.getImage(jsonArray.getJSONObject(i),"avatar"));
                 ReviewList.add(rate);
             }
         } catch (JSONException e) {
