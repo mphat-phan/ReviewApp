@@ -21,7 +21,7 @@ public class Tiki {
         url = "https://tiki.vn/api/v2/products?limit=10&q=";
         List<Product> productList = new ArrayList<>();
         Product product;
-        Connection.Response res = Jsoup.connect(url+q).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url+ex.removespecialcharac(q)).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
         try {

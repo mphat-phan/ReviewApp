@@ -84,4 +84,5 @@ public class exception {
     public String[] getImagebyString(String s){
         return s.replaceAll("[^0-9a-zA-Z,_./:-]","").split(",");
     }
+    public String removespecialcharac(String s){return s.replaceAll("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]","");}
 }

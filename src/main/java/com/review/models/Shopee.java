@@ -21,7 +21,7 @@ public class Shopee {
     }
 
     public List<Product> getProductsByQueryShopee(String q) throws IOException,RuntimeException {
-        url = "https://shopee.vn/api/v4/search/search_items?by=relevancy&keyword="+q+"&limit=10&newest=0&order=desc";
+        url = "https://shopee.vn/api/v4/search/search_items?by=relevancy&keyword="+ex.removespecialcharac(q)+"&limit=10&newest=0&order=desc";
         List<Product> productList = new ArrayList<>();
         Product product;
         Connection.Response res = Jsoup.connect(url)

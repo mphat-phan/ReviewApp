@@ -17,7 +17,7 @@ public class Sendo {
         url = "https://searchlist-api.sendo.vn/web/products?page=1&size=10&sortType=rank&q=";
         List<Product> productList = new ArrayList<>();
         Product product;
-        Connection.Response res = Jsoup.connect(url+q).method(Connection.Method.GET).header("referer","https://www.sendo.vn/").ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url+ex.removespecialcharac(q)).method(Connection.Method.GET).header("referer","https://www.sendo.vn/").ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
         try {

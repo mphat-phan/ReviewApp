@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RatingAggregatorController implements Initializable {
 
@@ -96,6 +98,7 @@ public class RatingAggregatorController implements Initializable {
     public List<Rate> Lazada = new ArrayList<>();
 
     private Pane pane;
+    public void setPane(Pane p){ pane=p;}
     private int stepPagination = 0;
     private int pageNumDefault = 5;
     private PrimaryController primaryController;
@@ -107,9 +110,29 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getShoppe().isEmpty()) {
+            //Kiểm tra không nhap chữ
+            if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+                alert.showAndWait();
+                return;
+            }
+            //Kiểm tra kí tự đặc biệt
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
             this.primaryController.getClient().SearchProductShopee(this.primaryController.getItemListController().productList.get(0).getProductName());
-            Product p = this.primaryController.getClient().ReceiveList().get(0);
-            if(p == null){
+            List<Product> listp = this.primaryController.getClient().ReceiveList();
+            if(listp.isEmpty() || listp.size()==0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning alert");
                 alert.setHeaderText(null);
@@ -117,6 +140,7 @@ public class RatingAggregatorController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+            Product p = listp.get(0);
             this.primaryController.getClient().GetReviewProductShopee(p.getproductID(),p.getIdshop(),1);
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
             if(this.primaryController.getRatingAggregatorController().rateList.size()==0){
@@ -147,9 +171,29 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getSendo().isEmpty()) {
+            //Kiểm tra không nhap chữ
+            if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+                alert.showAndWait();
+                return;
+            }
+            //Kiểm tra kí tự đặc biệt
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
             this.primaryController.getClient().SearchProductLazada(this.primaryController.getItemListController().productList.get(0).getProductName());
-            Product p = this.primaryController.getClient().ReceiveList().get(0);
-            if(p == null){
+            List<Product> listp = this.primaryController.getClient().ReceiveList();
+            if(listp.isEmpty() || listp.size()==0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning alert");
                 alert.setHeaderText(null);
@@ -157,7 +201,8 @@ public class RatingAggregatorController implements Initializable {
                 alert.showAndWait();
                 return;
             }
-            this.primaryController.getClient().GetReviewProductSendo(p.getproductID(), 1);
+            Product p = listp.get(0);
+            this.primaryController.getClient().GetReviewProductLazada(p.getproductID(), 1);
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
             if(this.primaryController.getRatingAggregatorController().rateList.size()==0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -187,9 +232,29 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getSendo().isEmpty()) {
+            //Kiểm tra không nhap chữ
+            if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+                alert.showAndWait();
+                return;
+            }
+            //Kiểm tra kí tự đặc biệt
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
             this.primaryController.getClient().SearchProductSendo(this.primaryController.getItemListController().productList.get(0).getProductName());
-            Product p = this.primaryController.getClient().ReceiveList().get(0);
-            if(p == null){
+            List<Product> listp = this.primaryController.getClient().ReceiveList();
+            if(listp.isEmpty() || listp.size()==0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning alert");
                 alert.setHeaderText(null);
@@ -197,6 +262,7 @@ public class RatingAggregatorController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+            Product p = listp.get(0);
             this.primaryController.getClient().GetReviewProductSendo(p.getproductID(), 1);
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
             if(this.primaryController.getRatingAggregatorController().rateList.size()==0){
@@ -227,9 +293,29 @@ public class RatingAggregatorController implements Initializable {
         fxmlLoader.load();
         this.primaryController.setRatingAggregatorController(fxmlLoader.getController());
         if(this.primaryController.getRatingAggregatorController().getTiki().isEmpty()) {
-            this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
-            Product p = this.primaryController.getClient().ReceiveList().get(0);
-            if(p == null){
+            //Kiểm tra không nhap chữ
+            if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+                alert.showAndWait();
+                return;
+            }
+            //Kiểm tra kí tự đặc biệt
+            Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+            if(hasSpecial.find()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning alert");
+                alert.setHeaderText(null);
+                alert.setContentText("Không được nhập ký tự đặc biệt!");
+                alert.showAndWait();
+                return;
+            }
+            this.primaryController.getClient().SearchProduct(this.primaryController.getItemListController().productList.get(0).getProductName());
+            List<Product> listp = this.primaryController.getClient().ReceiveList();
+            if(listp.isEmpty() || listp.size()==0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning alert");
                 alert.setHeaderText(null);
@@ -237,6 +323,7 @@ public class RatingAggregatorController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+            Product p = listp.get(0);
             this.primaryController.getClient().GetReviewProduct(p.getproductID(),1);
             this.primaryController.getRatingAggregatorController().rateList = this.primaryController.getClient().ReceiveListReviews();
             if(this.primaryController.getRatingAggregatorController().rateList.size()==0){
@@ -319,27 +406,46 @@ public class RatingAggregatorController implements Initializable {
                 ((Button)event.getSource()).getStyleClass().add("button-pagination-action");
                 int pageNumber = Integer.parseInt(((Button)event.getSource()).getText());
                 try {
-
+                    //Kiểm tra không nhap chữ
+                    if(primaryController.getSearch_product().getText() == "" || primaryController.getSearch_product().getText() ==null || primaryController.getSearch_product().getText().trim().isEmpty()){
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Warning alert");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Nhập ký tự để tìm kiếm sản phẩm!");
+                        alert.showAndWait();
+                        return;
+                    }
+                    //Kiểm tra kí tự đặc biệt
+                    Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
+                    Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
+                    if(hasSpecial.find()){
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Warning alert");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Không được nhập ký tự đặc biệt!");
+                        alert.showAndWait();
+                        return;
+                    }
                     if(this.primaryController.getRatingAggregatorController().check == "tiki"){
-                        this.primaryController.getClient().SearchProduct(this.primaryController.getSearch_product().getText());
+                        this.primaryController.getClient().SearchProduct(this.primaryController.getItemListController().productList.get(0).getProductName());
                         Product p = this.primaryController.getClient().ReceiveList().get(0);
                         this.primaryController.getClient().GetReviewProduct(p.getproductID(),pageNumber);
                     }
 
                     if(this.primaryController.getRatingAggregatorController().check == "sendo"){
-                        this.primaryController.getClient().SearchProductSendo(this.primaryController.getSearch_product().getText());
+                        this.primaryController.getClient().SearchProductSendo(this.primaryController.getItemListController().productList.get(0).getProductName());
                         Product p = this.primaryController.getClient().ReceiveList().get(0);
                         this.primaryController.getClient().GetReviewProductSendo(p.getproductID(),pageNumber);
                     }
 
                     if(this.primaryController.getRatingAggregatorController().check == "shopee"){
-                        this.primaryController.getClient().SearchProductShopee(this.primaryController.getSearch_product().getText());
+                        this.primaryController.getClient().SearchProductShopee(this.primaryController.getItemListController().productList.get(0).getProductName());
                         Product p = this.primaryController.getClient().ReceiveList().get(0);
-                        this.primaryController.getClient().GetReviewProductSendo(p.getproductID(),pageNumber);
+                        this.primaryController.getClient().GetReviewProductShopee(p.getproductID(),p.getIdshop(),pageNumber);
                     }
 
                     if(this.primaryController.getRatingAggregatorController().check == "lazada"){
-                        this.primaryController.getClient().SearchProductLazada(this.primaryController.getSearch_product().getText());
+                        this.primaryController.getClient().SearchProductLazada(this.primaryController.getItemListController().productList.get(0).getProductName());
                         Product p = this.primaryController.getClient().ReceiveList().get(0);
                         this.primaryController.getClient().GetReviewProductLazada(p.getproductID(),pageNumber);
                     }
@@ -458,7 +564,7 @@ public class RatingAggregatorController implements Initializable {
                             if(ratingAggregatorController.primaryController.getRatingAggregatorController().check == "shopee"){
                                 ratingAggregatorController.primaryController.getClient().SearchProductShopee(ratingAggregatorController.primaryController.getSearch_product().getText());
                                 Product p = ratingAggregatorController.primaryController.getClient().ReceiveList().get(0);
-                                ratingAggregatorController.primaryController.getClient().GetReviewProductSendo(p.getproductID(),pageNumber);
+                                ratingAggregatorController.primaryController.getClient().GetReviewProductShopee(p.getproductID(),p.getIdshop(),pageNumber);
                             }
 
                             if(ratingAggregatorController.primaryController.getRatingAggregatorController().check == "lazada"){

@@ -180,6 +180,7 @@ public class PrimaryController implements Initializable {
             alert.showAndWait();
             return;
         }
+        ratingAggregatorController.setPane(null);
         swapItemList();
         this.search_product_button.getStyleClass().add("action");
     }
@@ -193,9 +194,26 @@ public class PrimaryController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/com/review/rating_aggregator.fxml"));
         fxmlLoader.load();
         //Get rating default tiki
-        client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID(),1);
-        ratingAggregatorController.rateList = client.ReceiveListReviews();
-        ratingAggregatorController.Tiki = ratingAggregatorController.rateList;
+        if(check.equals("tiki")) {
+            client.GetReviewProduct(this.getItemListController().productList.get(0).getproductID(), 1);
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
+            ratingAggregatorController.Tiki = ratingAggregatorController.rateList;
+        }
+        if(check.equals("sendo")) {
+            client.GetReviewProductSendo(this.getItemListController().productList.get(0).getproductID(), 1);
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
+            ratingAggregatorController.Sendo = ratingAggregatorController.rateList;
+        }
+        if(check.equals("shopee")) {
+            client.GetReviewProductShopee(this.getItemListController().productList.get(0).getproductID(), this.getItemListController().productList.get(0).getIdshop(), 1);
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
+            ratingAggregatorController.Shoppe = ratingAggregatorController.rateList;
+        }
+        if(check.equals("lazada")) {
+            client.GetReviewProductLazada(this.getItemListController().productList.get(0).getproductID(), 1);
+            ratingAggregatorController.rateList = client.ReceiveListReviews();
+            ratingAggregatorController.Lazada = ratingAggregatorController.rateList;
+        }
         swapRatingAggregator();
         this.rating_aggregator_button.getStyleClass().add("action");
     }

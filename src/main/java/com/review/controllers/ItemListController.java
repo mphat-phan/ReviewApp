@@ -58,6 +58,7 @@ public class ItemListController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
+        primaryController.getRatingAggregatorController().setPane(null);
         this.primaryController.setItemListController(fxmlLoader.getController()) ;
         Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
         Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
@@ -106,6 +107,7 @@ public class ItemListController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
         fxmlLoader.load();
+        primaryController.getRatingAggregatorController().setPane(null);
         this.primaryController.setItemListController(fxmlLoader.getController()) ;
         Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
         Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
@@ -156,6 +158,7 @@ public class ItemListController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();
+            primaryController.getRatingAggregatorController().setPane(null);
             this.primaryController.setItemListController(fxmlLoader.getController());
             Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
             Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());
@@ -205,6 +208,7 @@ public class ItemListController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/com/review/item_list.fxml"));
             fxmlLoader.load();
+            primaryController.getRatingAggregatorController().setPane(null);
             this.primaryController.setItemListController(fxmlLoader.getController());
             Pattern special = Pattern.compile ("[!'/\"@#$%&*()_+=|<>?{}\\[\\]~-]");
             Matcher hasSpecial = special.matcher(primaryController.getSearch_product().getText());

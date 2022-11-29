@@ -27,7 +27,7 @@ public class Lazada {
         url = "https://www.lazada.vn/catalog/?_keyori=ss&ajax=true&q=";
         List<Product> productList = new ArrayList<>();
         Product product;
-        Connection.Response res = Jsoup.connect(url+q).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
+        Connection.Response res = Jsoup.connect(url+ex.removespecialcharac(q)).cookie("x5sec",getCookie()).method(Connection.Method.GET).ignoreContentType(true).execute();
         Document doc =res.parse();
         JSONArray jsonArray= null;
         try {
